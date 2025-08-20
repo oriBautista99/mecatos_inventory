@@ -1,0 +1,16 @@
+{
+    "Home":{
+        "welcome":"Bienvenidos",
+        "instructionsPIN":"Ingrese su PIN de 6 dígitos para acceder",
+        "instructionsEmail": "Inicie sesión en su cuenta email",
+        "inputPin": "PIN de acceso",
+        "digits": "dígitos",
+        "login": "Login",
+        "logging": "Iniciando sesión...",
+        "email" : "correo",
+        "password" : "contraseña",
+        "continue": "O continúa con",
+        "buttonEmail": "Usar email y contraseña",
+        "buttonPin": "Usar PIN de acceso"
+    }
+}
