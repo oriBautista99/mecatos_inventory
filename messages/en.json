@@ -1,0 +1,16 @@
+{
+    "Home":{
+        "welcome":"Welcome",
+        "instructionsPIN":"Enter your 6-digit PIN to access",
+        "instructionsEmail": "Log in to your email account",
+        "inputPin": "Access PIN",
+        "digits": "digits",
+        "login": "Login",
+        "logging": "Logging in...",
+        "email" : "email",
+        "password" : "password",
+        "continue": "Or continue with",
+        "buttonEmail": "Use email and password",
+        "buttonPin": "Use access PIN"
+    }
+}
