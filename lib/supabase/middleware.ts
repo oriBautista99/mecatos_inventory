@@ -47,6 +47,19 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
+  if (
+    !user &&
+    !request.nextUrl.pathname.startsWith("/api/pin-login") &&
+    !request.nextUrl.pathname.match(/^\/(en|es)\/auth\/callback/) &&
+    !request.nextUrl.pathname.match(/^\/(en|es)\/auth/) &&
+    request.nextUrl.pathname !== "/" // etc.
+  ) {
+    // no user, potentially respond by redirecting the user to the login page
+    const url = request.nextUrl.clone();
+    url.pathname = "en/auth/login";
+    return NextResponse.redirect(url);
+  }
+
   // if (
   //   request.nextUrl.pathname !== "/" &&
   //   !user &&

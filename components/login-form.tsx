@@ -14,7 +14,7 @@ import { useState } from "react";
 import { KeyRound, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { capitalize } from "@/utils/text";
-import { useLocaleRouter } from "@/hook/useLocaleRouter";
+import { useLocaleRouter } from "@/hooks/useLocaleRouter";
 
 export function LoginForm({
   className,
@@ -52,17 +52,31 @@ export function LoginForm({
           password,
         });
         if (error) throw error;
+
         // Update this route to redirect to an authenticated route. The user already has an active session.
-        router.push("/protected");
+        push("/dashboard");
+        
       } catch (error: unknown) {
         setError(error instanceof Error ? error.message : "An error occurred");
       } finally {
         setIsLoading(false);
       }      
     }else{
-        //setError("An error occurred");
+
+      try{
+        const res = await fetch("/app/[locale]/api/pin-login", {
+          method: "POST",
+          body: JSON.stringify({ pin })
+        });
+        const { url } = await res.json();
+        router.push(url);
         setIsLoading(false);
-        push("/dashboard");
+        //push("/dashboard");
+      }catch (e) {
+        console.log(e)
+        setError(e instanceof Error ? e.message : "An error occurred");
+      }
+        
     }
 
   };
