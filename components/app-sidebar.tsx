@@ -2,16 +2,12 @@
 
 import type * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
+  ChartArea,
+  ClipboardList,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  ShoppingCart,
+  Truck,
+  UsersRound,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -23,123 +19,105 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/component
 const data = {
   teams: [
     {
-      name: "Acme Inc",
+      name: "Mecatos",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
+      plan: "Hoffner",
+    }
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "ORDERS",
+      url: "orders",
+      icon: ShoppingCart,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "PURCHASE_ORDERS",
+          url: "purchase",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "ORDER_RECEIVING",
+          url: "receiving",
+        }
+      ],
+    },
+    {
+      title: "INVENTORY",
+      url: "inventory",
+      icon: ClipboardList,
+      items: [
+        {
+          title: "STORAGE_AREAS",
+          url: "storage_areas",
         },
         {
-          title: "Settings",
-          url: "#",
+          title: "INVENTORY_ITEMS",
+          url: "items",
+        },
+        {
+          title: "INVENTORY_COUNT",
+          url: "count",
+        },
+        {
+          title: "WASTE",
+          url: "waste",
+        },
+        {
+          title: "CATEGORIES",
+          url: "categories",
+        },
+        {
+          title: "EXPIRATION ALERTS",
+          url: "alerts",
+        },
+        {
+          title: "SUB-RECIPES OR PREPARATION",
+          url: "preparations",
+        },
+        {
+          title: "MENU",
+          url: "menu",
+        },
+        {
+          title: "PRODUCTION_EVENTS",
+          url: "production_event",
+        },
+        {
+          title: "SALESINVENTORY",
+          url: "sales",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "REPORTS",
+      url: "reports",
+      icon: ChartArea,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "SALES",
+          url: "sales",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "PRODUCTION",
+          url: "production",
         },
         {
-          title: "Quantum",
-          url: "#",
-        },
+          title: "WASTE",
+          url: "waste",
+        }
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "SUPPLIERS",
+      url: "suppliers",
+      icon: Truck,
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "USERS",
+      url: "users",
+      icon: UsersRound,
     },
   ],
 }

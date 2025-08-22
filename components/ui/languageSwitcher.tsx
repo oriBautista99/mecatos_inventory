@@ -19,14 +19,14 @@ export default function LanguageSwitcher() {
 
   const switchLanguage = (locale: string) => {
     const segments = pathname.split("/");
-    segments[1] = locale; // Reemplaza el [locale]
+    segments[1] = locale; 
     router.push(segments.join("/"));
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
+        <Button variant="ghost" size={"sm"}>
           <Globe className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
