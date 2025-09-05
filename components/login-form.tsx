@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { KeyRound, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -23,12 +22,10 @@ export function LoginForm({
 
   const [loginMode, setLoginMode] = useState <"pin"|"email">("pin");
   const [pin, setPin] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "").slice(0,6);
@@ -38,40 +35,55 @@ export function LoginForm({
   const t = useTranslations("Home");
   const { push } = useLocaleRouter();
 
+  async function loginUser(credentialsUser) {
+      try {
+          const supabase = createClient();
+          const { error } = await supabase.auth.signInWithPassword({
+            email: credentialsUser.email,
+            password: credentialsUser.password
+          });
+          if (error) throw error;
+          // Update this route to redirect to an authenticated route. The user already has an active session.
+          push("/dashboard");
+          
+      } catch (error: unknown) {
+          setError(error instanceof Error ? error.message : "An error occurred");
+      } finally {
+          setIsLoading(false);
+      }   
+  }
+
   const handleLogin = async (e: React.FormEvent) => {
 
-      e.preventDefault();
-      setIsLoading(true);
-      setError(null); 
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null); 
 
     if(loginMode === 'email'){
-      const supabase = createClient();
-      try {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
+      console.log(email,password);
 
-        // Update this route to redirect to an authenticated route. The user already has an active session.
-        push("/dashboard");
-        
-      } catch (error: unknown) {
-        setError(error instanceof Error ? error.message : "An error occurred");
-      } finally {
-        setIsLoading(false);
-      }      
+      loginUser({
+        email: email,
+        password: password
+      });
+
     }else{
 
       try{
-        const res = await fetch("/app/[locale]/api/pin-login", {
+        const res = await fetch("/api/pin-login", {
           method: "POST",
           body: JSON.stringify({ pin })
         });
-        const { url } = await res.json();
-        router.push(url);
-        setIsLoading(false);
-        //push("/dashboard");
+        const data = await res.json();
+        if(!res.ok){
+          setError(data.error || "Error en login");
+          return;
+        }
+        loginUser({
+          email: data,
+          password: pin
+        });
+
       }catch (e) {
         console.log(e)
         setError(e instanceof Error ? e.message : "An error occurred");
@@ -87,14 +99,6 @@ export function LoginForm({
         <CardContent className="grid p-0 md:grid-cols-2">
           <form onSubmit={handleLogin} className="md:p-8 p-6">
             <div className="flex flex-col gap-6">
-              {/* <div className="mb-2 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-primary/10">
-                {loginMode === "pin" ? (
-                    <KeyRound className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-                  ) : (
-                    <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-                  )}
-                  
-              </div> */}
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-xl sm:text-2xl font-bold">
                     {t("welcome")}
