@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
           <Globe className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end">
         {routing.locales.map((locale) => (
           <DropdownMenuItem
             key={locale}
