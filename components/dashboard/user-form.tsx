@@ -120,24 +120,6 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
                           )}
                         />
                       </div>
-
-                      {/* <div className="space-y-3">
-                        <Label htmlFor="status" className="text-sm font-medium">
-                          Estado
-                        </Label>
-                        <Select
-                          value={formData.status}
-                          onValueChange={(value: Profile["is_active"]) => setFormData({ ...formData, status: value })}
-                        >
-                          <SelectTrigger className="h-11">
-                            <SelectValue placeholder="Selecciona un estado" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="active">Activo</SelectItem>
-                            <SelectItem value="inactive">Inactivo</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div> */}
                     </div>
                      <div className="flex gap-3 pt-6 border-t border-border">
                       <Button type="submit" className="flex-1 h-11">
