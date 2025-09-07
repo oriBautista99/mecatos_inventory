@@ -56,13 +56,13 @@
         "sales" : "Sales",
         "production" : "Production"        
     },
-     "USERS" : {
-        "TITLE": "Gestión de Usuarios",
-        "DESCRIPTION-TITLE" : "Administra los usuarios de tu aplicación",
-        "SUB-TITLE" : "Lista de Usuarios",
-        "DESCRIPTION-SUBTITLE" : "Gestiona y administra todos los usuarios del sistema",
+  "USERS": {
+        "TITLE": "User Management",
+        "DESCRIPTION-TITLE": "Manage your application's users",
+        "SUB-TITLE": "List of Users",
+        "DESCRIPTION-SUBTITLE": "Manage and administer all system users",
         "NEW-USER": "New User",
-        "SEARCH": "Buscar usuarios por nombre o email...",
+        "SEARCH": "Search users by name or email...",
         "T-USER": "User",
         "T-EMAIL": "Email",
         "T-ROL": "Role",
@@ -97,5 +97,48 @@
         "CREATE-USER": "Crear usuario",
         "UPDATE-USER": "Actualizar usuario",
         "CANCEL": "Cancel"
+    },
+    "SUPPLIERS": {
+        "TITLE": "Supplier Management",
+        "DESCRIPTION-TITLE": "Manage your suppliers",
+        "NEW-SUPPLIER": "New Supplier",
+        "LIST-SUPPLIERS": "List of Suppliers",
+        "DESCRIPTION-LIST": "Manage your suppliers information and their orders",
+        "SEARCH": "Search suppliers...",
+        "NO-FOUND-SUPPLIERS": "No suppliers found",
+        "NO-SUPPLIERS": "No registered suppliers",
+        "T-COMPANY": "Company",
+        "T-CONTACT": "Contact",
+        "T-INFORMATION": "Information",
+        "T-FRECUENCY": "Frequency",
+        "T-ACTIONS": "Actions"
+    },
+    "SUPPLIER-FORM": {
+        "EDIT-SUPPLIER": "Edit Supplier",
+        "CREATE-SUPPLIER": "New Supplier",
+        "EDIT-DESCRIPTION": "Modify the information of the existing supplier",
+        "CREATE-DESCRIPTION": "Complete the information to register a new supplier",
+        "COMPANY-INFO": "Company Information",
+        "COMPANY-NAME": "Company Name",
+        "ADDRESS": "Address",
+        "ADDRESS-PLACEHOLDER": "Full company address",
+        "CONTACT-INFO": "Contact Information",
+        "CONTACT-NAME": "Contact Name",
+        "CONTACT-PLACEHOLDER": "Full name of the contact person",
+        "PHONE": "Phone",
+        "EMAIL": "Email",
+        "ORDER-FRECUENCY": "Order Frequency",
+        "DAYS-FRECUENCY": "Days of the week to place orders",
+        "SAVE-SUPPLIER": "Create supplier",
+        "UPDATE-SUPPLIER": "Update supplier",
+        "CANCEL": "Cancel",
+        "MONDAY": "Monday",
+        "TUESDAY": "Tuesday",
+        "WEDNESDAY": "Wednesday",
+        "THURSDAY": "Thursday",
+        "FRIDAY": "Friday",
+        "SATURDAY": "Saturday",
+        "SUNDAY": "Sunday"
     }
+
 }

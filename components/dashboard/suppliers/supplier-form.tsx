@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Supplier, SupplierFormValues, supplierSchema } from "@/types/suppliers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Building2, Calendar, Mail, Phone, Save, User, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -20,13 +21,13 @@ interface SupplierModalProps {
 }
 
 const daysOfWeek = [
-  { id: "lunes", label: "Lunes" },
-  { id: "martes", label: "Martes" },
-  { id: "miércoles", label: "Miércoles" },
-  { id: "jueves", label: "Jueves" },
-  { id: "viernes", label: "Viernes" },
-  { id: "sábado", label: "Sábado" },
-  { id: "domingo", label: "Domingo" },
+  { id: "lunes", label: "MONDAY" },
+  { id: "martes", label: "TUESDAY" },
+  { id: "miércoles", label: "WEDNESDAY" },
+  { id: "jueves", label: "THURSDAY" },
+  { id: "viernes", label: "FRIDAY" },
+  { id: "sábado", label: "SATURDAY" },
+  { id: "domingo", label: "SUNDAY" },
 ];
 
 export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
@@ -52,6 +53,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
   });
 
   const orderFrequency = watch("frecuency");
+  const t = useTranslations("SUPPLIER-FORM"); 
   
   useEffect(() => {
         if (supplier) {
@@ -77,29 +79,32 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
   return (
     <div>
-        <SheetHeader className="space-y-2 sm:space-y-3">
-          <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
-            <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
-            {supplier ? "Editar Proveedor" : "Nuevo Proveedor"}
-          </SheetTitle>
-          <SheetDescription className="text-sm">
-            {supplier
-              ? "Modifica la información del proveedor existente"
-              : "Completa la información para registrar un nuevo proveedor"}
-          </SheetDescription>
-        </SheetHeader>
-
+        <div className="p-4">
+          <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
+            <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
+              {supplier ? t("EDIT-SUPPLIER") : t("CREATE-SUPPLIER")}
+            </SheetTitle>
+            <SheetDescription className="text-sm">
+              {supplier
+                ? t("EDIT-DESCRIPTION")
+                : t("CREATE-DESCRIPTION")}
+            </SheetDescription>
+          </SheetHeader>          
+        </div>
+        <Separator />
         <form onSubmit={handleSubmit(onSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
           {/* Company Information */}
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2">
               <Building2 className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
-              <h3 className="font-medium text-sm sm:text-base">Información de la Empresa</h3>
+              <h3 className="font-medium text-sm sm:text-base">{t("COMPANY-INFO")}</h3>
             </div>
+          
 
             <div className="space-y-2">
               <Label htmlFor="company_name" className="text-sm">
-                Nombre de la Empresa *
+                {t("COMPANY-NAME")} *
               </Label>
               <Input
                 id="company_name"
@@ -112,12 +117,12 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
             <div className="space-y-2">
               <Label htmlFor="address" className="text-sm">
-                Dirección *
+                {t("ADDRESS")} *
               </Label>
               <Textarea
                 id="address"
                 {...register("address")}
-                placeholder="Dirección completa de la empresa"
+                placeholder={t("ADDRESS-PLACEHOLDER")}
                 className={`text-sm resize-none ${errors.address ? "border-destructive" : ""}`}
                 rows={2}
               />
@@ -131,17 +136,17 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2">
               <User className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
-              <h3 className="font-medium text-sm sm:text-base">Información de Contacto</h3>
+              <h3 className="font-medium text-sm sm:text-base">{t("CONTACT-INFO")}</h3>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="contact_name" className="text-sm">
-                Nombre del Contacto *
+                {t("CONTACT-NAME")} *
               </Label>
               <Input 
                 id="contact_name"
                 {...register("contact_name")}
-                placeholder="Nombre completo de la persona de contacto"
+                placeholder={t("CONTACT-PLACEHOLDER")}
                 className={`text-sm ${errors.contact_name ? "border-destructive" : ""}`}
               />
               {errors.contact_name && <p className="text-xs text-destructive">{errors.contact_name.message}</p>}
@@ -150,7 +155,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="phone" className="text-sm">
-                  Teléfono *
+                  {t("PHONE")} *
                 </Label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
@@ -166,7 +171,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm">
-                  Correo Electrónico *
+                  {t("EMAIL")} *
                 </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
@@ -174,7 +179,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
                     id="email"
                     type="email"
                     {...register("email")} 
-                    placeholder="contacto@empresa.com"
+                    placeholder="contact@company.com"
                     className={`pl-9 sm:pl-10 text-sm ${errors.email ? "border-destructive" : ""}`}
                   />
                 </div>
@@ -189,11 +194,11 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
-              <h3 className="font-medium text-sm sm:text-base">Frecuencia de Pedidos</h3>
+              <h3 className="font-medium text-sm sm:text-base">{t("ORDER-FRECUENCY")}</h3>
             </div>
 
             <div className="space-y-3">
-              <Label className="text-sm">Días de la semana para realizar pedidos *</Label>
+              <Label className="text-sm">{t("DAYS-FRECUENCY")} *</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {daysOfWeek.map((day) => (
                   <div key={day.id} className="flex items-center space-x-2">
@@ -208,7 +213,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
                       }}
                     />
                     <Label htmlFor={day.id} className="text-xs sm:text-sm font-normal">
-                      {day.label}
+                      {t(day.label)}
                     </Label>
                   </div>
                 ))}
@@ -232,7 +237,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4 border-t">
             <Button type="submit" className="flex-1 text-sm">
               <Save className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              {supplier ? "Actualizar" : "Crear"} Proveedor
+              {supplier ? t("UPDATE-SUPPLIER") : t("SAVE-SUPPLIER")}
             </Button>
             <Button
               type="button"
@@ -241,7 +246,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
               className="flex-1 sm:flex-none text-sm bg-transparent"
             >
               <X className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-              Cancelar
+              {t("CANCEL")} 
             </Button>
           </div>
         </form>      

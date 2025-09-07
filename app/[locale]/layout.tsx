@@ -7,6 +7,7 @@ import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import { getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -51,6 +52,7 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               {children}
+              <Toaster  richColors position="bottom-right"/> 
             </ThemeProvider>          
         </NextIntlClientProvider>
       </body>

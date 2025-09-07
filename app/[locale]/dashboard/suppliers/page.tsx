@@ -9,7 +9,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Supplier, SupplierFormValues } from "@/types/suppliers";
 import { Edit, Mail, MapPin, Phone, Plus, Search, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Page() {
 
@@ -17,6 +19,8 @@ export default function Page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const t = useTranslations("SUPPLIERS"); 
+  
 
   async function loadSuppliers() {
     const list = await getSuppliers();
@@ -48,9 +52,11 @@ export default function Page() {
     if (selectedSupplier) {
       // Edit existing supplier
       await updateSupplier(selectedSupplier, supplierData);
+      toast.success("Proveedor editado correctamente");
     } else {
       // Create new supplier
       await createSupplier(supplierData);
+      toast.success("Proveedor guardado correctamente");
     }
     await loadSuppliers();
     setIsModalOpen(false);
@@ -74,16 +80,16 @@ export default function Page() {
       <div  className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">Gestión de Proveedores</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">{t("TITLE")}</h1>
             <p className="text-sm sm:text-base text-muted-foreground">
-              Administra tus proveedores
+              {t("DESCRIPTION-TITLE")}
             </p>
           </div>
           <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
               <SheetTrigger asChild>
                 <Button className="w-full sm:w-fit">
                   <Plus className="mr-2 h-4 w-4" />
-                  Nuevo Proveedor
+                  {t("NEW-SUPPLIER")}
                 </Button>
               </SheetTrigger>
               <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-4 sm:p-6">
@@ -97,19 +103,19 @@ export default function Page() {
         </div>
         <Card>
           <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="text-lg sm:text-xl">Lista de Proveedores</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">{t("LIST-SUPPLIERS")}</CardTitle>
             <CardDescription className="text-sm">
-              Gestiona la información de tus proveedores y sus órdenes
+              {t("DESCRIPTION-LIST")}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0 sm:p-6 sm:pt-0">
             <div className="space-y-4 p-4 sm:p-0">
               {/* Search Bar */}
               <div className="flex items-center space-x-2">
-                <div className="relative flex-1 max-w-sm">
+                <div className="relative flex-1 max-w-full">
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Buscar proveedores..."
+                    placeholder={t("SEARCH")}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-8"
@@ -120,7 +126,7 @@ export default function Page() {
               <div className="block sm:hidden space-y-3">
                 {filteredSuppliers.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
-                    {searchTerm ? "No se encontraron proveedores" : "No hay proveedores registrados"}
+                    {searchTerm ? t("NO-FOUND-SUPPLIERS") : t("NO-SUPPLIERS")}
                   </div>
                 ) : (
                   filteredSuppliers.map((supplier) => (
@@ -173,18 +179,18 @@ export default function Page() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="min-w-[150px]">Empresa</TableHead>
-                      <TableHead className="min-w-[120px]">Contacto</TableHead>
-                      <TableHead className="hidden md:table-cell min-w-[200px]">Información</TableHead>
-                      <TableHead className="hidden lg:table-cell min-w-[120px]">Frecuencia</TableHead>
-                      <TableHead className="w-[140px]">Acciones</TableHead>
+                      <TableHead className="min-w-[150px]">{t("T-COMPANY")}</TableHead>
+                      <TableHead className="min-w-[120px]">{t("T-CONTACT")}</TableHead>
+                      <TableHead className="hidden md:table-cell min-w-[200px]">{t("T-INFORMATION")}</TableHead>
+                      <TableHead className="hidden lg:table-cell min-w-[120px]">{t("T-FRECUENCY")}</TableHead>
+                      <TableHead className="w-[140px]">{t("T-ACTIONS")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredSuppliers.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                          {searchTerm ? "No se encontraron proveedores" : "No hay proveedores registrados"}
+                          {searchTerm ?  t("NO-FOUND-SUPPLIERS") : t("NO-SUPPLIERS")}
                         </TableCell>
                       </TableRow>
                     ) : (
