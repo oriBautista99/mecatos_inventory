@@ -43,7 +43,7 @@ export async function updateSupplier(supplier: Supplier, data: SupplierFormValue
 
 
 //delete
-export async function deleteUser(supplier: Supplier) {
+export async function deleteSupplier(supplier: Supplier) {
     const supabase =  await createClient();
     await supabase.from("suppliers").delete().eq("supplier_id",supplier.supplier_id);
 }

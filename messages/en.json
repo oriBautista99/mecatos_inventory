@@ -139,6 +139,43 @@
         "FRIDAY": "Friday",
         "SATURDAY": "Saturday",
         "SUNDAY": "Sunday"
+    },
+    "STORAGE-AREAS": {
+        "TITLE": "Storage Area Management",
+        "DESCRIPTION-TITLE": "Manage your Storage Areas",
+        "NEW-AREA": "New Area",
+        "LIST-AREAS": "List of Storage Areas",
+        "DESCRIPTION-LIST": "Manage your area information",
+        "SEARCH": "Search storage areas...",
+        "NO-FOUND-AREAS": "No storage areas found",
+        "NO-AREAS": "No registered storage areas",
+        "T-NAME": "Name",
+        "T-DESCRIPTION": "Description",
+        "T-ACTIONS": "Actions",
+        "ERROR-GET-AREAS": "Error querying areas",
+        "SUCCESS-CREATE": "Area created successfully",
+        "ERROR-CREATE": "Error creating an area",
+        "SUCCESS-EDIT": "Area updated successfully",
+        "ERROR-EDIT": "Error updating an area",
+        "SUCCESS-DELETE": "Area successfully deleted",
+        "ERROR-DELETE": "Error deleting an area",
+        "DELETE": "Delete",
+        "DELETE-AREA": "Do you want to delete the storage area?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The area will be permanently deleted.",
+        "CANCEL": "Cancel"
+    },
+    "STORAGE-AREAS-FORM": {
+        "EDIT-AREA": "Edit Storage Area",
+        "CREATE-AREA": "New Storage Area",
+        "EDIT-DESCRIPTION": "Modify the information of the existing area",
+        "CREATE-DESCRIPTION": "Complete the information to register a new storage area",
+        "NAME": "Storage Area Name",
+        "NAME-PLACEHOLDER": "Ex: Freezer",
+        "DESCRIPTION": "Storage Area Description",
+        "DESCRIPTION-PLACEHOLDER": "Full description of which area is being referenced",
+        "SAVE-AREA": "Create Area",
+        "UPDATE-AREA": "Update Area",
+        "CANCEL": "Cancel"
     }
 
 }

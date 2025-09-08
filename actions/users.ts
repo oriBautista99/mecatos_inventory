@@ -38,12 +38,12 @@ export async function createUser(data: UserFormData) {
 
         if(profileError){
             console.error('Error in create Profile:', authError);
-            return { data: null, authError };
+            return { data: null, error: authError };
         }
 
         return {authUser, error:null};        
     } catch (err) {
-        console.error('Unexpected error in createProveedor:', err);
+        console.error('Unexpected error in createUser: ', err);
         return { data: null, error: { message: 'Unexpected error occurred' } }
     }
 
