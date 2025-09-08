@@ -1,6 +1,7 @@
 "use client"
 
-import { createSupplier, getSuppliers, updateSupplier } from "@/actions/suppliers";
+import { createSupplier, deleteSupplier, getSuppliers, updateSupplier } from "@/actions/suppliers";
+import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { SupplierForm } from "@/components/dashboard/suppliers/supplier-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,8 +24,12 @@ export default function Page() {
   
 
   async function loadSuppliers() {
-    const list = await getSuppliers();
-    setSuppliers(list);
+    const {data, error} = await getSuppliers();
+    if(data) {
+      setSuppliers(data);
+    }else{
+      toast.error(error);
+    }
   }
 
   useEffect(() => {
@@ -43,20 +48,35 @@ export default function Page() {
     setIsModalOpen(true);
   }
 
-  const handleDeleteSupplier = (id: string) => {
-    setSuppliers(suppliers.filter((s) => s.supplier_id !== id))
+  const handleDeleteSupplier = async (id: string) => {
+    const response = await deleteSupplier(id);
+    if (response.success){ 
+      toast.success(t("SUCCESS-DELETE"));
+    } else{ 
+      toast.error(t("ERROR-DELETE"));
+    }
+    await loadSuppliers();
+    setSelectedSupplier(null);
   }
 
   const handleSaveSupplier = async (supplierData: SupplierFormValues) => {
-    console.log("Info de FORM: ",supplierData)
+
     if (selectedSupplier) {
-      // Edit existing supplier
-      await updateSupplier(selectedSupplier, supplierData);
-      toast.success("Proveedor editado correctamente");
+      // Edit existing
+      const response = await updateSupplier(selectedSupplier, supplierData);
+      if(response.success){
+        toast.success(t("SUCCESS-EDIT"));
+      }else{
+        toast.error(t("ERROR-EDIT"));
+      }
     } else {
-      // Create new supplier
-      await createSupplier(supplierData);
-      toast.success("Proveedor guardado correctamente");
+      // Create new 
+      const response = await createSupplier(supplierData);
+      if (response.success){ 
+        toast.success(t("SUCCESS-CREATE"));
+      } else{ 
+        toast.error(t("ERROR-CREATE"));
+      }
     }
     await loadSuppliers();
     setIsModalOpen(false);
@@ -76,7 +96,7 @@ export default function Page() {
   }
 
   return (
-    <div  className="min-h-screen bg-background p-2 sm:p-4 md:p-6 lg:p-8">
+    <div  className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
       <div  className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
@@ -161,14 +181,23 @@ export default function Page() {
                           >
                             <Edit className="h-3 w-3" />
                           </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                            onClick={() => handleDeleteSupplier(supplier.supplier_id)}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
+                          <ConfirmDialog
+                              trigger={
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                                  title="Eliminar"
+                                >
+                                   <Trash2 className="h-4 w-4" />
+                                </Button>
+                              }
+                              title={t("DELETE-AREA")}
+                              description={t("DELETE-DESCRIPTION")}
+                              confirmText={t("DELETE")}
+                              cancelText={t("CANCEL")}
+                              onConfirm={() => handleDeleteSupplier(supplier.supplier_id)}
+                            />
                       </div>
                     </div>
                   ))
@@ -247,15 +276,23 @@ export default function Page() {
                               >
                                 <Edit className="h-4 w-4" />
                               </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
-                                onClick={() => handleDeleteSupplier(supplier.supplier_id)}
-                                title="Eliminar"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
+                              <ConfirmDialog
+                              trigger={
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    title="Eliminar"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                }
+                                title={t("DELETE-AREA")}
+                                description={t("DELETE-DESCRIPTION")}
+                                confirmText={t("DELETE")}
+                                cancelText={t("CANCEL")}
+                                onConfirm={() => handleDeleteSupplier(supplier.supplier_id)}
+                              />
                             </div>
                           </TableCell>
                         </TableRow>
