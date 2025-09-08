@@ -5,20 +5,30 @@ import { Supplier, SupplierFormValues } from "@/types/suppliers";
 
 export async function createSupplier(supplier: SupplierFormValues) {
 
-    const supabase = await createClient();
-    const {data, error: supplierError} = await supabase.from("suppliers").insert({
-        company_name: supplier.company_name,
-        contact_name: supplier.contact_name,
-        address: supplier.address,
-        phone: supplier.phone,
-        email: supplier.email,
-        frecuency: supplier.frecuency,
-        is_active: true
-    });
+    try {
+        const supabase = await createClient();
+        const {error: supplierError} = await supabase.from("suppliers").insert({
+            company_name: supplier.company_name,
+            contact_name: supplier.contact_name,
+            address: supplier.address,
+            phone: supplier.phone,
+            email: supplier.email,
+            frecuency: supplier.frecuency,
+            is_active: true
+        });
 
-    if(supplierError) throw supplierError;
+        if(supplierError){
+            console.error('Error in create Profile:', supplierError);
+            return { error: supplierError};
+        }
 
-    return data;
+        return {success: true, error:null};
+    } catch (err) {
+        console.error('Unexpected error in create supplier:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+
+
 }
 
 export async function updateSupplier(supplier: Supplier, data: SupplierFormValues) {
@@ -34,7 +44,11 @@ export async function updateSupplier(supplier: Supplier, data: SupplierFormValue
                                 frecuency: data.frecuency,
                             })
                             .eq("supplier_id", supplier.supplier_id);
-        if(error) throw error;
+        if(error){
+            console.error('Error in update supplier:', error);
+            return {error: error};
+        }
+        return {success: true, error: null};
     } catch (err) {
         console.error("Error updating supplier:", err)
         return { success: false, error: "Error actualizando proveedor" }
@@ -43,14 +57,33 @@ export async function updateSupplier(supplier: Supplier, data: SupplierFormValue
 
 
 //delete
-export async function deleteSupplier(supplier: Supplier) {
-    const supabase =  await createClient();
-    await supabase.from("suppliers").delete().eq("supplier_id",supplier.supplier_id);
+export async function deleteSupplier(supplier_id: string) {
+    try {
+        const supabase =  await createClient();
+        const {error} = await supabase.from("suppliers").delete().eq("supplier_id",supplier_id);
+        if(error){
+            console.error('Error in delete SUPPLIER:', error);
+            return { data: null, error: "ERROR-DELETE-SUPPLIER"};
+        }
+        return {success: true, error: null};
+    } catch (err) {
+        console.error("Error delete suppliers:", err)
+        return { data: null, error: "ERROR-DELETE-SUPPLIER" }
+    }
+    
 }
 
 export async function getSuppliers(){
-    const supabase = await createClient();
-    const {data, error} = await supabase.from("suppliers").select("*");
-    if (error) throw error;
-    return data;
+    try {
+        const supabase = await createClient();
+        const {data, error} = await supabase.from("suppliers").select("*"); 
+        if(error){
+            console.error('Error in get suppliers:', error);
+            return { data: null, error: "ERROR-GET-SUPPLIERS"};
+        }
+        return {data: data, error: null};
+    } catch (err) {
+        console.error("Error get suppliers:", err)
+        return { data: null, error: "ERROR-GET-SUPPLIERS" }
+    }
 }

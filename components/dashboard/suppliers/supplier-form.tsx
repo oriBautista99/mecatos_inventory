@@ -224,7 +224,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
                 <div className="flex flex-wrap gap-1 mt-2">
                   {orderFrequency.map((dayId) => {
                     const day = daysOfWeek.find((d) => d.id === dayId);
-                    return <Badge key={dayId}>{day?.label}</Badge>;
+                    return <Badge key={dayId}>{t(day?.label)}</Badge>;
                   })}
                 </div>
               )}

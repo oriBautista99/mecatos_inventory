@@ -36,7 +36,7 @@ export async function updateArea(area: Storage_area, dataArea: AreaStorageFormVa
                             })
                             .eq("storage_area_id", area.storage_area_id);
         if(error){
-            console.error('Error in create Profile:', error);
+            console.error('Error in update area:', error);
             return {error: error};
         }
         return {success: true, error: null};
@@ -53,7 +53,7 @@ export async function deleteArea(storage_area_id: string) {
         const {error} = await supabase.from("storage_areas").delete().eq("storage_area_id",storage_area_id);
         if(error){
             console.error('Error in delete area:', error);
-            return { data: null, error: "ERROR-GET-AREAS"};
+            return { data: null, error: "ERROR-DELETE-AREAS"};
         }
         return {success: true, error: null};
     } catch (err) {

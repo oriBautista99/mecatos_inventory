@@ -18,7 +18,7 @@ export async function createUser(data: UserFormData) {
 
         if(authError){
             console.error('Error in create Auth User:', authError);
-            return { data: null, authError };
+            return { error: authError };
         }
 
         // hashear el PIN
@@ -38,10 +38,10 @@ export async function createUser(data: UserFormData) {
 
         if(profileError){
             console.error('Error in create Profile:', authError);
-            return { data: null, error: authError };
+            return { error: authError };
         }
 
-        return {authUser, error:null};        
+        return {success: true, error:null};  
     } catch (err) {
         console.error('Unexpected error in createUser: ', err);
         return { data: null, error: { message: 'Unexpected error occurred' } }
@@ -51,7 +51,6 @@ export async function createUser(data: UserFormData) {
 
 //update
 export async function updateUser(profile: Profile, dataForm: UserFormData) {
-
     try{
         if(dataForm.pin_hash){
             const salt = await bcrypt.genSalt(10);
@@ -63,7 +62,7 @@ export async function updateUser(profile: Profile, dataForm: UserFormData) {
             });
 
             const supabase =  await createClient();
-            const {data, error} = await supabase.from("profiles")
+            const {error} = await supabase.from("profiles")
                             .update({
                                 email: dataForm.email,
                                 username: dataForm.username,
@@ -73,17 +72,16 @@ export async function updateUser(profile: Profile, dataForm: UserFormData) {
                             .eq("profile_id", profile.profile_id);
             if(error){
                 console.error('Error in update Profile:', error);
-                return { data: null, error };
+                return { error: error };
             }
-            return {data, error: null};
-
+            return {success: true, error: null};
         }else{
             await supabaseAdmin.auth.admin.updateUserById(profile.auth_user,{
                 email: dataForm.email
             });
 
             const supabase =  await createClient();
-            const {data, error} = await supabase.from("profiles")
+            const {error} = await supabase.from("profiles")
                                 .update({
                                     email: dataForm.email,
                                     username: dataForm.username,
@@ -92,36 +90,62 @@ export async function updateUser(profile: Profile, dataForm: UserFormData) {
                                 .eq("profile_id", profile.profile_id);
             if(error){
                 console.error('Error in update Profile:', error);
-                return { data: null, error };
+                return { error: error };
             }
-            return {data, error: null};
+            return {success: true, error: null};
         }        
-        
-
     }catch (err) {
         console.error("Error updating user:", err)
-        return { data: null , error: "Error actualizando usuario" }
+        return { error: "Error actualizando usuario" }
     }
 }
 
 //delete
 export async function deleteUser(profile: Profile) {
-    await supabaseAdmin.auth.admin.deleteUser(profile.auth_user);
-    const supabase =  await createClient();
-    await supabase.from("profiles").delete().eq("profile_id",profile.profile_id);
+    try {
+        const {error: authError} = await supabaseAdmin.auth.admin.deleteUser(profile.auth_user);
+        const supabase =  await createClient();
+        const {error} = await supabase.from("profiles").delete().eq("profile_id",profile.profile_id);        
+        if(error || authError){
+            console.error('Error in delete user:', error);
+            return { data: null, error: "ERROR-DELETE-USERS"};
+        }
+        return {success: true, error: null};
+    } catch (err) {
+        console.error("Error delete user:", err)
+        return { data: null, error: "ERROR-DELETE-USERS" }
+    }
+
 }
 
 // listar
 export async function getUsers() {
-    const supabase =  await createClient();
-    const {data, error} = await supabase.from("profiles").select("*");
-    if (error) throw error;
-    return data;
+    try {
+        const supabase =  await createClient();
+        const {data, error} = await supabase.from("profiles").select("*");
+        if(error){
+            console.error('Error in get users:', error);
+            return { data: null, error: "ERROR-GET-USERS"};
+        }
+        return {data: data, error: null};            
+    } catch (err) {
+        console.error("Error get users:", err)
+        return { data: null, error: "ERROR-GET-USERS" }
+    }
 }
 
 export async function getUserById(id:string) {
-    const supabase =  await createClient();
-    const {data, error} = await supabase.from("profiles").select("*").eq("auth_user", id);
-    if (error) throw error;
-    return data[0];
+    try {
+        const supabase =  await createClient();
+        const {data, error} = await supabase.from("profiles").select("*").eq("auth_user", id);
+        if(error){
+            console.error('Error in get user:', error);
+            return { data: null, error: "ERROR-GET-USER"};
+        }
+        return {data: data[0], error: null};       
+    } catch (err) {
+        console.error("Error get users:", err)
+        return { data: null, error: "ERROR-GET-USER" }
+    }
+
 }

@@ -76,7 +76,18 @@
         "INACTIVE": "Inactive",
         "NO-USERS": "No users found",
         "NO-USERS-MESSAGE": "Try other search terms",
-        "CREATE-USERS": "Start by creating your first user"
+        "CREATE-USERS": "Start by creating your first user",
+        "ERROR-GET-USERS": "Error querying users",
+        "SUCCESS-CREATE": "User created successfully",
+        "ERROR-CREATE": "Error creating a user",
+        "SUCCESS-EDIT": "User updated successfully",
+        "ERROR-EDIT": "Error updating a user",
+        "SUCCESS-DELETE": "User deleted successfully",
+        "ERROR-DELETE": "Error deleting a user",
+        "DELETE": "Delete",
+        "DELETE-AREA": "Do you want to delete the user?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The user will be permanently deleted.",
+        "CANCEL": "Cancel"
     },
     "USER-FORM" :{
         "CREATE-TITLE": "Create New User",
@@ -111,7 +122,18 @@
         "T-CONTACT": "Contact",
         "T-INFORMATION": "Information",
         "T-FRECUENCY": "Frequency",
-        "T-ACTIONS": "Actions"
+        "T-ACTIONS": "Actions",
+        "ERROR-GET-SUPPLERS": "Error querying suppliers",
+        "SUCCESS-CREATE": "Supplier created successfully",
+        "ERROR-CREATE": "Error creating a supplier",
+        "SUCCESS-EDIT": "Supplier updated successfully",
+        "ERROR-EDIT": "Error updating a supplier",
+        "SUCCESS-DELETE": "Supplier deleted successfully",
+        "ERROR-DELETE": "Error deleting a supplier",
+        "DELETE": "Delete",
+        "DELETE-AREA": "Do you want to delete the supplier?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The supplier will be permanently deleted.",
+        "CANCEL": "Cancel"
     },
     "SUPPLIER-FORM": {
         "EDIT-SUPPLIER": "Edit Supplier",

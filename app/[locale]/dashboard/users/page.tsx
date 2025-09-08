@@ -1,6 +1,7 @@
 "use client";
 
-import { createUser, getUsers, updateUser } from "@/actions/users";
+import { createUser, deleteUser, getUsers, updateUser } from "@/actions/users";
+import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { UserForm } from "@/components/dashboard/user-form";
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ import { Avatar } from "@radix-ui/react-avatar";
 import { Edit, Plus, Search, Trash2, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 export default function Page() {
@@ -26,8 +28,12 @@ export default function Page() {
   const [selectUser, setSelectedUser] = useState<Profile | null>(null);
 
   async function loadUsers() {
-    const list = await getUsers();
-    setUsers(list);
+    const {data, error} = await getUsers();
+    if(data) {
+      setUsers(data);
+    }else{
+      toast.error(error);
+    }
   }
 
   useEffect(() => {
@@ -54,16 +60,24 @@ export default function Page() {
   }
 
   const handleSubmit = async (data: UserFormData) => {
-    //e.preventDefault();
     if(selectUser){
-      await updateUser(selectUser, data);
+      const response = await updateUser(selectUser, data);
+      if(response.success){
+        toast.success(t("SUCCESS-EDIT"));
+      }else{
+        toast.error(t("ERROR-EDIT"));
+      }
     }else{
-      await createUser(data);
+      const response = await createUser(data);
+      if (response.success){ 
+        toast.success(t("SUCCESS-CREATE"));
+      } else{ 
+        toast.error(t("ERROR-CREATE"));
+      }
     }
     await loadUsers();
     setIsSheetOpen(false);
     setSelectedUser(null);
-
   }
 
   const getStatusColor = (status: Profile["is_active"]) => {
@@ -77,8 +91,15 @@ export default function Page() {
     setIsSheetOpen(true);
   }
 
-  const handleDeleteUser = (userId: string) => {
-    setUsers(users.filter((user) => user.profile_id !== userId))
+  const handleDeleteUser = async (user: Profile) => {
+    const response = await deleteUser(user);
+    if (response.success){ 
+      toast.success(t("SUCCESS-DELETE"));
+    } else{ 
+      toast.error(t("ERROR-DELETE"));
+    }
+    await loadUsers();
+    setSelectedUser(null);
   }
 
   const handleCancel = () => {
@@ -88,7 +109,7 @@ export default function Page() {
 
 
   return (
-    <div className="min-h-screen bg-background p-2 sm:p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3 mb-6">
@@ -181,14 +202,23 @@ export default function Page() {
                               <Button variant="ghost" size="sm" onClick={() => handleEditUser(user)}>
                                 <Edit className="w-4 h-4" />
                               </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDeleteUser(user.profile_id)}
-                                className="text-destructive hover:text-destructive"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
+                              <ConfirmDialog
+                                trigger={
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                                    title="Eliminar"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                }
+                                title={t("DELETE-AREA")}
+                                description={t("DELETE-DESCRIPTION")}
+                                confirmText={t("DELETE")}
+                                cancelText={t("CANCEL")}
+                                onConfirm={() => handleDeleteUser(user)}
+                              />
                             </div>
                           </TableCell>
                         </TableRow>
@@ -225,17 +255,23 @@ export default function Page() {
                               </div>
                             </div>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              handleDeleteUser(user.profile_id)
-                            }}
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                          <ConfirmDialog
+                                trigger={
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                                    title="Eliminar"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                }
+                                title={t("DELETE-AREA")}
+                                description={t("DELETE-DESCRIPTION")}
+                                confirmText={t("DELETE")}
+                                cancelText={t("CANCEL")}
+                                onConfirm={() => handleDeleteUser(user)}
+                          />
                         </div>
                       </CardContent>
                     </Card>
@@ -254,10 +290,6 @@ export default function Page() {
             </div>
           </CardContent>
         </Card>
-
-
-      
-
       </div>    
     </div>
   );
