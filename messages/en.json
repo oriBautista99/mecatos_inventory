@@ -198,6 +198,43 @@
         "SAVE-AREA": "Create Area",
         "UPDATE-AREA": "Update Area",
         "CANCEL": "Cancel"
+    },
+    "CATEGORIES": {
+        "TITLE": "Category Management",
+        "DESCRIPTION-TITLE": "Manage your categories",
+        "NEW-CATEGORY": "New Category",
+        "LIST-CATEGORIES": "List of Categories",
+        "DESCRIPTION-LIST": "Manage your category information",
+        "SEARCH": "Search categories...",
+        "NO-FOUND-CATEGORIES": "No categories found",
+        "NO-CATEGORIES": "No registered categories",
+        "T-NAME": "Name",
+        "T-DESCRIPTION": "Description",
+        "T-ACTIONS": "Actions",
+        "ERROR-GET-CATEGORIES": "Error fetching categories",
+        "SUCCESS-CREATE": "Category created successfully",
+        "ERROR-CREATE": "Error creating a category",
+        "SUCCESS-EDIT": "Category updated successfully",
+        "ERROR-EDIT": "Error updating a category",
+        "SUCCESS-DELETE": "Category deleted successfully",
+        "ERROR-DELETE": "Error deleting a category",
+        "DELETE": "Delete",
+        "DELETE-CATEGORY": "Do you want to delete the Category?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The category will be permanently deleted.",
+        "CANCEL": "Cancel"
+    },
+    "CATEGORIES-FORM": {
+        "EDIT-CATEGORY": "Edit Category",
+        "CREATE-CATEGORY": "New Category",
+        "EDIT-DESCRIPTION": "Modify the information of the existing category",
+        "CREATE-DESCRIPTION": "Complete the information to register a new category",
+        "NAME": "Category Name",
+        "NAME-PLACEHOLDER": "Ex: Hot bites",
+        "DESCRIPTION": "Category Description",
+        "DESCRIPTION-PLACEHOLDER": "Full description of which category is being referenced",
+        "SAVE-CATEGORY": "Create category",
+        "UPDATE-CATEGORY": "Update category",
+        "CANCEL": "Cancel"
     }
 
 }

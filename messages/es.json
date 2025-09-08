@@ -198,5 +198,42 @@
         "SAVE-AREA": "Crear Área",
         "UPDATE-AREA": "Actualizar Área",
         "CANCEL": "Cancelar"
+    },
+    "CATEGORIES": {
+        "TITLE": "Gestión de Categorías",
+        "DESCRIPTION-TITLE": "Administra tus categorías",
+        "NEW-CATEGORY":"Nueva categoría",
+        "LIST-CATEGORIES":"Lista de Categorías",
+        "DESCRIPTION-LIST": "Gestiona la información de tus categorías",
+        "SEARCH": "Buscar categorías...",
+        "NO-FOUND-CATEGORIES": "No se encontraron categorías",
+        "NO-CATEGORIES": "No hay categorías registradas",
+        "T-NAME":"Nombre",
+        "T-DESCRIPTION":"Descripción",
+        "T-ACTIONS":"Acciones",
+        "ERROR-GET-CATEGORIES": "Error al consultar las categorías",
+        "SUCCESS-CREATE": "Categoría creada correctamente",
+        "ERROR-CREATE": "Error al crear una categoría",
+        "SUCCESS-EDIT": "Categoría actualizada correctamente",
+        "ERROR-EDIT": "Error al actualizar una categoría",
+        "SUCCESS-DELETE": "Categoría eliminada correctamente",
+        "ERROR-DELETE": "Error al eliminar una categoría",
+        "DELETE": "Eliminar",
+        "DELETE-CATEGORY": "¿Desea eliminar la Categoría?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. La categoría será eliminada permanentemente.",
+        "CANCEL": "Cancelar"
+    },
+    "CATEGORIES-FORM":{
+        "EDIT-CATEGORY": "Editar Categoría",
+        "CREATE-CATEGORY":"Nueva Categoría",
+        "EDIT-DESCRIPTION": "Modifica la información de la categoría existente",
+        "CREATE-DESCRIPTION":"Completa la información para registrar una nueva categoría",
+        "NAME": "Nombre de la categoría",
+        "NAME-PLACEHOLDER": "Ej: Hot bites",
+        "DESCRIPTION": "Descripción de la categoría",
+        "DESCRIPTION-PLACEHOLDER":"Descripción completa de a que categoría se hace referencia",
+        "SAVE-CATEGORY": "Crear categoría",
+        "UPDATE-CATEGORY": "Actualizar categoría",
+        "CANCEL": "Cancelar"
     }
 }
