@@ -23,22 +23,22 @@ export default function Breadcrumbs() {
   
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList  className="gap-2 text-sm text-muted-foreground">
     {routeSegments.map((segment, index) => {
       const href = `/${locale}/` + routeSegments.slice(0, index+1).join("/");
       const isLast = index === routeSegments.length - 1;
       return (
         <React.Fragment key={href}>
-          <BreadcrumbItem>
+          <BreadcrumbItem className="hidden md:block">
             {!isLast ? (
-              <BreadcrumbLink asChild>
+              <BreadcrumbLink asChild className="hover:text-primary transition-colors group">
                 <Link href={href}>{t(segment) || segment}</Link>
               </BreadcrumbLink>
             ) : (
-              <BreadcrumbPage>{t(segment) || segment}</BreadcrumbPage>
+              <BreadcrumbPage className="font-semibold text-foreground" >{t(segment) || segment}</BreadcrumbPage>
             )}
           </BreadcrumbItem>
-          {!isLast && <BreadcrumbSeparator />}
+          {!isLast &&  <BreadcrumbSeparator className="mx-2 opacity-50">/</BreadcrumbSeparator>}
         </React.Fragment>
       );
     })}

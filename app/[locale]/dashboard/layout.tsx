@@ -18,15 +18,13 @@ export default async function DashboardLayout({children} : Readonly<{children: R
    
   return (
     <SidebarProvider>
-      <AppSidebar className="bg-background" />
+      <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
+        <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4 hidden md:block" />
-            <div className="hidden md:block">
-              <Breadcrumbs/>
-            </div>
+            <Breadcrumbs/>
           </div>
           <div className="ml-auto flex items-center gap-2 px-4">
             <NotificationsDropdown />
@@ -35,9 +33,9 @@ export default async function DashboardLayout({children} : Readonly<{children: R
             <HeaderUser user={profile} />
           </div>
         </header>
-        <main className="min-h-screen bg-background ">
+        <div className="min-h-min bg-background ">
           {children}
-        </main>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

@@ -113,14 +113,14 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
                     name="role"
                     control={control}
                     render={({ field }) => (
-                      <Select onValueChange={(value) => field.onChange(Number(value))} defaultValue={field.value?.toString()}>
+                      <Select onValueChange={(value) => field.onChange(Number(value))} defaultValue={"1"}>
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder={t("ROLE-PLACEHOLDER")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value={Role.employer.toString()}>{t("EMPLOYEE")}</SelectItem>
-                          <SelectItem value={Role.manager.toString()}>{t("MANAGER")}</SelectItem>
-                          <SelectItem value={Role.admin.toString()}>{t("ADMIN")}</SelectItem>
+                          <SelectItem value={'1'}>{t("EMPLOYEE")}</SelectItem>
+                          <SelectItem value={'2'}>{t("MANAGER")}</SelectItem>
+                          <SelectItem value={'3'}>{t("ADMIN")}</SelectItem>
                         </SelectContent>
                       </Select>
                     )}

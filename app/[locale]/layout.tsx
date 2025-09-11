@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
@@ -19,12 +19,10 @@ export const metadata: Metadata = {
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  display: "swap",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
 });
-
 export default async function RootLayout({
   children,
   params
@@ -42,8 +40,8 @@ export default async function RootLayout({
   const messages = await getMessages({locale});
 
    return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+    <html lang={locale} suppressHydrationWarning={true}>
+      <body className={`${openSans.className} antialiased`}>
         <NextIntlClientProvider locale={locale}  messages={messages}>
             <ThemeProvider
               attribute="class"
