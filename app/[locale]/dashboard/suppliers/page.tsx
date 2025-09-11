@@ -96,7 +96,7 @@ export default function Page() {
   }
 
   return (
-    <div  className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
+    <div  className="bg-background p-4 md:p-6 lg:p-8">
       <div  className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
