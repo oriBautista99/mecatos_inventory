@@ -54,7 +54,8 @@
         "menu": "Menú",
         "production_event": "Eventos de Producción",
         "sales": "Ventas",
-        "production": "Producción"       
+        "production": "Producción",
+        "settings": "Configuraciones"       
     },
      "USERS" : {
         "TITLE": "Gestión de Usuarios",
@@ -235,5 +236,39 @@
         "SAVE-CATEGORY": "Crear categoría",
         "UPDATE-CATEGORY": "Actualizar categoría",
         "CANCEL": "Cancelar"
+    },
+    "SETTINGS" :{
+        "TITLE": "Configuración del Sistema",
+        "DESCRIPTION-TITLE" : "Administra los datos bases de tu sistema.",
+        "TYPE": "Tipos de Productos"
+    },
+    "ITEM-TYPES": {
+        "EDIT-ITEM-TYPES": "Editar el tipo de producto",
+        "CREATE-ITEM-TYPES":"Nuevo tipo de producto",
+        "EDIT-DESCRIPTION": "Modifica la información del tipo de producto existente",
+        "CREATE-DESCRIPTION":"Completa la información para registrar un nuevo tipo de producto",
+        "NAME": "Nombre del tipo",
+        "NAME-PLACEHOLDER": "Ej: Hot bites",
+        "DESCRIPTION": "Descripción del tipo",
+        "DESCRIPTION-PLACEHOLDER":"Descripción completa de a que tipo se hace referencia",
+        "SAVE-ITEM-TYPES": "Crear tipo",
+        "UPDATE-ITEM-TYPES": "Actualizar tipo",
+        "CANCEL": "Cancelar",        
+        "NO-FOUND-TYPES": "No se encontraron tipos",
+        "NO-TYPES": "No hay tipos registrados",
+        "T-NAME":"Nombre",
+        "T-DESCRIPTION":"Descripción",
+        "T-ACTIONS":"Acciones",
+        "ERROR-GET-TYPES": "Error al consultar los tipos",
+        "SUCCESS-CREATE": "Tipo creado correctamente",
+        "ERROR-CREATE": "Error al crear un tipo",
+        "SUCCESS-EDIT": "Tipo actualizado correctamente",
+        "ERROR-EDIT": "Error al actualizar un tipo",
+        "SUCCESS-DELETE": "Tipo eliminado correctamente",
+        "ERROR-DELETE": "Error al eliminar un tipo",
+        "DELETE": "Eliminar",
+        "DELETE-TYPE": "¿Desea eliminar un tipo?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El tipo será eliminado permanentemente.",
+        "SEARCH": "Buscar tipo de producto..."
     }
 }

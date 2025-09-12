@@ -19,6 +19,7 @@ import {
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 export function NavMain({
   items,
@@ -66,7 +67,12 @@ export function NavMain({
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <Link href={basePath+'/'+item.url+'/'+subItem.url}>
+                          <Link href={basePath+'/'+item.url+'/'+subItem.url}
+                            key={basePath+'/'+item.url+'/'+subItem.url}
+                            className={cn(
+                              pathname === basePath+'/'+item.url+'/'+subItem.url && "bg-primary/90 text-primary-foreground"
+                            )}
+                          >
                             <span>{t(subItem.title)}</span>
                           </Link>
                         </SidebarMenuSubButton>
@@ -79,7 +85,12 @@ export function NavMain({
           ): (
             <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={t(item.title)}>
-              <Link href={basePath+'/'+item.url}>
+              <Link key={basePath+'/'+item.url} 
+                href={basePath+'/'+item.url}
+                className={cn(
+                  pathname === basePath+'/'+item.url && "bg-primary/90  text-primary-foreground"
+                )}
+              >
                 {item.icon && <item.icon />}
                 <span>{t(item.title)}</span>
               </Link>

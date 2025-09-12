@@ -11,8 +11,8 @@ import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createUserSchema, updateUserSchema, UserFormData } from "@/types/user";
-import { Role } from "@/types/roles";
 import { Separator } from "@/components/ui/separator";
+import { ROLES } from "@/types/constants";
 
 interface UserFormProps {
   defaultValues ?: UserFormData;
@@ -113,14 +113,14 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
                     name="role"
                     control={control}
                     render={({ field }) => (
-                      <Select onValueChange={(value) => field.onChange(Number(value))} defaultValue={"1"}>
+                      <Select onValueChange={(value) => field.onChange(Number(value))} defaultValue={field.value?.toString()}>
                         <SelectTrigger className="h-11">
                           <SelectValue placeholder={t("ROLE-PLACEHOLDER")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value={'1'}>{t("EMPLOYEE")}</SelectItem>
-                          <SelectItem value={'2'}>{t("MANAGER")}</SelectItem>
-                          <SelectItem value={'3'}>{t("ADMIN")}</SelectItem>
+                          <SelectItem value={ROLES.ADMIN.toString()}>{t("EMPLOYEE")}</SelectItem>
+                          <SelectItem value={ROLES.MANAGER.toString()}>{t("MANAGER")}</SelectItem>
+                          <SelectItem value={ROLES.EMPLOYEE.toString()}>{t("ADMIN")}</SelectItem>
                         </SelectContent>
                       </Select>
                     )}
