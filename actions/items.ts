@@ -1,9 +1,7 @@
-"use server"
-
 import { createClient } from "@/lib/supabase/server";
-import { Category, CategoryFormValues } from "@/types/category";
+import { Item, ItemFormValues } from "@/types/item";
 
-export async function createCategory(category: CategoryFormValues) {
+export async function createItem(item: ItemFormValues) {
     try {
         const supabase = await createClient();
         // validar sesión con el cliente del request
@@ -15,14 +13,21 @@ export async function createCategory(category: CategoryFormValues) {
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        const {error: categoryError} = await supabase.from("categories").insert({
-            name: category.name,
-            description: category.description
+        const {error: itemError} = await supabase.from("items").insert({
+            name: item.name,
+            description: item.description,
+            base_unit: item.base_unit,
+            min_quantity: item.min_quantity,
+            target_quantity: item.target_quantity,
+            supplier_id: item.supplier,
+            category_id: item.category,
+            item_type_id: item.item_type,
+            storage_area_id: item.storage_area,
         });
 
-        if(categoryError){
-            console.error('Error in create category:', categoryError);
-            return { error: categoryError};
+        if(itemError){
+            console.error('Error in create category:', itemError);
+            return { error: itemError};
         }
 
         return {success: true, error:null};        
@@ -32,7 +37,7 @@ export async function createCategory(category: CategoryFormValues) {
     }
 }
 
-export async function updateCategory(category: Category, dataCategory: CategoryFormValues) {
+export async function updateItem(item: Item, dataItem: ItemFormValues) {
     try {
         const supabase = await createClient();
         // validar sesión con el cliente del request
@@ -44,12 +49,19 @@ export async function updateCategory(category: Category, dataCategory: CategoryF
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        const {error} = await supabase.from("categories")
+        const {error} = await supabase.from("items")
                             .update({
-                                name: dataCategory.name,
-                                description: dataCategory.description,
+                                name: dataItem.name,
+                                description: dataItem.description,
+                                base_unit: dataItem.base_unit,
+                                min_quantity: dataItem.min_quantity,
+                                target_quantity: dataItem.target_quantity,
+                                supplier_id: dataItem.supplier,
+                                category_id: dataItem.category,
+                                item_type_id: dataItem.item_type,
+                                storage_area_id: dataItem.storage_area,
                             })
-                            .eq("category_id", category.category_id);
+                            .eq("item_id", item.item_id);
         if(error){
             console.error('Error in update caregory:', error);
             return {error: error};
@@ -62,7 +74,7 @@ export async function updateCategory(category: Category, dataCategory: CategoryF
 }
 
 //delete
-export async function deleteCategory(category_id: string) {
+export async function deleteItem(item_id: string) {
     try {
         const supabase =  await createClient();
         // validar sesión con el cliente del request
@@ -74,7 +86,7 @@ export async function deleteCategory(category_id: string) {
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        const {error} = await supabase.from("categories").delete().eq("category_id",category_id);
+        const {error} = await supabase.from("items").delete().eq("item_id",item_id);
         if(error){
             console.error('Error in delete categories:', error);
             return { data: null, error: "ERROR-DELETE-CATEGORIES"};
@@ -86,18 +98,3 @@ export async function deleteCategory(category_id: string) {
     }
 
 }
-
-/*export async function getCategories(){
-    try {
-        const supabase = await createClient();
-        const {data, error} = await supabase.from("categories").select("*");
-        if(error){
-            console.error('Error in get categories:', error);
-            return { data: null, error: "ERROR-GET-CATEGORIES"};
-        }
-        return {data: data, error: null};     
-    } catch (err) {
-        console.error("Error get categories:", err)
-        return { data: null, error: "ERROR-GET-CATEGORIES" }
-    }
-}*/

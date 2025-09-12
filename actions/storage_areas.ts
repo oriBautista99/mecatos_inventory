@@ -6,6 +6,14 @@ import { AreaStorageFormValues, Storage_area } from "@/types/storage_area";
 export async function createArea(area: AreaStorageFormValues) {
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
         const {error: areaError} = await supabase.from("storage_areas").insert({
             name: area.name,
             description: area.description,
@@ -28,6 +36,14 @@ export async function createArea(area: AreaStorageFormValues) {
 export async function updateArea(area: Storage_area, dataArea: AreaStorageFormValues) {
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
         const {error} = await supabase.from("storage_areas")
                             .update({
                                 name: dataArea.name,
@@ -50,6 +66,14 @@ export async function updateArea(area: Storage_area, dataArea: AreaStorageFormVa
 export async function deleteArea(storage_area_id: string) {
     try {
         const supabase =  await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
         const {error} = await supabase.from("storage_areas").delete().eq("storage_area_id",storage_area_id);
         if(error){
             console.error('Error in delete area:', error);
@@ -63,7 +87,7 @@ export async function deleteArea(storage_area_id: string) {
 
 }
 
-export async function getAreas(){
+/*export async function getAreas(){
     try {
         const supabase = await createClient();
         const {data, error} = await supabase.from("storage_areas").select("*");
@@ -76,4 +100,4 @@ export async function getAreas(){
         console.error("Error get areas:", err)
         return { data: null, error: "ERROR-GET-AREAS" }
     }
-}
+}*/

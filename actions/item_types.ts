@@ -7,6 +7,13 @@ export async function createItemType(type: ItemTypesFormValues) {
 
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {data, error: typeError} = await supabase.from('item_types').insert({
             name: type.name,
             description: type.description
@@ -29,6 +36,13 @@ export async function createItemType(type: ItemTypesFormValues) {
 export async function updateItemType(type: Item_types, dataType: ItemTypesFormValues) {
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {error} = await supabase.from("item_types")
                             .update({
                                 name: dataType.name,
@@ -50,6 +64,13 @@ export async function updateItemType(type: Item_types, dataType: ItemTypesFormVa
 export async function deleteItemType(item_type_id: string) {
     try {
         const supabase =  await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {error} = await supabase.from("item_types").delete().eq("item_type_id",item_type_id);
         if(error){
             console.error('Error in delete item_types:', error);
@@ -63,7 +84,7 @@ export async function deleteItemType(item_type_id: string) {
 
 }
 
-export async function getItemTypes(){
+/*export async function getItemTypes(){
     try {
         const supabase = await createClient();
         const {
@@ -83,4 +104,4 @@ export async function getItemTypes(){
         console.error("Error get categories:", err)
         return { data: null, error: "ERROR-GET-CATEGORIES" }
     }
-}
+}*/

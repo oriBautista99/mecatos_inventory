@@ -1,5 +1,5 @@
 "use client"
-import { createCategory, deleteCategory, getCategories, updateCategory } from "@/actions/categories";
+import { createCategory, deleteCategory, updateCategory } from "@/actions/categories";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { CategoriesForm } from "@/components/dashboard/inventory/categories-form";
 import { Button } from "@/components/ui/button";
@@ -10,31 +10,24 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Category, CategoryFormValues } from "@/types/category";
 import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
+import { revalidateCategories, useCategoriesSWR } from "@/hooks/useCategoriesSWR";
 
 export default function Page() {
 
   const t = useTranslations("CATEGORIES"); 
-  const [categories, setCategories] = useState<Category[]>([]);
+  // const [categories, setCategories] = useState<Category[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { categories = [], error } = useCategoriesSWR();
 
-  async function loadCategories() {
-    const {data, error} = await getCategories();
-    if(data) {
-      setCategories(data);
-    }else{
-      toast.error(error);
-    }
+  if (error) {
+    toast.error("Error cargando categorías");
   }
 
-  useEffect(() => {
-    loadCategories();
-  }, [])
-
-    const filteredCategories = categories.filter(
+  const filteredCategories = categories.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       category.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -58,7 +51,7 @@ export default function Page() {
           toast.error(t("ERROR-CREATE"));
         }
       }
-      await loadCategories();
+      await revalidateCategories();
       setIsModalOpen(false);
       setSelectedCategory(null);
   }
@@ -80,7 +73,7 @@ export default function Page() {
     } else{ 
       toast.error(t("ERROR-DELETE"));
     }
-    await loadCategories();
+    await revalidateCategories();
     setSelectedCategory(null);
   }
 

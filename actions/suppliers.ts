@@ -7,6 +7,13 @@ export async function createSupplier(supplier: SupplierFormValues) {
 
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {error: supplierError} = await supabase.from("suppliers").insert({
             company_name: supplier.company_name,
             contact_name: supplier.contact_name,
@@ -34,6 +41,13 @@ export async function createSupplier(supplier: SupplierFormValues) {
 export async function updateSupplier(supplier: Supplier, data: SupplierFormValues) {
     try {
         const supabase = await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {error} = await supabase.from("suppliers")
                             .update({
                                 company_name: data.company_name,
@@ -60,6 +74,13 @@ export async function updateSupplier(supplier: Supplier, data: SupplierFormValue
 export async function deleteSupplier(supplier_id: string) {
     try {
         const supabase =  await createClient();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
+        }
         const {error} = await supabase.from("suppliers").delete().eq("supplier_id",supplier_id);
         if(error){
             console.error('Error in delete SUPPLIER:', error);
@@ -73,7 +94,7 @@ export async function deleteSupplier(supplier_id: string) {
     
 }
 
-export async function getSuppliers(){
+/*export async function getSuppliers(){
     try {
         const supabase = await createClient();
         const {data, error} = await supabase.from("suppliers").select("*"); 
@@ -86,4 +107,4 @@ export async function getSuppliers(){
         console.error("Error get suppliers:", err)
         return { data: null, error: "ERROR-GET-SUPPLIERS" }
     }
-}
+}*/

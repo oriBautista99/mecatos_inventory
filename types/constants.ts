@@ -11,5 +11,9 @@ export const UNITS = {
 } as const;
 
 export const ORDER_STATUS = {
-
+  CREATED: "created",
+  PROCESSED: "processed",
+  SENT: "sent",
+  RECEIVED: "received",
+  PENDING: "pending"
 }
