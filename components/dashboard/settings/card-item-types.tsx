@@ -14,16 +14,18 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { createItemType, deleteItemType, getItemTypes, updateItemType } from "@/actions/item_types";
+import { createItemType, deleteItemType, updateItemType } from "@/actions/item_types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { revalidateItemTypes, useItemTypesSWR } from "@/hooks/useItemTypesSWR";
 
 export default function CardItemTypes(){
 
-    const [itemTypes, setItemTypes] = useState<Item_types[]>([]);
+    // const [itemTypes, setItemTypes] = useState<Item_types[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectType, setSelectedType] = useState<Item_types | null>(null);
     const [showForm, setShowForm] = useState<boolean>(false);
     const t = useTranslations("ITEM-TYPES"); 
+    const { itemTypes=[], error } = useItemTypesSWR();
 
     const {
         register,
@@ -38,17 +40,11 @@ export default function CardItemTypes(){
         },
     });
 
-    async function loadItemsTypes() {
-        const {data, error} = await getItemTypes();
-        if(data) {
-            setItemTypes(data);
-        }else{
-            toast.error(error);
-        }
+    if (error) {
+        toast.error("Error cargando categorías");
     }
 
     useEffect(() => {
-        loadItemsTypes();
         if(selectType){
             reset({
                 name: selectType.name,
@@ -82,7 +78,7 @@ export default function CardItemTypes(){
             toast.error(t("ERROR-CREATE"));
         }
         }
-        await loadItemsTypes();
+        await revalidateItemTypes();
         setShowForm(false);
         setSelectedType(null);
     }
@@ -104,7 +100,7 @@ export default function CardItemTypes(){
         } else{ 
             toast.error(t("ERROR-DELETE"));
         }
-        await loadItemsTypes();
+        await revalidateItemTypes();
         setSelectedType(null);
     }
 

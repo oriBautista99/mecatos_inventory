@@ -1,6 +1,6 @@
 "use client"
 
-import { createSupplier, deleteSupplier, getSuppliers, updateSupplier } from "@/actions/suppliers";
+import { createSupplier, deleteSupplier, updateSupplier } from "@/actions/suppliers";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { SupplierForm } from "@/components/dashboard/suppliers/supplier-form";
 import { Button } from "@/components/ui/button";
@@ -8,33 +8,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { revalidateSuppliers, useSuppliersSWR } from "@/hooks/useSuppliers";
 import { Supplier, SupplierFormValues } from "@/types/suppliers";
 import { Edit, Mail, MapPin, Phone, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
 
-  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  // const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const t = useTranslations("SUPPLIERS"); 
+  const { suppliers=[], error } = useSuppliersSWR();
   
-
-  async function loadSuppliers() {
-    const {data, error} = await getSuppliers();
-    if(data) {
-      setSuppliers(data);
-    }else{
-      toast.error(error);
-    }
+  if (error) {
+    toast.error("Error cargando categorías");
   }
-
-  useEffect(() => {
-    loadSuppliers();
-  }, [])
 
   const filteredSuppliers = suppliers.filter(
     (supplier) =>
@@ -55,7 +47,7 @@ export default function Page() {
     } else{ 
       toast.error(t("ERROR-DELETE"));
     }
-    await loadSuppliers();
+    await revalidateSuppliers();
     setSelectedSupplier(null);
   }
 
@@ -78,7 +70,7 @@ export default function Page() {
         toast.error(t("ERROR-CREATE"));
       }
     }
-    await loadSuppliers();
+    await revalidateSuppliers();
     setIsModalOpen(false);
     setSelectedSupplier(null);
   }

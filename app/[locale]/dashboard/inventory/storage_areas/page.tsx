@@ -1,6 +1,6 @@
 "use client"
 
-import { createArea, deleteArea, getAreas, updateArea } from "@/actions/storage_areas";
+import { createArea, deleteArea, updateArea } from "@/actions/storage_areas";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { StorageAreasForm } from "@/components/dashboard/inventory/storage-areas-form";
 import { Button } from "@/components/ui/button";
@@ -8,32 +8,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { revalidateStorageAreas, useStorageAreasSWR } from "@/hooks/useStorageAreas";
 import { AreaStorageFormValues, Storage_area } from "@/types/storage_area";
 import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
 
   const t = useTranslations("STORAGE-AREAS"); 
-  const [areas, setAreas] = useState<Storage_area[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState<Storage_area | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  async function loadStorageAreas() {
-    const {data, error} = await getAreas();
-    if(data) {
-      setAreas(data);
-    }else{
-      toast.error(error);
-    }
+  const { areas = [], error } = useStorageAreasSWR();
+
+  if (error) {
+    toast.error("Error cargando categorías");
   }
-  
-  useEffect(() => {
-    loadStorageAreas();
-  }, [])
 
   const filteredAreas = areas.filter(
     (area) =>
@@ -59,7 +52,7 @@ export default function Page() {
           toast.error(t("ERROR-CREATE"));
         }
       }
-      await loadStorageAreas();
+      await revalidateStorageAreas();
       setIsModalOpen(false);
       setSelectedArea(null);
   }
@@ -81,7 +74,7 @@ export default function Page() {
     } else{ 
       toast.error(t("ERROR-DELETE"));
     }
-    await loadStorageAreas();
+    await revalidateStorageAreas();
     setSelectedArea(null);
   }
 
