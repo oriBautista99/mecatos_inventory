@@ -4,6 +4,7 @@ import type * as React from "react"
 import {
   ChartArea,
   ClipboardList,
+  FolderCog,
   GalleryVerticalEnd,
   ShoppingCart,
   Truck,
@@ -118,6 +119,11 @@ const data = {
       name: "USERS",
       url: "users",
       icon: UsersRound,
+    },
+    {
+      name: "SETTINGS",
+      url: "settings",
+      icon: FolderCog,
     },
   ],
 }

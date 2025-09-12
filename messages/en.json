@@ -54,7 +54,8 @@
         "menu" : "Menu",
         "production_event" : "Production events",
         "sales" : "Sales",
-        "production" : "Production"        
+        "production" : "Production",
+        "settings": "settings"           
     },
   "USERS": {
         "TITLE": "User Management",
@@ -105,8 +106,8 @@
         "EMPLOYEE": "Employee",
         "MANAGER": "Manager",
         "ADMIN": "Administrator",
-        "CREATE-USER": "Crear usuario",
-        "UPDATE-USER": "Actualizar usuario",
+        "CREATE-USER": "Create User",
+        "UPDATE-USER": "Update User",
         "CANCEL": "Cancel"
     },
     "SUPPLIERS": {
@@ -235,6 +236,39 @@
         "SAVE-CATEGORY": "Create category",
         "UPDATE-CATEGORY": "Update category",
         "CANCEL": "Cancel"
+    },
+    "SETTINGS" :{
+        "TITLE": "System Settings",
+        "DESCRIPTION-TITLE": "Manage your system's basic data.",
+        "TYPE": "Product Types"
+    },
+    "ITEM-TYPES": {
+        "EDIT-ITEM-TYPES": "Edit the product type",
+        "CREATE-ITEM-TYPES": "New product type",
+        "EDIT-DESCRIPTION": "Modify the information for an existing product type",
+        "CREATE-DESCRIPTION": "Complete the information to register a new product type",
+        "NAME": "Type name",
+        "NAME-PLACEHOLDER": "Ex: Hot bites",
+        "DESCRIPTION": "Type description",
+        "DESCRIPTION-PLACEHOLDER": "Full description of the type being referenced",
+        "SAVE-ITEM-TYPES": "Create type",
+        "UPDATE-ITEM-TYPES": "Update type",
+        "CANCEL": "Cancel",
+        "NO-FOUND-TYPES": "No types found",
+        "NO-TYPES": "No types registered",
+        "T-NAME": "Name",
+        "T-DESCRIPTION": "Description",
+        "T-ACTIONS": "Actions",
+        "ERROR-GET-TYPES": "Error querying types",
+        "SUCCESS-CREATE": "Type created successfully",
+        "ERROR-CREATE": "Error creating a type",
+        "SUCCESS-EDIT": "Type updated successfully",
+        "ERROR-EDIT": "Error updating a type",
+        "SUCCESS-DELETE": "Type deleted successfully",
+        "ERROR-DELETE": "Error deleting a type",
+        "DELETE": "Delete",
+        "DELETE-TYPE": "Do you want to delete a type?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The type will be permanently deleted.",
+        "SEARCH": "Search for product type..."  
     }
-
 }
