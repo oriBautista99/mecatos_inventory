@@ -4,8 +4,8 @@ export interface Storage_area {
     storage_area_id: string;
     name: string;
     description: string;
-    is_active: boolean;
-    created_at: Date;
+    is_active?: boolean;
+    created_at?: Date;
 }
 
 export const storagAreaSchema = z.object({

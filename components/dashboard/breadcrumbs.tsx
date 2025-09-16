@@ -38,7 +38,7 @@ export default function Breadcrumbs() {
               <BreadcrumbPage className="font-semibold text-foreground" >{t(segment) || segment}</BreadcrumbPage>
             )}
           </BreadcrumbItem>
-          {!isLast &&  <BreadcrumbSeparator className="mx-2 opacity-50">/</BreadcrumbSeparator>}
+          {!isLast &&  <BreadcrumbSeparator className="mx-2 opacity-50 hidden md:block">/</BreadcrumbSeparator>}
         </React.Fragment>
       );
     })}

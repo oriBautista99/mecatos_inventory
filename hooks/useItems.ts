@@ -6,7 +6,7 @@ const fetcher = (url: string) => fetch(url).then(async res => {
   return (await res.json()) as Item[];
 });
 
-export function useCategoriesSWR() {
+export function useItemsSWR() {
   const { data, error, isLoading } = useSWR<Item[]>("/api/items", fetcher);
   return {
     items: data,
@@ -16,4 +16,4 @@ export function useCategoriesSWR() {
 }
 
 // helper to revalidate after a mutation
-export const revalidateCategories = () => mutate("/api/items");
+export const revalidateItems = () => mutate("/api/items");

@@ -9,7 +9,7 @@ export interface Supplier {
     email: string;
     frecuency: string[];
     is_active: boolean;
-    created_at: Date;
+    created_at?: Date;
 }
 
 export const supplierSchema = z.object({

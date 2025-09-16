@@ -4,7 +4,7 @@ export interface Category {
     category_id: string;
     name: string;
     description: string;
-    created_at: Date;
+    created_at?: Date;
 }
 
 export const CategorySchema = z.object({

@@ -4,7 +4,7 @@ export interface Item_types {
     item_type_id: string;
     name: string;
     description: string;
-    created_at: Date;
+    created_at?: Date;
 }
 
 export const ItemTypeSchema = z.object({
