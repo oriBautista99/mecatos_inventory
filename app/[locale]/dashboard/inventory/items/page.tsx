@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { filters_Items, Item, ItemFormValues } from "@/types/item";
 import { Edit, Funnel, MapPin, Plus, Search, Tag, Trash2, Truck } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"
 import { FiltersInventory } from "@/components/dashboard/inventory/filters-inventory";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -42,7 +42,7 @@ export default function Page() {
     setAppliedFilters(filters);
   };
 
-  const applyFilters = (items:Item[], filters: filters_Items) => {
+  const applyFilters = useCallback((items:Item[], filters: filters_Items) => {
     return items.filter((item) => {
       // category
       if (filters.category_id && item.category_id !== Number(filters.category_id)) {
@@ -80,11 +80,11 @@ export default function Page() {
 
       return true;
     });
-  };
+  },[searchTerm]);
 
   const filteredItems = useMemo(() => {
     return applyFilters(items, appliedFilters);
-  }, [items, appliedFilters, searchTerm]);
+  }, [items, appliedFilters, applyFilters]);
 
   const handleCancel = () => {
     setSelectedItem(null);

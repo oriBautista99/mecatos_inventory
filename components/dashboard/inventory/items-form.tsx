@@ -35,7 +35,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const t = useTranslations("ITEMS-FORM");
-  const { register, handleSubmit, control, formState: { errors }, reset } = useForm<ItemFormValues>({
+  const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
     resolver: zodResolver(ItemSchema),
     defaultValues: {
       name: "",

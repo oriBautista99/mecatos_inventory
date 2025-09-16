@@ -35,7 +35,7 @@ export function LoginForm({
   const t = useTranslations("Home");
   const { push } = useLocaleRouter();
 
-  async function loginUser(credentialsUser) {
+  async function loginUser(credentialsUser: {email: string, password:string}) {
       try {
           const supabase = createClient();
           const { error } = await supabase.auth.signInWithPassword({
