@@ -20,7 +20,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "PIN inválido" }, { status: 401 });
   }
 
-  console.log(isValid)
-
   return NextResponse.json(isValid.email);
 }
