@@ -9,11 +9,16 @@ import Breadcrumbs from "@/components/dashboard/breadcrumbs"
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { createClient } from "@/lib/supabase/server"
 import { getUserById } from "@/actions/users"
+import { redirect } from "next/navigation"
 
 export default async function DashboardLayout({children} : Readonly<{children: React.ReactNode}>) {
 
   const supabase = await createClient();
   const { data: {user} } = await supabase.auth.getUser();
+  if(!user) {
+    redirect('/en/auth/login'); // o muestra un error
+    return null;
+  }
   const {data: profile} = await getUserById(user.id); 
    
   return (

@@ -23,6 +23,9 @@ export async function createUser(data: UserFormData) {
 
         // hashear el PIN
         const salt = await bcrypt.genSalt(10);
+        if(!data.pin_hash){
+            throw new Error("PIN no proporcionado");
+        }
         const hashedPin = await bcrypt.hash(data.pin_hash, salt);       
 
         // inserta en profile
