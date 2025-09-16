@@ -60,8 +60,6 @@ export function LoginForm({
     setError(null); 
 
     if(loginMode === 'email'){
-      console.log(email,password);
-
       loginUser({
         email: email,
         password: password
