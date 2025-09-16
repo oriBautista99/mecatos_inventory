@@ -88,7 +88,7 @@ export default function Page() {
   }
 
   return (
-    <div  className="bg-background p-4 md:p-6 lg:p-8">
+    <div className="bg-background p-4 md:p-6 lg:p-8">
       <div  className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         <div className="flex flex-col gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-1">
@@ -106,9 +106,9 @@ export default function Page() {
               </SheetTrigger>
               <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-4 sm:p-6">
                 <SupplierForm
-                onClose={handleCancel}
-                onSave={handleSaveSupplier}
-                supplier={selectedSupplier}
+                  onClose={handleCancel}
+                  onSave={handleSaveSupplier}
+                  supplier={selectedSupplier}
                 ></SupplierForm>
               </SheetContent>
           </Sheet>

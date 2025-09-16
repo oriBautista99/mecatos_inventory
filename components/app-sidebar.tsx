@@ -48,12 +48,12 @@ const data = {
       icon: ClipboardList,
       items: [
         {
-          title: "STORAGE_AREAS",
-          url: "storage_areas",
-        },
-        {
           title: "INVENTORY_ITEMS",
           url: "items",
+        },        
+        {
+          title: "STORAGE_AREAS",
+          url: "storage_areas",
         },
         {
           title: "INVENTORY_COUNT",

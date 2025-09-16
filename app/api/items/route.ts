@@ -13,20 +13,18 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { data, error } = await supabase.from("categories")
+  const { data, error } = await supabase.from("items")
     .select(`
-        item_id,
-        name,
-        description,
-        base_unit,
-        min_quantity,
-        target_quantity,
-        is_active,
-        created_at,
-        suppliers(supplier_id,company_name,contact_name,address,phone,email,frecuency),
+        *,
         categories(category_id,name,description),
         item_types(item_type_id,name,description),
-        storage_areas(storage_area_id,name,description)
+        storage_areas(storage_area_id,name,description),
+        presentations(
+          *,
+          suppliers_presentations(
+            suppliers(*)
+          )
+        )
     `);
 
   if (error) {
