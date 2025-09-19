@@ -39,6 +39,10 @@ const data = {
         {
           title: "ORDER_RECEIVING",
           url: "receiving",
+        },
+        {
+          title: "ORDER_HISTORY",
+          url: "history",
         }
       ],
     },

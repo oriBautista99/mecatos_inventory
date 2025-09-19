@@ -17,6 +17,7 @@
         "ORDERS": "Orders",
         "PURCHASE_ORDERS": "Purchase Orders",
         "ORDER_RECEIVING": "Order Receiving",
+        "ORDER_HISTORY": "Order History",
         "INVENTORY" : "Inventory",
         "STORAGE_AREAS" : "Storage Areas",
         "INVENTORY_ITEMS" : "Inventory Items",
@@ -44,6 +45,7 @@
         "users" : "Usuario",
         "purchase": "Purchase Orders",
         "receiving": "Order Receiving",
+        "history" : "Order History",
         "storage_areas": "Storage Areas",
         "items": "Inventory Items",
         "count": "Inventory Count",
@@ -55,7 +57,8 @@
         "production_event" : "Production events",
         "sales" : "Sales",
         "production" : "Production",
-        "settings": "settings"           
+        "settings": "settings",
+        "neworder": "New Order"                
     },
   "USERS": {
         "TITLE": "User Management",
