@@ -93,7 +93,7 @@ export default function Page() {
 
   const handleSaveItem = async (itemData: ItemFormValues) => {
 
-    //console.log("FORM DATA",itemData)
+    console.log("FORM DATA",itemData)
 
      if (selectedItem) {
       //Edit existing

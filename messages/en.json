@@ -17,7 +17,6 @@
         "ORDERS": "Orders",
         "PURCHASE_ORDERS": "Purchase Orders",
         "ORDER_RECEIVING": "Order Receiving",
-        "ORDER_HISTORY": "Order History",
         "INVENTORY" : "Inventory",
         "STORAGE_AREAS" : "Storage Areas",
         "INVENTORY_ITEMS" : "Inventory Items",
@@ -45,7 +44,6 @@
         "users" : "Usuario",
         "purchase": "Purchase Orders",
         "receiving": "Order Receiving",
-        "history" : "Order History",
         "storage_areas": "Storage Areas",
         "items": "Inventory Items",
         "count": "Inventory Count",
@@ -57,8 +55,7 @@
         "production_event" : "Production events",
         "sales" : "Sales",
         "production" : "Production",
-        "settings": "settings",
-        "neworder": "New Order"                
+        "settings": "settings"           
     },
   "USERS": {
         "TITLE": "User Management",
@@ -343,83 +340,5 @@
         "UPDATE_ITEM": "Update Product",
         "SAVE_ITEM": "Save Product",
         "CANCEL": "Cancel"
-    },
-    "ORDER-DETAILS": {
-        "RECEIVED_DATE": "Received on: ",
-        "EXPIRATION_DATE": "Arrival date before: ",
-        "COMMENT": "Anything to report upon receiving the order?",
-        "COMMENT_PLACEHOLDER": "Anything to report upon receiving the order?",
-        "PRODUCTS_RECEIVED": "Products Received",
-        "RECEIVE_ORDER":"Receive Order",
-        "CANCEL":"Cancel",
-        "ERROR-SAVE": "Error saving order",
-        "SUCCESS-SAVE": "Order saved successfully"
-    },
-    "PRESE_ORDER_TABLE": {
-        "REGISTER_PRODUCTS": "Register products received from the supplier",
-        "LOADING": "Loading products for your order...",
-        "SEARCH": "Search products by name...",
-        "PRODUCT-T": "Product",
-        "PRESENTATION-T": "Presentation",
-        "QTY_RECEIVED-T": "Qty Received",
-        "QTY_ORDERED-T": "Qty Ordered",
-        "UNIT_PRICE-T": "Price each",
-        "EXPIRATION_DATE-T": "Expiration Date",
-        "PRODUCT-NO-FOUND": "No products found",
-        "NO-PRODUCT": "There are no products registered with this supplier",
-        "SELECT-DATE": "When does it expire?"
-    },
-    "ORDER-FORM": {
-        "INFO-ORDER":"Order Information",
-        "SUPPLIER":"Supplier",
-        "RECEIVED_DATE": "Received on:",
-        "STATUS": "Order Status",
-        "SELECT-STATUS": "Select Status",
-        "EXPIRATION_DATE": "Arrival date before:"
-    },
-    "NEW-ORDER": {
-        "TITLE": "Receive New Order",
-        "DESCRIPTION": "Next, select the necessary details for the new order to be received",
-        "DETAILS-ORDER": "Details of the order to be received"
-    },
-    "STATUS-ORDER": {
-        "CREATED": "Created",
-        "SUGGESTED": "Suggested",
-        "REVISED": "Reviewed",
-        "ACCEPTED": "Accepted",
-        "RECEIVED": "Received"
-    },
-    "RECEIVING-ORDERS": {
-        "TITLE": "Received Orders",
-        "DESCRIPTION": "Manage the orders registered in your system and receive new orders.",
-        "RECEIVE-NEW-ORDER": "Receive New Order",
-        "LOADING": "Loading orders...",
-        "SEARCH": "Search orders...",
-        "ALL": "All"
-    },
-    "ORDERS-TABLE": {
-        "NO-ORDERS": "No orders to display",
-        "N-ORDER": "Order",
-        "SUPPLIER": "Supplier",
-        "CREATED_AT": "Creation date",
-        "RECEIVED_DATE": "Receipt date",
-        "STATUS": "Status",
-        "EXPIRATION_DATE": "Expiration date"
-    },
-    "RECEIVING-ORDER": {
-        "TITLE": "Order to be received",
-        "DESCRIPTION":"Enter the quantities received in the order below",
-        "DETAILS-ORDER": "Order details"
-    },
-    "SUPPLIER-ORDERS": {
-        "TITLE": "Supplier Orders",
-        "DESCRIPTION": "Manage all registered and suggested orders in your system.",
-        "SUGGEST-ORDER": "Generate orders",
-        "LOADING": "Loading orders...",
-        "SEARCH": "Search orders...",
-        "ORDER": "Order",
-        "SUPPLIER": "Supplier",
-        "ALL": "All",
-        "ORDER_STATUS": "Order Status"
     }
 }
