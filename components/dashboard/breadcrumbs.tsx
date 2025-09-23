@@ -24,26 +24,25 @@ export default function Breadcrumbs() {
   return (
     <Breadcrumb>
       <BreadcrumbList  className="gap-2 text-sm text-muted-foreground">
-        {routeSegments.map((segment, index) => {
-          const href = `/${locale}/` + routeSegments.slice(0, index+1).join("/");
-          const isLast = index === routeSegments.length - 1;
-          const label = t.has(segment) ? t(segment) : segment;
-          return (
-            <React.Fragment key={href}>
-              <BreadcrumbItem className="hidden md:block">
-                {!isLast ? (
-                  <BreadcrumbLink asChild className="hover:text-primary transition-colors group">
-                    <Link href={href}>{label}</Link>
-                  </BreadcrumbLink>
-                ) : (
-                  <BreadcrumbPage className="font-semibold text-foreground" >{label}</BreadcrumbPage>
-                )}
-              </BreadcrumbItem>
-              {!isLast &&  <BreadcrumbSeparator className="mx-2 opacity-50 hidden md:block">/</BreadcrumbSeparator>}
-            </React.Fragment>
-          );
-        })}
-      </BreadcrumbList>
+    {routeSegments.map((segment, index) => {
+      const href = `/${locale}/` + routeSegments.slice(0, index+1).join("/");
+      const isLast = index === routeSegments.length - 1;
+      return (
+        <React.Fragment key={href}>
+          <BreadcrumbItem className="hidden md:block">
+            {!isLast ? (
+              <BreadcrumbLink asChild className="hover:text-primary transition-colors group">
+                <Link href={href}>{t(segment) || segment}</Link>
+              </BreadcrumbLink>
+            ) : (
+              <BreadcrumbPage className="font-semibold text-foreground" >{t(segment) || segment}</BreadcrumbPage>
+            )}
+          </BreadcrumbItem>
+          {!isLast &&  <BreadcrumbSeparator className="mx-2 opacity-50 hidden md:block">/</BreadcrumbSeparator>}
+        </React.Fragment>
+      );
+    })}
+  </BreadcrumbList>
     </Breadcrumb>
   );
 }

@@ -11,7 +11,7 @@ export default createMiddleware(routing);
 
 
 export const config = {
-  //runtime: "nodejs",
+  runtime: "nodejs",
   matcher: [
     /*
      * Match all request paths except:

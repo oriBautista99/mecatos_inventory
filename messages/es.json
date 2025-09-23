@@ -15,9 +15,8 @@
     },
     "DASHBOARD" : {
         "ORDERS": "Órdenes",
-        "PURCHASE_ORDERS": "Órdenes por Proveedor",
-        "ORDER_RECEIVING": "Recibir Órdenes",
-        "ORDER_HISTORY": "Historial de Órdenes",
+        "PURCHASE_ORDERS": "Órdenes de Compra",
+        "ORDER_RECEIVING": "Recepción de Órdenes",
         "INVENTORY" : "Inventario",
         "STORAGE_AREAS" : "Zonas de Almacenamiento",
         "INVENTORY_ITEMS" : "Artículos de Inventario",
@@ -45,7 +44,6 @@
         "users": "Usuarios",
         "purchase": "Órdenes de Compra",
         "receiving": "Recepción de Órdenes",
-        "history" : "Historial de Órdenes",
         "storage_areas": "Áreas de Almacenamiento",
         "items": "Artículos de Inventario",
         "count": "Conteo de Inventario",
@@ -57,8 +55,7 @@
         "production_event": "Eventos de Producción",
         "sales": "Ventas",
         "production": "Producción",
-        "settings": "Configuraciones",
-        "neworder": "Nueva Orden"       
+        "settings": "Configuraciones"       
     },
      "USERS" : {
         "TITLE": "Gestión de Usuarios",
@@ -343,91 +340,5 @@
         "UPDATE_ITEM": "Actualizar producto",
         "SAVE_ITEM": "Guardar producto",
         "CANCEL": "Cancelar"
-    },
-    "ORDER-DETAILS": {
-        "RECEIVED_DATE": "Recibido el: ",
-        "EXPIRATION_DATE": "Fecha de llegada antes del: ",
-        "COMMENT": "Comentario",
-        "COMMENT_PLACEHOLDER": "Algo que reportar en la recepción de la orden?",
-        "PRODUCTS_RECEIVED": "Productos Recibidos",
-        "RECEIVE_ORDER":"Recibir Orden",
-        "CANCEL":"Cancelar",
-        "ERROR-SAVE": "Error al guardar la orden",
-        "SUCCESS-SAVE": "Orden registrada correctamente"
-    },
-    "PRESE_ORDER_TABLE": {
-        "REGISTER_PRODUCTS": "Registra los productos recibidos del proveedor",
-        "LOADING": "Cargando productos para tu orden ...",
-        "SEARCH":"Buscar productos por nombre...",
-        "PRODUCT-T": "Producto",
-        "PRESENTATION-T":"Presentación",
-        "QTY_RECEIVED-T":"Cant. Recibida",
-        "QTY_ORDERED-T": "Cant. Ordenada",
-        "UNIT_PRICE-T":"Precio c/u",
-        "EXPIRATION_DATE-T":"Fecha de vencimiento",
-        "PRODUCT-NO-FOUND": "No se encontraron productos",
-        "NO-PRODUCT": "No existen productos registrados en este proveedor",
-        "SELECT-DATE": "¿Cuándo vence?"
-    },
-    "ORDER-FORM": {
-        "INFO-ORDER":"Información de la orden",
-        "SUPPLIER":"Proveedor",
-        "RECEIVED_DATE": "Recibido el:",
-        "STATUS" : "Estado de la orden",
-        "SELECT-STATUS": "Selecciona estado",
-        "EXPIRATION_DATE": "Fecha de llegada: "
-    },
-    "NEW-ORDER": {
-        "TITLE": "Recibir Nueva Orden",
-        "DESCRIPTION":"A continuación selecciona los datos necesarios de la nueva orden a recibir",
-        "DETAILS-ORDER": "Detalles de la orden a recibir"
-    },
-    "STATUS-ORDER": {
-        "CREATED": "Creada",
-        "SUGGESTED": "Sugerida",
-        "REVISED": "Revisada",
-        "ACCEPTED": "Aceptada",
-        "RECEIVED": "Recibida"
-    },
-    "RECEIVING-ORDERS": {
-        "TITLE": "Ordenes Recibidas",
-        "DESCRIPTION": "Administra las ordenes registradas en tu sistema y recibe nuevas ordenes.",
-        "RECEIVE-NEW-ORDER": "Recibir Nueva Orden",
-        "LOADING": "Cargando ordenes...",
-        "SEARCH": "Buscar ordenes...",
-        "ALL": "Todos"
-    },
-    "ORDERS-TABLE": {
-        "NO-ORDERS": "No hay órdenes para mostrar",
-        "N-ORDER": "Orden",
-        "SUPPLIER": "Proveedor",
-        "CREATED_AT": "Fecha de creación",
-        "RECEIVED_DATE": "Fecha de recepción",
-        "STATUS": "Estado",
-        "EXPIRATION_DATE": "Fecha de expiración"
-    },
-    "RECEIVING-ORDER": {
-        "TITLE": "Orden a recibir: ",
-        "DESCRIPTION":"A continuación ingresa las cantidades recibidas en la orden",
-        "DETAILS-ORDER": "Detalles de la orden"
-    },
-    "SUPPLIER-ORDERS": {
-        "TITLE": "Ordenes a Proveedores",
-        "DESCRIPTION": "Administra todas las ordenes registradas y sugeridas en tu sistema.",
-        "SUGGEST-ORDER": "Generar ordenes",
-        "LOADING": "Cargando ordenes...",
-        "SEARCH": "Buscar ordenes...",
-        "ORDER": "Orden",
-        "SUPPLIER": "Proveedor",
-        "ALL" : "Todos",
-        "ORDER_STATUS":"Estado de la Orden"
-    },
-    "ORDER-DETAILS-PURCHASE": {
-        "LOADING":"Cargando informacion de la orden...",
-        "ORDER": "Orden",
-        "DESCRIPTION": "Revisa la orden y edita lo que necesites.",
-        "RESUMEN-ORDER" : "Orden recibida",
-        "SUCCESSFULY-UPDATE-ORDER": "Orden actualizada",
-        "DETAILS-ORDER": "Detalles de la orden"
     }
 }
