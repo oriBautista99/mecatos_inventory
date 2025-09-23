@@ -70,7 +70,6 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                 const selectDate = productList.map( pro => {
                     const dataPres = idsPresents.get(pro.presentation_id);
                     if(dataPres){
-                        console.log('DATAP', dataPres)
                         return {
                             ...pro, 
                             selected:true,
@@ -186,7 +185,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                 <Input
                                                     type="number"
                                                     className="w-full min-w-20"
-                                                    value={item.quantity_received}
+                                                    value={item.quantity_received ?? ''}
                                                     onChange={(e) =>
                                                     handleInputChange(
                                                         item.presentation_id,
@@ -207,7 +206,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                         <Input
                                                             type="number"
                                                             className="w-full min-w-20"
-                                                            value={item.quantity_orderned}
+                                                            value={item.quantity_orderned ?? ''}
                                                             onChange={(e) =>
                                                             handleInputChange(
                                                                 item.presentation_id,
@@ -229,7 +228,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                 <Input
                                                     type="number"
                                                     className="w-full min-w-20"
-                                                    value={item.unit_price}
+                                                    value={item.unit_price ?? ''}
                                                     onChange={(e) =>
                                                     handleInputChange(item.presentation_id, "unit_price", Number(e.target.value))
                                                     }
@@ -259,7 +258,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     <PopoverContent className="w-auto p-0" align="start">
                                                     <Calendar
                                                         mode="single"
-                                                        selected={item.expiration_date || undefined}
+                                                        selected={item.expiration_date  ?? undefined}
                                                         onSelect={(date) =>
                                                         handleInputChange(item.presentation_id, "expiration_date", date)
                                                         }
@@ -307,7 +306,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     <Input
                                                         type="number"
                                                         className="w-full"
-                                                        value={item.quantity_received}
+                                                        value={item.quantity_received ?? ''}
                                                         onChange={(e) =>
                                                         handleInputChange(
                                                             item.presentation_id,
@@ -327,7 +326,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     <Input
                                                         type="number"
                                                         className="w-full"
-                                                        value={item.unit_price}
+                                                        value={item.unit_price ?? ''}
                                                         onChange={(e) =>
                                                         handleInputChange(item.presentation_id, "unit_price", Number(e.target.value))
                                                         }
@@ -357,7 +356,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                         <PopoverContent className="w-auto p-0" align="start">
                                                         <Calendar
                                                             mode="single"
-                                                            selected={item.expiration_date || undefined}
+                                                            selected={item.expiration_date ?? undefined}
                                                             onSelect={(date) =>
                                                             handleInputChange(item.presentation_id, "expiration_date", date)
                                                             }

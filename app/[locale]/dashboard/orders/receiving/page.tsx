@@ -130,7 +130,7 @@ export default function Page() {
           
           {filteredOrders &&
             <OrdersTable
-              mode="received"
+              mode="RECEIVED"
               data={filteredOrders}
             ></OrdersTable>        
           }

@@ -87,7 +87,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                     <div className="mt-2 text-sm text-muted-foreground space-y-2">
                       <p><span className="font-semibold text-foreground">{t("SUPPLIER")}: </span> {order.suppliers?.company_name}</p>
                       <p><span className="font-semibold text-foreground">{t("CREATED_AT")}: </span>{order.created_at && new Date(order.created_at).toLocaleDateString()}</p>
-                      <p><span className="font-semibold text-foreground">{t("EXPIRATION_DATE")}: </span>{new Date(order.expiration_date).toLocaleDateString()}</p>
+                      <p><span className="font-semibold text-foreground">{t("EXPIRATION_DATE")}: </span>{order.expiration_date && new Date(order.expiration_date).toLocaleDateString()}</p>
                     </div>
                   </Card>                
                 </Link>

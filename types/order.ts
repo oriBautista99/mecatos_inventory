@@ -104,8 +104,6 @@ export function mapSupabaseDataToPresentations(
     const presentation = record.presentations;
     const supplier = record.suppliers;
     const item = presentation.items;
-    console.log(presentation)
-    console.log(item)
 
     return {
       presentation_id: record.presentation_id,

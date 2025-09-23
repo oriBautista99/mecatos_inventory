@@ -58,7 +58,6 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
 
     useEffect(() => {
         if(order && suppliers.length > 0){
-            console.log(suppliers,order)
             reset({
                 order_id: order.order_id,
                 status: order.status,

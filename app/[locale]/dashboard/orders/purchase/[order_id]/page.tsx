@@ -5,10 +5,9 @@ import { fullPresentItems } from "@/types/order";
 export default async function Page(props: { params: Promise<{ order_id: string }> }) {
 
     const { order_id } = await props.params;
-    const { data:order, error } = await getOrderById(Number(order_id));
-
+    const { data:order, error } = await getOrderById(Number(order_id)); 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const presentations: fullPresentItems[] = order.order_details.map( (od:any) => {
-        console.log('INFO:', od)
         return {
             presentation_id: od.presentation_id,
             order_detail_id: od.order_detail_id,

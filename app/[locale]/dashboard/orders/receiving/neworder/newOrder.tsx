@@ -20,7 +20,7 @@ export default function NewOrder(){
     const [selectedProducts, setSelectedProducts] = useState<fullPresentItems[]>([]);
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { suppliers, isLoading: loadingSuppliers } = useSuppliersSWR();
+    const { suppliers } = useSuppliersSWR();
 
     
     const handleOrder = useCallback((data: OrderFromValues) => {
@@ -44,18 +44,19 @@ export default function NewOrder(){
 
     return(
         <div className="max-h-screen overflow-y-auto space-y-4">
-            <div className="flex lg:flex-col px-2 md:pb-6 items-center lg:items-start justify-between gap-4">
+            <div className="flex px-2 md:pb-6 items-center justify-between gap-4">
               <div className="flex flex-col items-start">
                 <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
                 <p className="text-sm text-muted-foreground tracking-tight">{t("DESCRIPTION")}</p>
               </div>
-              <div className="lg:hidden">  
+              <div className="">  
                   {
                     order?.supplier_id && 
                     <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
                         <SheetTrigger asChild>
                           <Button className="w-fit bg-primary/60 border-primary  hover:bg-primary/50">
                             <BookOpenCheck className="h-4 w-4" />
+                            Recibir Orden
                           </Button>
                         </SheetTrigger>
                         <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-6 sm:p-6">
@@ -66,6 +67,7 @@ export default function NewOrder(){
                             </SheetTitle>
                           </SheetHeader>
                           <OrdenDetails
+                            mode="RECEIVED"
                             presentations={selectedProducts}
                             order={order}
                             onCancel={() => {
@@ -86,8 +88,8 @@ export default function NewOrder(){
                   }
               </div>
             </div>
-            <div className="w-full grid grid-cols-1 lg:grid-cols-6 lg:grid-rows-auto gap-4">
-              <div className="lg:col-span-4 px-2">
+            <div className="w-full flex flex-col gap-4">
+              <div className="px-2">
                 {
                   suppliers && suppliers?.length > 0 && 
                     <OrderForm 
@@ -95,33 +97,6 @@ export default function NewOrder(){
                         onSave={handleOrder} 
                         suppliers={suppliers}>
                     </OrderForm>
-                }
-              </div>
-              <div className="hidden lg:block lg:col-span-2 lg:row-span-2 lg:col-start-5">
-                {
-                  order?.supplier_id &&
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <ClipboardList className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
-                      <h3 className="font-medium text-sm sm:text-base">{t("DETAILS-ORDER")}</h3>
-                    </div>  
-                    <OrdenDetails
-                      presentations={selectedProducts}
-                      order={order}
-                      onCancel={() => {
-                        setOrder(null);
-                        setSelectedProducts([]);
-                        setSupplier(null);
-                        router.back();
-                      }}
-                      onConfirm={() => {
-                        setOrder(null);
-                        setSelectedProducts([]);
-                        setSupplier(null);
-                        router.back();
-                      }}
-                    ></OrdenDetails>                        
-                  </div>
                 }
               </div>
               <div className="lg:col-span-4 lg:row-start-2 px-2 py-6">

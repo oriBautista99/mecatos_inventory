@@ -8,8 +8,6 @@ export function StatusBadge({ status }: {status: string}) {
 
   const getBadgeVariant = (status: typeof ORDER_STATUS[keyof typeof ORDER_STATUS]) => {
     switch (status) {
-      case ORDER_STATUS.CREATED:
-        return "bg-blue-500/50 hover:bg-blue-500/80 text-white"; // Azul
       case ORDER_STATUS.SUGGESTED:
         return "bg-yellow-500/50 hover:bg-yellow-500/80 text-white"; // Amarillo
       case ORDER_STATUS.REVISED:

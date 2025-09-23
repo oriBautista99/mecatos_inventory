@@ -23,7 +23,7 @@ export async function suggestedOrders(profileId: number){
         });
 
         const data = await res.json();
-        console.log(data)
+        //console.log(data)
         if(!res.ok){
             console.error('Error in generated orders:', data.error);
             return { error: data.error};

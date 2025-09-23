@@ -15,6 +15,7 @@ import { isEqual } from "lodash";
 import { createOrderDetail, deleteOrderDetail, updateOrder, updateOrderDetail } from "@/actions/orders";
 import { toast } from "sonner";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
   let timeoutId: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -96,7 +97,7 @@ export default function OrderDetails({ order, presentations }: {order: Order, pr
 
 
     const processSelected = useCallback(async (selected: fullPresentItems[]) => {
-        console.log(selected)
+        //console.log(selected)
         const prevList = originalRef.current || [];
         const prevMap = new Map(prevList.map((p) => [p.presentation_id, p]));
         const nextMap = new Map(selected.map((p) => [p.presentation_id, p]));
@@ -254,7 +255,7 @@ export default function OrderDetails({ order, presentations }: {order: Order, pr
                         order && 
                         <PresentationOrdesTable
                             supplier={order.supplier_id}
-                            presentationsOrder={presentations}
+                            presentationsOrder={originalDetails}
                             onUpdate={handleUpdate}
                             mode="EDIT"
                         ></PresentationOrdesTable>                  
