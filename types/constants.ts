@@ -7,13 +7,13 @@ export const ROLES ={
 export const UNITS = {
   LB: "lb",
   OZ: "oz",
-  U: "u"
+  U: "u",
+  gl: "gl"
 } as const;
 
 export const ORDER_STATUS = {
-  CREATED: "created",
-  PROCESSED: "processed",
-  SENT: "sent",
-  RECEIVED: "received",
-  PENDING: "pending"
+  SUGGESTED: "SUGGESTED",
+  REVISED: "REVISED",
+  RECEIVED: "RECEIVED",
+  ACCEPTED: "ACCEPTED"  
 }
