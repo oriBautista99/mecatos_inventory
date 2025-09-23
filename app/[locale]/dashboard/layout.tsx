@@ -8,18 +8,19 @@ import React from "react"
 import Breadcrumbs from "@/components/dashboard/breadcrumbs"
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { createClient } from "@/lib/supabase/server"
-import { getUserById } from "@/actions/users"
+// import { getUserById } from "@/actions/users"
 import { redirect } from "next/navigation"
 
 export default async function DashboardLayout({children} : Readonly<{children: React.ReactNode}>) {
 
   const supabase = await createClient();
   const { data: {user} } = await supabase.auth.getUser();
+
   if(!user) {
     redirect('/en/auth/login'); // o muestra un error
     return null;
   }
-  const {data: profile} = await getUserById(user.id); 
+  
    
   return (
     <SidebarProvider>
@@ -35,7 +36,7 @@ export default async function DashboardLayout({children} : Readonly<{children: R
             <NotificationsDropdown />
             <LanguageSwitcher />
             <ThemeSwitcher />
-            <HeaderUser user={profile} />
+            <HeaderUser/>
           </div>
         </header>
         <div className="min-h-min bg-background ">
