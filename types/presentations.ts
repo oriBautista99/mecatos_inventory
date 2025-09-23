@@ -13,6 +13,7 @@ export interface Presentation {
     created_at ?: Date;
     item_id?: string;
     Item?:Item;
+    items?:Item;
     suppliers_presentations ?: {suppliers:Supplier}[];
 }
 
