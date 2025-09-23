@@ -1,6 +1,6 @@
 import { getOrderById } from "@/actions/orders";
-import OrderDetail from "./orderDetail";
-import { fullPresentItems} from "@/types/order";
+import OrderDetails from "./orderDetail";
+import { fullPresentItems } from "@/types/order";
 
 export default async function Page(props: { params: Promise<{ order_id: string }> }) {
 
@@ -8,10 +8,11 @@ export default async function Page(props: { params: Promise<{ order_id: string }
     const { data:order, error } = await getOrderById(Number(order_id));
 
     const presentations: fullPresentItems[] = order.order_details.map( (od:any) => {
+        console.log('INFO:', od)
         return {
             presentation_id: od.presentation_id,
             order_detail_id: od.order_detail_id,
-            batch_id: od.item_batches.batch_id,
+            batch_id: od.item_batches.length > 0 ? od.item_batches[0].batch_id : 0,
             presentation_name: od.presentations.name,
             presentation_unit: od.presentations.unit,
             conversion_factor: od.presentations.conversion_factor,
@@ -20,18 +21,17 @@ export default async function Page(props: { params: Promise<{ order_id: string }
             quantity_orderned: od.quantity_ordered,
             quantity_received: od.quantity_received,
             unit_price: od.unit_price,
-            expiration_date: '',
+            expiration_date: od.item_batches.length > 0 ? od.item_batches[0].expiration_date : '',
             selected:  true
         }
     });
     
-
     if (!order && error) return <div>{error.toString()}</div>;
 
     return(
-        <OrderDetail
+        <OrderDetails
             order={order}
             presentations={presentations}
-        ></OrderDetail>
+        ></OrderDetails>
     );
 }
