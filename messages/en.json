@@ -421,5 +421,39 @@
         "SUPPLIER": "Supplier",
         "ALL": "All",
         "ORDER_STATUS": "Order Status"
+    },
+    "COUNTS": {
+        "TITLE": "Inventory Count",
+        "DESCRIPTION": "Manages completed inventory counts",
+        "NEW_COUNT": "New Count",
+        "LOADING": "Loading inventory counts...",
+        "SEARCH": "Search count...",
+        "N-COUNT": "Count",
+        "T-USER": "Done by",
+        "T-DATE": "Done on",
+        "T-NOTES": "Observations"
+    },
+    "COUNT-INVENTORY-TABLE": {
+        "NO-ITEMS": "There are no items",
+        "INVENTORY": "Inventory",
+        "THERE-IS": "There are items",
+        "THERE-MUST-BE": "There must be items"
+    },
+    "NEW-COUNT": {
+        "SUCCESSFULLY-SAVE": "Successfully Saved",
+        "TITLE": "Inventory Count",
+        "DESCRIPTION": "Count each product needed in the inventory, remembering the unit you are counting in",
+        "SAVE": "Save Count",
+        "LOADING": "Loading products from inventory",
+        "SEARCH": "Search inventory",
+        "FILTERS_TITLE": "Filters"
+    },
+    "EDIT-COUNT": {
+        "SUCCESSFULLY-UPDATE": "Updated count and adjusted batches",
+        "TITLE": "Edit Count #",
+        "DESCRIPTION": "Review and update counted quantities",
+        "SAVE_DATA": "Save Changes",
+        "SEARCH": "Search inventory",
+        "FILTERS_TITLE": "Filters"
     }
 }

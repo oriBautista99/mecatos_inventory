@@ -36,7 +36,7 @@ export default function Page() {
   });
 
   if (errorItems) {
-    toast.error("Error cargando categorías");
+    toast.error("Error cargando inventario");
   }
   const handleFilters = (filters: filters_Items) => {
     setAppliedFilters(filters);
