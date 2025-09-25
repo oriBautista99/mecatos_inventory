@@ -81,7 +81,7 @@ export default function NewCount() {
     // conteo
     useEffect(() => {
         (async () => {
-            const data = await getItemsWithStock();
+            const data: ItemForCount[]= await getItemsWithStock();
             setItems(data);
             const timer: NodeJS.Timeout = setInterval(() => {
                 setProgress((old) => {

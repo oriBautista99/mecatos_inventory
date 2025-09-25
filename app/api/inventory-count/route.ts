@@ -8,6 +8,8 @@ export async function POST(req: Request) {
 
     // body should be { counted_by: number, items: [{ item_id, counted_quantity }] }
     const body = await req.json();
+    const { profile_id, countedItems } = body;
+
     const supabase = await createClient();
 
   try {
@@ -20,7 +22,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const result = await saveInventoryCount(body);
+    const result = await saveInventoryCount(profile_id, countedItems);
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: 500 });
     }

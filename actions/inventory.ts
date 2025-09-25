@@ -1,9 +1,9 @@
 "use server"
 import { createClient } from "@/lib/supabase/server";
-import { CountDetails, InventoryCount, InventoryCountDetail, Item, ItemForCount, Profiles } from "@/types/inventory";
+import { CountDetails, InventoryCount, InventoryCountDetail, Item, ItemForCount, Presentation, Profiles, SupplierPresentation } from "@/types/inventory";
 
 // Obtiene items filtrados y calcula stock total por item (en unidades base)
-export async function getItemsWithStock(): Promise<ItemForCount[]> {
+export async function getItemsWithStock() {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -49,16 +49,40 @@ export async function getItemsWithStock(): Promise<ItemForCount[]> {
     return [];
   }
 
-  // 🔹 Calcular el stock real sumando lotes
-  const items: ItemForCount[] = (data as Item[]).map((item) => {
-    const system_quantity = item.presentations.reduce((acc, pres) => {
+const items: ItemForCount[] = data.map((item: any) => {
+    // 🔹 Transformar la data de `presentations` para corregir la estructura de `suppliers`
+    const correctedPresentations = item.presentations.map((pres: any) => {
+        // Asumo que el array `sp.suppliers` solo tiene un elemento
+        const correctedSuppliersPresentations = pres.suppliers_presentations.map((sp: any) => {
+            // ✅ CORRECCIÓN: Accedemos al primer elemento del array `suppliers`
+            const supplier = sp.suppliers[0];
+            return {
+                ...sp,
+                // ✅ Sobreescribimos la propiedad `suppliers` para que sea un solo objeto
+                suppliers: supplier,
+            } as SupplierPresentation;
+        });
+
+        return {
+            ...pres,
+            suppliers_presentations: correctedSuppliersPresentations,
+        } as Presentation;
+    });
+
+    // 🔹 Calcular el stock real sumando lotes del item
+    const system_quantity = correctedPresentations.reduce((acc:any, pres:any) => {
       const sumBatches = pres.item_batches && pres.item_batches
-        .filter((b) => b.is_active)
-        .reduce((s, b) => s + b.current_quantity, 0);
+        .filter((b:any) => b.is_active)
+        .reduce((s:any, b:any) => s + b.current_quantity, 0);
       return acc + (sumBatches ? sumBatches: 0) * pres.conversion_factor;
     }, 0);
- 
-    return { ...item, system_quantity };
+  
+    // Devolvemos el objeto con la estructura correcta
+    return { 
+      ...item, 
+      presentations: correctedPresentations,
+      system_quantity 
+    };
   });
 
   return items;
