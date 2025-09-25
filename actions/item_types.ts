@@ -19,7 +19,7 @@ export async function createItemType(type: ItemTypesFormValues) {
             description: type.description
         });
 
-        console.log(data, typeError)
+        // console.log(data, typeError)
 
         if(typeError){
             console.error('Error in create item_types:', typeError);

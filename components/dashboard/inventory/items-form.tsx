@@ -57,7 +57,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
 
   useEffect(() => {
     if(item && !isLoadingCategories && !isLoadingAreas && !isLoadingSuppliers && !isLoadingTypes){
-        console.log(item);        
+        //console.log(item);        
         reset({
           name: item.name ?? "",
           description: item.description ?? "",
@@ -78,7 +78,6 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
             presentation_id: p.presentation_id ?? p.presentation_id ?? ""
           }))
         });
-          console.log('FORMULARIO RESET')
         
         const timer: NodeJS.Timeout = setInterval(() => {
         setProgress((old) => {

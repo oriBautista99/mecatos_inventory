@@ -77,7 +77,7 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
         try {
             if (mode === "RECEIVED" && !order.order_id) {
 
-                console.log("Crear orden desde cero")
+                //console.log("Crear orden desde cero")
                 const newOrder: Omit<Order, "order_id"> = {
                     expiration_date: order.expiration_date,
                     received_date: order.received_date,
@@ -112,7 +112,7 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
                     toast.success("Orden creada exitosamente con detalles y lotes");
                 }
             } else {
-                console.log("Update orden existente")
+                //console.log("Update orden existente")
                 const { success } = await updateOrder(order.order_id, order);
                 if (success) {
                     for (const product of presentations) {

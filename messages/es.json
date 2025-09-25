@@ -429,5 +429,40 @@
         "RESUMEN-ORDER" : "Orden recibida",
         "SUCCESSFULY-UPDATE-ORDER": "Orden actualizada",
         "DETAILS-ORDER": "Detalles de la orden"
+    },
+    "COUNTS": {
+        "TITLE": "Conteo de Inventario",
+        "DESCRIPTION": "Administra los conteos de inventarios realizados",
+        "NEW_COUNT": "Nuevo Conteo",
+        "LOADING": "Cargando conteos de inventario...",
+        "SEARCH": "Buscar conteo...",
+        "N-COUNT": "Conteo",
+        "T-USER": "Hecho por",
+        "T-DATE": "Realizado el",
+        "T-NOTES": "Observaciones"
+    },
+    "COUNT-INVENTORY-TABLE": {
+        "NO-ITEMS": "No hay productos",
+        "INVENTORY": "Inventario",
+        "THERE-IS": "Hay",
+        "THERE-MUST-BE":"Deben haber"
+    },
+    "NEW-COUNT": {
+        "SUCCESSFULLY-SAVE": "Guardado Correctamente",
+        "TITLE": "Conteo de Inventario",
+        "DESCRIPTION":"Cuenta cada producto necesario en el inventario, recuerda la unidad en que estas contando",
+        "SAVE": "Guardad Conteo",
+        "LOADING": "Cargando productos del inventario",
+        "SEARCH": "Buscar en inventario",
+        "FILTERS_TITLE": "Filtros"
+    }, 
+    "EDIT-COUNT": {
+        "SUCCESSFULLY-UPDATE":"Conteo actualizado y lotes ajustados",
+        "TITLE":"Editar Conteo #",
+        "DESCRIPTION": "Revisar y actualizar cantidades contadas",
+        "SAVE_DATA":"Guardar Cambios",
+        "SEARCH": "Buscar en inventario",
+        "FILTERS_TITLE": "Filtros"
     }
+
 }
