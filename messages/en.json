@@ -455,5 +455,57 @@
         "SAVE_DATA": "Save Changes",
         "SEARCH": "Search inventory",
         "FILTERS_TITLE": "Filters"
+    },
+    "USER-COMBOBOX": {
+        "SEARCH": "Search user...",
+        "SELECT": "Select your name..."
+    },
+    "SHEET-PRODUCTION": {
+        "BREAD_TITLE": "Bread Registration",
+        "PASTRY_TITLE": "Pastry Registration",
+        "DESSERT_TITLE": "Dessert Registration",
+        "SUCCESS-CREATE": "Production successfully registered",
+        "SUCCESS-EDIT": "Production updated successfully",
+        "ERROR-CREATE": "Error registering production",
+        "SAVE": "Save",
+        "CANCEL": "Cancel"
+    },
+    "PROD-SHEET-FORM": {
+        "USER": "Made by:",
+        "DATE": "Produced on:",
+        "NOTE": "Note"
+    },
+    "PROD-ITEM-TABLE": {
+        "NAME": "Name",
+        "QTY": "Quantity",
+        "HOUR": "Time",
+        "STOCK": "Display Case"
+    },
+    "PROD-HISTORY-TABLE" : {
+        "NO-DATA" : "No production records.",
+        "DATE" : "Date",
+        "CREATED_BY": "Made by",
+        "NOTES": "Note",
+        "TYPE": "Type",
+        "SEARCH": "Search production...",
+        "SELECT-DATE": "Select date"
+    },
+    "PRODUCTION-INIT" : {
+        "TITLE": "Production Events",
+        "DESCRIPTION": "This is where the products baked or taken to the display case are recorded on the day",
+        "HISTORY": "History",
+        "CARD-BREAD": "Breads",
+        "CARD-BREAD-DESCP": "Breads baked daily",
+        "CARD-PASTRY": "Pastries",
+        "CARD-PASTRY-DESCP": "Pastries baked daily",
+        "CARD-DESSERT": "Desserts",
+        "CARD-DESSERT-DESCP": "Desserts brought to the display case",
+        "LOADING": "Loading today's production..."
+    },
+    "PRODUCTION-HISTORY":{
+        "TITLE": "Production History",
+        "DESCRIPTION": "Here you will find all the products that have been baked or showcased on file.",
+        "LOADING": "Loading production..."
     }
+
 }

@@ -21,7 +21,8 @@ export interface Item {
     storage_areas: Storage_area,
     created_at?: string,
     total ?: number,
-    presentations: Presentation[]
+    presentations: Presentation[],
+    production_type ?: 'BREAD' | 'DESSERT' | 'PASTRY';
 }
 
 export const ItemSchema = z.object({
