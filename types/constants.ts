@@ -17,3 +17,9 @@ export const ORDER_STATUS = {
   RECEIVED: "RECEIVED",
   ACCEPTED: "ACCEPTED"  
 }
+
+export const TYPE_PRODUCTION = {
+  BREAD: "BREAD",
+  PASTRY: "PASTRY",
+  DESSERT: "DESSERT"  
+}

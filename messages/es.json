@@ -463,6 +463,57 @@
         "SAVE_DATA":"Guardar Cambios",
         "SEARCH": "Buscar en inventario",
         "FILTERS_TITLE": "Filtros"
+    },
+    "USER-COMBOBOX": {
+        "SEARCH": "Buscar usuario...",
+        "SELECT": "Selecciona tu nombre..."
+    },
+    "SHEET-PRODUCTION": {
+        "BREAD_TITLE": "Registro de Panes",
+        "PASTRY_TITLE": "Registro de Pastries",
+        "DESSERT_TITLE": "Registro de Postres",
+        "SUCCESS-CREATE": "Produccion registrada correctamente",
+        "SUCCESS-EDIT": "Produccion actualizada correctamente",
+        "ERROR-CREATE": "Error al registrar produccion",
+        "SAVE" : "Guardar",
+        "CANCEL" : "Cancelar"
+    },
+    "PROD-SHEET-FORM": {
+        "USER": "Hecho por: ",
+        "DATE": "Producido el: ",
+        "NOTE": "Nota"
+    },
+    "PROD-ITEM-TABLE": {
+        "NAME": "Nombre",
+        "QTY": "Cantidad",
+        "HOUR": "Hora",
+        "STOCK": "Vitrina"
+    },
+    "PROD-HISTORY-TABLE" : {
+        "NO-DATA" : "No hay registros de producción.",
+        "DATE" : "Fecha",
+        "CREATED_BY": "Realizado por",
+        "NOTES": "Nota",
+        "TYPE": "Tipo",
+        "SEARCH" : "Buscar produccion ...",
+        "SELECT-DATE" : "Seleccionar fecha"
+    },
+    "PRODUCTION-INIT" :{ 
+        "TITLE": "Eventos de Produccion",
+        "DESCRIPTION": "Aqui se registran los productos horneados o sacado a vitrina en el dia",
+        "HISTORY": "Historial",
+        "CARD-BREAD": "Panes",
+        "CARD-BREAD-DESCP": "Panes horneados al dia",
+        "CARD-PASTRY": "Pastries",
+        "CARD-PASTRY-DESCP": "Pastries horneados al dia",
+        "CARD-DESSERT": "Postres",
+        "CARD-DESSERT-DESCP": "Postres sacados a vitrina",
+        "LOADING" : "Cargando produccion del dia..."
+    },
+    "PRODUCTION-HISTORY":{
+        "TITLE": "Historial de Producciones",
+        "DESCRIPTION": "Aqui encontraras todos los productos horneados o sacados a vitrina registrados",
+        "LOADING" : "Cargando produccion registrada..."
     }
 
 }
