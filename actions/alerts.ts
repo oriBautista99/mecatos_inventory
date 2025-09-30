@@ -14,7 +14,7 @@ export async function resolveAlert(alertId: string, resolvedBy: string) {
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        const { error } = await supabase.rpc('resolve_alert', {
+        const { error } = await supabase.rpc('resolve_expiration_alert', {
             p_alert_id: alertId,
             p_resolved_by: resolvedBy
         })
@@ -26,4 +26,21 @@ export async function resolveAlert(alertId: string, resolvedBy: string) {
         return { error: { message: 'Unexpected error occurred - resolveAlert' } }
     }
 
+}
+
+export async function getPendingAlerts() {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from("v_expiration_alerts")
+        .select("*")
+        .eq("resolved", false)
+        .order("due_date", { ascending: true });
+
+    if (error) {
+        console.error("Error fetching alerts:", error);
+        return { error };
+    }
+
+    return { success: true, data };
 }

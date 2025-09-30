@@ -71,22 +71,22 @@ const data = {
           title: "EXPIRATION ALERTS",
           url: "alerts",
         },
-        {
-          title: "SUB-RECIPES OR PREPARATION",
-          url: "preparations",
-        },
-        {
-          title: "MENU",
-          url: "menu",
-        },
+        // {
+        //   title: "SUB-RECIPES OR PREPARATION",
+        //   url: "preparations",
+        // },
+        // {
+        //   title: "MENU",
+        //   url: "menu",
+        // },
         {
           title: "PRODUCTION_EVENTS",
           url: "production_event",
         },
-        {
-          title: "SALESINVENTORY",
-          url: "sales",
-        },
+        // {
+        //   title: "SALESINVENTORY",
+        //   url: "sales",
+        // },
       ],
     },
     {
@@ -94,10 +94,10 @@ const data = {
       url: "reports",
       icon: ChartArea,
       items: [
-        {
-          title: "SALES",
-          url: "sales",
-        },
+        // {
+        //   title: "SALES",
+        //   url: "sales",
+        // },
         {
           title: "PRODUCTION",
           url: "production",

@@ -514,6 +514,16 @@
         "TITLE": "Historial de Producciones",
         "DESCRIPTION": "Aqui encontraras todos los productos horneados o sacados a vitrina registrados",
         "LOADING" : "Cargando produccion registrada..."
+    },
+    "ALERTS-VIEW":{
+        "TITLE":"Alertas de Vencimiento",
+        "DESCRIPTION": "Podras ver todas las alertas de los productos a retirar de la vitrina",
+        "LOADING": "Cargando Alertas ...",
+        "ITEM": "Producto",
+        "QTY" : "Cantidad en Vitrina",
+        "EXPIRATION": "Fecha de vencimiento",
+        "RESOLVE" : "Revisada",
+        "RESOLVED-SUCCESSFULLY": "Alerta revisada"
     }
 
 }
