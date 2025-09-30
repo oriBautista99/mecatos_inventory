@@ -72,7 +72,7 @@ export function SheetProduction({ type, eventId, onClose }: Props){
             const dataEvent = {
                 profileId: formData?.user,
                 notes: formData?.notes,
-                typeProduction: 'BREAD',
+                typeProduction: type,
                 items: tableData.map(item => {
                     if(item.quantity){
                         return({

@@ -506,6 +506,15 @@
         "TITLE": "Production History",
         "DESCRIPTION": "Here you will find all the products that have been baked or showcased on file.",
         "LOADING": "Loading production..."
+    },
+    "ALERTS-VIEW":{
+        "TITLE": "Expiration Alerts",
+        "DESCRIPTION": "You will be able to see all the alerts for products that need to be removed from the display case",
+        "LOADING": "Loading Alerts...",
+        "ITEM": "Product",
+        "QTY": "Quantity in Display Case",
+        "EXPIRATION": "Expiration Date",
+        "RESOLVE" : "Revised", 
+        "RESOLVED-SUCCESSFULLY": "Revised alert"
     }
-
 }
