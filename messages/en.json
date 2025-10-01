@@ -516,5 +516,37 @@
         "EXPIRATION": "Expiration Date",
         "RESOLVE" : "Revised", 
         "RESOLVED-SUCCESSFULLY": "Revised alert"
+    },
+    "FILTERS-REPORTS" : {
+        "APPLY" : "Filter",
+        "SELECT-RANGE" : "Select Range"
+    },
+    "WASTE-REPORT" : {
+        "TITLE" : "Loss Reports",
+        "CARD-1-TITLE" : "Losses",
+        "CARD-1-DESCRIPTION" : "with previous week",
+        "CARD-1-UNITS" : "Units",
+        "CARD-2-TITLE" : "Loss Rate",
+        "CARD-2-DESCRIPTION" : "Percentage of Lost Products",
+        "CARD-2-UNITS" : "units / day",
+        "TITLE-CHART-1" : "Losses by Product",
+        "LOADING": "Loading reports, this may take a while..."
+
+    },
+    "PRODUCTION-REPORTS" : {
+        "TITLE" : "Loss Reports",
+        "CARD-1-TITLE": "Items in Display Case",
+        "CARD-1-DESCRIPTION": "Unsold Due to Removal from Display Case",
+        "CARD-1-UNITS": "Units",
+        "CARD-2-TITLE": "Produced",
+        "CARD-2-DESCRIPTION": "Last Week",
+        "CARD-2-UNITS": "Units",
+        "CARD-3-TITLE": "Daily Average",
+        "CARD-3-DESCRIPTION": "During Selected Period",
+        "CARD-3-UNITS": "Units / Day",
+        "TITLE-CHART-1": "Daily Production",
+        "TITLE-CHART-2": "Display Case by Closeness to Expiration",
+        "TITLE-CHART-3": "Top Items Produced",
+        "LOADING": "Loading reports, this may take a while..."
     }
 }
