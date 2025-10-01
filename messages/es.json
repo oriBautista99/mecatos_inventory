@@ -524,6 +524,37 @@
         "EXPIRATION": "Fecha de vencimiento",
         "RESOLVE" : "Revisada",
         "RESOLVED-SUCCESSFULLY": "Alerta revisada"
+    },
+    "FILTERS-REPORTS" : {
+        "APPLY" : "Filtrar",
+        "SELECT-RANGE" : "Seleccionar rango"
+    },
+    "WASTE-REPORT": {
+        "TITLE": "Reportes de Perdidas",
+        "CARD-1-TITLE" : "Pérdidas",
+        "CARD-1-DESCRIPTION" : "con la semana anterior",
+        "CARD-1-UNITS": "Unidades",
+        "CARD-2-TITLE" : "Tasa de pérdidas",
+        "CARD-2-DESCRIPTION" : "Porcentaje de productos perdidos",
+        "CARD-2-UNITS": "unidades / dia",
+        "TITLE-CHART-1": "Pérdidas por Producto",
+        "LOADING" : "Cargando reportes, esto puede tomar un tiempo ..."
+    },
+    "PRODUCTION-REPORTS" : {
+        "TITLE": "Reportes de Perdidas",
+        "CARD-1-TITLE" : "Ítems en vitrina",
+        "CARD-1-DESCRIPTION" : "No vendidos por sacar de vitrina",
+        "CARD-1-UNITS": "Unidades",
+        "CARD-2-TITLE" : "Producido",
+        "CARD-2-DESCRIPTION" : "que la semana anterior",
+        "CARD-2-UNITS": "unidades",
+        "CARD-3-TITLE" : "Promedio diario",
+        "CARD-3-DESCRIPTION" : "Durante el periodo seleccionado",
+        "CARD-3-UNITS": "unidades / dia",
+        "TITLE-CHART-1": "Producción diaria",
+        "TITLE-CHART-2": "Vitrina por cercanía a vencimiento",
+        "TITLE-CHART-3": "Top ítems producidos",
+        "LOADING" : "Cargando reportes, esto puede tomar un tiempo ..."
     }
 
 }
