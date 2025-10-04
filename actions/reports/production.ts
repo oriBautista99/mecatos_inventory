@@ -18,8 +18,8 @@ export async function getTopProducedByItem(range: DateRange, limit = 10, itemId?
         }
 
         const { data, error } = await supabase.rpc("get_top_produced_by_item", {
-                    date_from: `${range.from} 00:00:00`,
-                    date_to: `${range.to} 23:59:59`,
+                    date_from: range.from,
+                    date_to: range.to,
                     limit_count: limit,
                     item_filter: itemId ?? null
                 });
@@ -47,8 +47,8 @@ export async function getDailyProductionSeries(range: DateRange, itemId?: number
             return { error: "Unauthorized" };
         }
         const { data, error } = await supabase.rpc("get_daily_production_series", {
-            date_from: `${range.from} 00:00:00`,
-            date_to: `${range.to} 23:59:59`,
+            date_from: range.from,
+            date_to: range.to,
             item_filter: itemId ?? null,
         });
         if (error) return { error }
@@ -60,29 +60,6 @@ export async function getDailyProductionSeries(range: DateRange, itemId?: number
 }
 
 
-export async function getLossesByItem(range: DateRange) {
-    try {
-        const supabase = await createClient(); 
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const { data, error } = await supabase.rpc("get_losses_by_item", {
-            date_from: `${range.from} 00:00:00`,
-            date_to: `${range.to} 23:59:59`,
-        });
-        if (error) return { error }
-        return { data }
-    } catch (err) {
-        console.error('Unexpected error in getLossesByItem:', err);
-        return { error: { message: 'Unexpected error occurred - getLossesByItem' } }
-    }
-
-}
 
 export async function getShowcaseSnapshot(range?: DateRange) {
     try {
@@ -96,8 +73,8 @@ export async function getShowcaseSnapshot(range?: DateRange) {
             return { error: "Unauthorized" };
         }
         const { data, error } = await supabase.rpc("get_expiration_snapshot", {
-            date_from: range ? `${range.from} 00:00:00` : null,
-            date_to: range ? `${range.to} 23:59:59` : null,
+            date_from: range ? range.from : null,
+            date_to: range ? range.to : null,
         });
         if (error) return { error }
         return { data }        
@@ -127,7 +104,7 @@ export async function getShowcaseAging() {
 
         if (error) return { error }
 
-        // En cliente agrupamos por buckets (0-1, 2-3, 4+ días)
+        //agrupamos por buckets (0-1, 2-3, 4+ días)
         return { data }        
     } catch (err) {
         console.error('Unexpected error in getShowcaseAging:', err);

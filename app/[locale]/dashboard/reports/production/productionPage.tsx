@@ -45,26 +45,31 @@ export default function ProductionPage() {
         return undefined;
     }
 
+    function startOfDay(date: Date) {
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0);
+        return d.toISOString();
+    }
+
+    function endOfDay(date: Date) {
+        const d = new Date(date);
+        d.setHours(23, 59, 59, 999);
+        return d.toISOString();
+    }
+
     async function load() {
         if(range){
-            const from = range?.from
-            ? range.from.toISOString().slice(0, 10)
-            : new Date().toISOString().slice(0, 10)
+            const today = new Date();
 
-            const to = range?.to
-            ? range.to.toISOString().slice(0, 10)
-            : new Date().toISOString().slice(0, 10)
+            const from = range?.from ? startOfDay(range.from) : startOfDay(today);
+            const to   = range?.to   ? endOfDay(range.to)     : endOfDay(today);
 
-            const dateRange = { from, to }
+            const dateRange = { from, to };
+
             const prevRange = getPrevRange(range);
 
-            const fromPrev = prevRange?.from
-            ? prevRange.from.toISOString().slice(0, 10)
-            : new Date().toISOString().slice(0, 10)
-
-            const toPrev = prevRange?.to
-            ? prevRange.to.toISOString().slice(0, 10)
-            : new Date().toISOString().slice(0, 10)
+            const fromPrev = prevRange?.from ? startOfDay(prevRange.from) : startOfDay(today);
+            const toPrev   = prevRange?.to   ? endOfDay(prevRange.to)    : endOfDay(today);
 
 
             const [r1, r2, r3, r5, p1] = await Promise.all([

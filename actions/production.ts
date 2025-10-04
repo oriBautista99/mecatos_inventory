@@ -15,7 +15,6 @@ export async function createProduction(productionData:any) {
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        console.log(productionData)
         
         const { data, error } = await supabase.rpc('create_production_event', {
             p_profile_id: productionData.profileId,
