@@ -530,6 +530,8 @@
         "CARD-2-DESCRIPTION" : "Percentage of Lost Products",
         "CARD-2-UNITS" : "units / day",
         "TITLE-CHART-1" : "Losses by Product",
+        "TITLE-CHART-2": "Losses per day",
+        "TITLE-CHART-3": "Losses by reason",
         "LOADING": "Loading reports, this may take a while..."
 
     },
@@ -548,5 +550,42 @@
         "TITLE-CHART-2": "Display Case by Closeness to Expiration",
         "TITLE-CHART-3": "Top Items Produced",
         "LOADING": "Loading reports, this may take a while..."
+    },
+    "FORMULARIO PERDIDO": { 
+        "REASON": "Razón de pérdida", 
+        "SELECCIONAR" : "Seleccionar", 
+        "FECHA":"Fecha", 
+        "NOTA": "Nota" 
+    },
+    "LOSS-FORM" : {
+        "REASON": "Loss Reason",
+        "SELECT": "Select",
+        "DATE": "Date",
+        "NOTE": "Note"
+    },
+    "LOSS-SHEET": {
+        "SUCCESS-CREATE": "Loss successfully recorded",
+        "ERROR-CREATE": "Error recording loss",
+        "TITLE": "Record loss",
+        "LOADING": "Loading information",
+        "SEARCH": "Search for products...",
+        "FILTERS": "Filter products",
+        "SAVE": "Save",
+        "CANCEL": "Cancel"
+    },
+    "LOSS-TABLE": {
+        "NO-REGISTER": "No recorded losses",
+        "SEARCH": "Search for loss...",
+        "DATE-SEARCH": "Search by date...",
+        "DATE": "Date",
+        "REGISTER_BY": "Registered by",
+        "REASON": "Reason for loss",
+        "NOTE": "Note"
+    },
+    "WASTE-PAGE": {
+        "TITLE": "Losses",
+        "DESCRIPTION": "Record of losses that occurred",
+        "REGISTER-WASTE": "Record Loss",
+        "LOADING": "Loading losses..."
     }
 }

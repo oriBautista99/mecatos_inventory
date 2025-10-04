@@ -538,6 +538,8 @@
         "CARD-2-DESCRIPTION" : "Porcentaje de productos perdidos",
         "CARD-2-UNITS": "unidades / dia",
         "TITLE-CHART-1": "Pérdidas por Producto",
+        "TITLE-CHART-2" : "Pérdidas por dia",
+        "TITLE-CHART-3" : "Pérdidas por razon",
         "LOADING" : "Cargando reportes, esto puede tomar un tiempo ..."
     },
     "PRODUCTION-REPORTS" : {
@@ -555,6 +557,41 @@
         "TITLE-CHART-2": "Vitrina por cercanía a vencimiento",
         "TITLE-CHART-3": "Top ítems producidos",
         "LOADING" : "Cargando reportes, esto puede tomar un tiempo ..."
+    },
+    "LOSS-FORM" : {
+        "REASON": "Razon de perdida",
+        "SELECT" : "Selecciona",
+        "DATE":"Fecha",
+        "NOTE" : "Nota"
+    },
+    "LOSS-ITEM-TABLE" : {
+        "PRODUCT": "Producto",
+        "QYT_LOST": "Cantidad Perdida"
+    },
+    "LOSS-SHEET": {
+        "SUCCESS-CREATE" : "Perdida registrada correctamente",
+        "ERROR-CREATE" : "Error al registrar la perdida",
+        "TITLE": "Registar perdida",
+        "LOADING" : "Cargando informacion",
+        "SEARCH": "Buscar productos...",
+        "FILTERS" : "Filtrar productos",
+        "SAVE" : "Guardar",
+        "CANCEL" : "Cancelar"
+    },
+    "LOSS-TABLE": {
+        "NO-REGISTER": "No hay perdidas registradas",
+        "SEARCH" : "Buscar perdida...",
+        "DATE-SEARCH" : "Buscar por fecha...",
+        "DATE" : "Fecha",
+        "REGISTER_BY" : "Registrado por",
+        "REASON" : "Razon de perdida",
+        "NOTE": "Nota"
+    },
+    "WASTE-PAGE": {
+        "TITLE" : "Perdidas",
+        "DESCRIPTION" : "Registro de las perdidas ocurridas",
+        "REGISTER-WASTE" : "Registrar Perdida",
+        "LOADING" : "Cargando perdidas..."
     }
 
 }

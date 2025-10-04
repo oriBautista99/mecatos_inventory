@@ -1,5 +1,6 @@
 "use client"
 
+import { AreaChartComponent } from "@/components/area-chart"
 import { BarChartComponent } from "@/components/bar-chart"
 import { LineChartComponent } from "@/components/line-chart"
 import { PieChartComponent } from "@/components/PieChart"
@@ -7,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useItemsSWR } from "@/hooks/useItems"
-import { AgingRow, AgingRowChart, DailySeriesRow, LossesRow, SnapshotRow, TopProducedRow } from "@/types/reports"
+import { TypeOfDataCharts } from "@/types/reports"
 import { Download } from "lucide-react"
 import { useEffect, useState } from "react"
 import { DateRange } from "react-day-picker"
@@ -16,7 +17,7 @@ type PropChartCard = {
     title:string
     descripcion?: string
     footer?: string
-    data: TopProducedRow[] | DailySeriesRow[] | LossesRow[] | SnapshotRow[] | AgingRow[] | AgingRowChart[]
+    data: TypeOfDataCharts[]
     xKey: string
     yKey: string
     filename:string
@@ -27,7 +28,7 @@ type PropChartCard = {
     enableItemFilter?: boolean
 }
 
-function detectChartType(data: TopProducedRow[] | DailySeriesRow[] | LossesRow[] | SnapshotRow[] | AgingRow[], typeChart: string) {
+function detectChartType(data: TypeOfDataCharts[], typeChart: string) {
 
     if (!data || data.length === 0) return typeChart;
 
@@ -45,13 +46,17 @@ function detectChartType(data: TopProducedRow[] | DailySeriesRow[] | LossesRow[]
         return "PIE";
     }
 
+    if ("reason" in sample && "total_loss" in sample) {
+        return "AREA";
+    }
+
     return typeChart;
 }
 
 export function ChartCard({title, data, xKey, yKey, filename, typeChart, range, fetchData, enableItemFilter=false}: PropChartCard){
 
     const [itemId, setItemId] = useState<number | undefined>(undefined)
-    const [localData, setLocalData] = useState<TopProducedRow[] | DailySeriesRow[] | LossesRow[] | SnapshotRow[] | AgingRow[] | AgingRowChart[]>(data)
+    const [localData, setLocalData] = useState<TypeOfDataCharts[]>(data)
     const { items=[] } = useItemsSWR();
     const filterItems = items.filter(it => it.production_type);
     const [resolvedType, setResolvedType] = useState<string>(typeChart) 
@@ -86,7 +91,7 @@ export function ChartCard({title, data, xKey, yKey, filename, typeChart, range, 
         a.click()
         URL.revokeObjectURL(url)
     }
-
+    
     return(
         <Card className="h-full">
             <CardHeader className="flex flex-row items-center justify-between">
@@ -185,6 +190,18 @@ export function ChartCard({title, data, xKey, yKey, filename, typeChart, range, 
                             xKey={xKey}
                             yKey={yKey}
                             xIsDate={true}
+                            config={{
+                                total: { label: "Producción", color: "hsl(var(--chart-1))" },
+                            }}
+                        />
+                }
+                {
+                    resolvedType === 'AREA' && 
+                        <AreaChartComponent
+                            data={localData}
+                            xKey={xKey}
+                            yKey={yKey}
+                            xIsDate={false}
                             config={{
                                 total: { label: "Producción", color: "hsl(var(--chart-1))" },
                             }}
