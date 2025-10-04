@@ -1,6 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import { HeaderUser } from "@/components/header-user"
-import { NotificationsDropdown } from "@/components/notifications-dropdown"
+// import { NotificationsDropdown } from "@/components/notifications-dropdown"
 import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import LanguageSwitcher from "@/components/ui/languageSwitcher";
@@ -33,7 +33,7 @@ export default async function DashboardLayout({children} : Readonly<{children: R
             <Breadcrumbs/>
           </div>
           <div className="ml-auto flex items-center gap-2 px-4">
-            <NotificationsDropdown />
+            {/* <NotificationsDropdown /> */}
             <LanguageSwitcher />
             <ThemeSwitcher />
             <HeaderUser/>
