@@ -1,12 +1,12 @@
 "use client"
 
 import {
-  LineChart as ReLineChart,
-  Line,
   XAxis,
-  YAxis,
   CartesianGrid,
   ResponsiveContainer,
+  AreaChart,
+  Area,
+  YAxis,
 } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { TypeOfDataCharts } from "@/types/reports"
@@ -24,11 +24,14 @@ type PropChartLine = {
   xIsDate?: boolean    // formatear eje X como fecha
 }
 
-export function LineChartComponent({ data, xKey, yKey, config, xIsDate = false }: PropChartLine) {
+export function AreaChartComponent({ data, xKey, yKey, config, xIsDate = false }: PropChartLine) {
   return (
     <ChartContainer config={config} className="h-full w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <ReLineChart data={data} margin={{ left: 12, right: 12 }}>
+        <AreaChart 
+            accessibilityLayer
+            data={data} 
+            margin={{ left: 12, right: 12 }}>
           <CartesianGrid vertical={false} />
 
           <XAxis
@@ -36,7 +39,6 @@ export function LineChartComponent({ data, xKey, yKey, config, xIsDate = false }
             tickLine={false}
             axisLine={false}
             tickMargin={8}
-            minTickGap={20}
             tickFormatter={(value) => {
               if (!xIsDate) return value
               const date = new Date(value)
@@ -66,19 +68,17 @@ export function LineChartComponent({ data, xKey, yKey, config, xIsDate = false }
             }
           />
 
-          <Line
+          <Area
             type="natural"
             dataKey={yKey}
             stroke={`hsl(var(--chart-1))`}
             strokeWidth={2}
-            dot={{
-              fill: "var(--color-desktop)",
-            }}
+            fill="hsl(var(--chart-1))"
             activeDot={{
-              r: 6,
+                r: 6,
             }}
           />
-        </ReLineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

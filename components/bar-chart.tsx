@@ -1,6 +1,6 @@
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar, CartesianGrid } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
-import { AgingRow, AgingRowChart, DailySeriesRow, LossesRow, SnapshotRow, TopProducedRow } from "@/types/reports";
+import { TypeOfDataCharts } from "@/types/reports";
 
 type ChartConfig = Record<
   string,
@@ -8,7 +8,7 @@ type ChartConfig = Record<
 >
 
 type PropChartBar = {
-    data: TopProducedRow[] | DailySeriesRow[] | LossesRow[] | SnapshotRow[] | AgingRow[] | AgingRowChart[]
+    data: TypeOfDataCharts[]
     xKey: string
     yKey: string
     xIsDate?: boolean // si el eje X son fechas

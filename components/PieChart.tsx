@@ -2,7 +2,7 @@
 
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts"
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { AgingRow, AgingRowChart, DailySeriesRow, LossesRow, SnapshotRow, TopProducedRow } from "@/types/reports"
+import { TypeOfDataCharts } from "@/types/reports"
 
 type ChartConfig = Record<
   string,
@@ -10,7 +10,7 @@ type ChartConfig = Record<
 >
 
 type PropChartPie = {
-  data: TopProducedRow[] | DailySeriesRow[] | LossesRow[] | SnapshotRow[] | AgingRow[] | AgingRowChart[]
+  data: TypeOfDataCharts[]
   nameKey: string       // la categoría (ej: item_name, bucket, etc.)
   valueKey: string      // el valor (ej: total, remaining, etc.)
   config: ChartConfig   // configuración de colores/labels
