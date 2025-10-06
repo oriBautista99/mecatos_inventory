@@ -568,7 +568,7 @@
 
     },
     "PRODUCTION-REPORTS" : {
-        "TITLE" : "Loss Reports",
+        "TITLE": "Production Reports",
         "CARD-1-TITLE": "Items in Display Case",
         "CARD-1-DESCRIPTION": "Unsold Due to Removal from Display Case",
         "CARD-1-UNITS": "Units",

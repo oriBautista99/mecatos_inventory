@@ -585,7 +585,7 @@
         "LOADING" : "Cargando reportes, esto puede tomar un tiempo ..."
     },
     "PRODUCTION-REPORTS" : {
-        "TITLE": "Reportes de Perdidas",
+        "TITLE": "Reportes de Producción",
         "CARD-1-TITLE" : "Ítems en vitrina",
         "CARD-1-DESCRIPTION" : "No vendidos por sacar de vitrina",
         "CARD-1-UNITS": "Unidades",
