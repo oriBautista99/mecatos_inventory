@@ -2,20 +2,20 @@
 
 import {useRouter, usePathname} from "next/navigation";
 import {routing} from "@/i18n/routing";
+import { ReactNode, useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import Image from "next/image";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+type Props = {
+  trigger: ReactNode
+  align?: 'start' | 'center' | 'end'
+}
 
-import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
+export default function LanguageSwitcher({ align, trigger }: Props) {
 
-export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const switchLanguage = (locale: string) => {
     const segments = pathname.split("/");
@@ -24,22 +24,29 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size={"sm"}>
-          <Globe className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {routing.locales.map((locale) => (
-          <DropdownMenuItem
-            key={locale}
-            onClick={() => switchLanguage(locale)}
-          >
-            {locale.toUpperCase()}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Popover open={open} onOpenChange={setOpen} modal={false}>
+      <PopoverTrigger asChild>{trigger}</PopoverTrigger>
+      <PopoverContent
+        align={align || "end"}
+        className="w-32 p-2"
+        onClick={(e) => e.stopPropagation()}
+        onInteractOutside={(e) => e.preventDefault()}
+      >
+        <div className="flex flex-col space-y-2">
+          {routing.locales.map((locale) => (
+            <button
+              key={locale}
+              className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 hover:bg-accent"
+              onClick={() => {switchLanguage(locale); setOpen(false)}}
+            >
+              {locale == 'es' && <Image src={'/colombia.png'} alt="Español" width={16} height={16}/>}
+              {locale == 'en' && <Image src={'/states-unites.png'} alt="Español" width={16} height={16}/>}
+              {locale.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
+      </PopoverContent>
+    </Popover>
   );
 }

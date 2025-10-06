@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useTranslations } from "next-intl"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 export function NavMain({
@@ -40,11 +40,17 @@ export function NavMain({
 
   const pathname = usePathname(); 
   const basePath = pathname.split("/").slice(0, 3).join("/"); 
+  const router = useRouter();
+
+  //redirect for row
+  const handleRowClick = (route:string) => {
+    router.push(`${basePath}/${route}`);
+  };
 
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
-      <SidebarMenu>
+      <SidebarMenu className="space-y-2">
         {items.map((item) => {
           const hasSubItems = item.items && item.items.length > 0;
           return hasSubItems ? (
@@ -57,7 +63,7 @@ export function NavMain({
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuButton tooltip={t(item.title)}>
-                    {item.icon && <item.icon />}
+                    {item.icon && <item.icon onClick={() => handleRowClick(item.url)} />}
                     <span>{t(item.title)}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>

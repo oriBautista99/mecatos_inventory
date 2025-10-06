@@ -6,7 +6,6 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
-  YAxis,
 } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { TypeOfDataCharts } from "@/types/reports"
@@ -49,7 +48,7 @@ export function AreaChartComponent({ data, xKey, yKey, config, xIsDate = false }
             }}
           />
 
-          <YAxis />
+          {/* <YAxis /> */}
 
           <ChartTooltip
             content={

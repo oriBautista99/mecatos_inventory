@@ -1,4 +1,4 @@
-import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar, CartesianGrid } from "recharts";
+import { ResponsiveContainer, BarChart, XAxis, Bar, CartesianGrid } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 import { TypeOfDataCharts } from "@/types/reports";
 
@@ -42,7 +42,7 @@ export function BarChartComponent({ data, xKey, yKey, config, xIsDate = false, l
                     }}
                 />
 
-                <YAxis />
+                {/* <YAxis /> */}
 
                 <ChartTooltip
                     content={
