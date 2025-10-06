@@ -109,7 +109,7 @@
         "neworder": "New Order",
         "new_count": "New Count"       
     },
-  "USERS": {
+    "USERS": {
         "TITLE": "User Management",
         "DESCRIPTION-TITLE": "Manage your application's users",
         "SUB-TITLE": "List of Users",
@@ -295,6 +295,11 @@
         "TYPE": "Product Types"
     },
     "ITEM-TYPES": {
+        "TITLE": "Product Types",
+        "DESCRIPTION-TITLE": "Classification you want to add to your products in inventory.",
+        "ADD": "New Type",
+        "SAVE": "Save",
+        "UPDATE": "Update",
         "EDIT-ITEM-TYPES": "Edit the product type",
         "CREATE-ITEM-TYPES": "New product type",
         "EDIT-DESCRIPTION": "Modify the information for an existing product type",
@@ -404,6 +409,7 @@
         "ERROR-SAVE": "Error saving order",
         "SUCCESS-SAVE": "Order saved successfully"
     },
+
     "PRESE_ORDER_TABLE": {
         "REGISTER_PRODUCTS": "Register products received from the supplier",
         "LOADING": "Loading products for your order...",
@@ -470,6 +476,14 @@
         "SUPPLIER": "Supplier",
         "ALL": "All",
         "ORDER_STATUS": "Order Status"
+    },
+    "ORDER-DETAILS-PURCHASE": {
+        "LOADING": "Loading order information...",
+        "ORDER": "Order",
+        "DESCRIPTION": "Review the order and edit as needed.",
+        "ORDER-SUMMARY": "Order received",
+        "SUCCESSFULY-UPDATE-ORDER": "Order updated",
+        "ORDER-DETAILS": "Order details"
     },
     "COUNTS": {
         "TITLE": "Inventory Count",

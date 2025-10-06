@@ -109,7 +109,7 @@ export default function WastePage() {
     
     return (
         <div className="overflow-y-hidden space-y-4">
-            <div className="flex px-2 md:pb-4 items-center justify-between gap-4">
+            <div className="flex px-2 items-center justify-between gap-4">
                 <div className="w-full flex flex-col items-start">
                     <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
                 </div>

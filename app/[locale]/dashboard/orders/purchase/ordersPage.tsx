@@ -95,13 +95,13 @@ export default function OrdersPage() {
     <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-start w-full">
           <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
           <p className="text-sm text-muted-foreground tracking-tight">
             {t("DESCRIPTION")}
           </p>
         </div>
-        <Button onClick={handleGenerateOrders} className="w-fit md:w-auto">{t("SUGGEST-ORDER")}</Button>
+        <Button onClick={handleGenerateOrders} className="w-full md:w-fit">{t("SUGGEST-ORDER")}</Button>
       </div>
 
       {/* Loader */}
