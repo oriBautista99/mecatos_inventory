@@ -315,7 +315,7 @@ export default function Page() {
                           </div>
                           <div className="w-full flex  justify-between items-end space-x-1 py-1 px-3 bg-secondary rounded-bl-md rounded-br-md">
                               <span className="text-sm text-muted-foreground font-bold tracking-tight">{t("QU-NOW")}</span>
-                              <span className="text-sm font-bold">{item.total} {item.base_unit}</span>
+                              <span className="text-sm font-bold">{item.system_quantity} {item.base_unit}</span>
                           </div>
                         </div>
                       </div>
@@ -372,7 +372,7 @@ export default function Page() {
                           <TableCell>{item.base_unit}</TableCell>
                           <TableCell className="hidden xl:table-cell">{item.min_quantity}</TableCell>
                           <TableCell className="hidden lg:table-cell">{item.target_quantity}</TableCell>
-                          <TableCell>{item.total}</TableCell>
+                          <TableCell>{item.system_quantity}</TableCell>
                           <TableCell>
                             <div className="flex gap-1">
                               <Button
@@ -456,7 +456,7 @@ export default function Page() {
                                     </div> 
                                     <div className="w-full flex justify-end items-center gap-4">
                                         <span className="text-sm text-muted-foreground tracking-tight">{t("QU-NOW")}</span>
-                                        <span className="text-sm font-bold">{item.total} {item.base_unit}</span>
+                                        <span className="text-sm font-bold">{item.system_quantity} {item.base_unit}</span>
                                     </div>               
                                   </div>
                                 </motion.div>

@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Spinner } from "@/components/ui/spinner"
 import { Activity, Boxes, ChefHat } from "lucide-react"
 
 type PropsCardCharts =  {
@@ -31,8 +32,9 @@ function VariationBadge({ value }: { value: number }) {
 }
 
 export default function CardInfo({title,value,variation,sign, description} : PropsCardCharts) {
+
     return (
-        <Card className="relative">
+        <Card className="relative h-full">
             <div className="absolute top-0 right-0 rounded-tr-lg overflow-hidden">
                 <div className="p-5 pb-7 pl-7 w-fit rounded-bl-full ">
                     {
@@ -50,13 +52,23 @@ export default function CardInfo({title,value,variation,sign, description} : Pro
                 <CardTitle className=" text-card-foreground/80">{title}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-start justify-center gap-2">
-                <h1 className="text-3xl font-semibold">{value} <span className="text-2xl">{sign}</span></h1>
-                    <div className="flex space-x-2 text-sm">
-                        {variation !== undefined && 
-                            VariationBadge({value:variation})
-                        }
-                        <p className="text-muted-foreground/75">{description}</p>
-                    </div>
+                    {
+                        value && sign ? (
+                            <h1 className="text-3xl font-semibold">
+                                {value} <span className="text-2xl">{sign}</span>
+                            </h1>                            
+                        ) : (
+                            <div>
+                                <Spinner className="size-9 text-primary/80" />
+                            </div>
+                        )
+                    }
+                <div className="flex space-x-2 text-sm">
+                    {variation !== undefined && 
+                        VariationBadge({value:variation})
+                    }
+                    <p className="text-muted-foreground/75">{description}</p>
+                </div>
             </CardContent>
         </Card>
     )

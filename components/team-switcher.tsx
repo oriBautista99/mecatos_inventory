@@ -3,6 +3,7 @@
 import type * as React from "react"
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import Image from "next/image"
 
 export function TeamSwitcher({
   teams,
@@ -23,8 +24,8 @@ export function TeamSwitcher({
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" className="cursor-default">
-          <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-            <activeTeam.logo className="size-4" />
+          <div className="flex aspect-square size-8 items-center justify-center rounded-full">
+            <Image width={30} height={30} src="/mecatos-logo.png" alt="logo-mecatos" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">{activeTeam.name}</span>

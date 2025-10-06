@@ -281,34 +281,66 @@ export async function adjustBatchesForItem(
   }
 }
 
-export async function getInventoryHistory(): Promise<(InventoryCount & { inventory_counts_details: InventoryCountDetail[] } & {profiles: Profiles})[]> {
+export async function getInventoryHistory(limit?: number): Promise<(InventoryCount & { inventory_counts_details: InventoryCountDetail[] } & {profiles: Profiles})[]> {
+  
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("inventory_counts")
-    .select(
-      `
-      count_id,
-      counted_by,
-      created_at,
-      notes,
-      profiles(
-        username,
-        profile_id
-      ),
-      inventory_counts_details(
-        *
+  if(limit){ 
+    const { data, error } = await supabase
+      .from("inventory_counts")
+      .select(
+        `
+        count_id,
+        counted_by,
+        created_at,
+        notes,
+        profiles(
+          username,
+          profile_id
+        ),
+        inventory_counts_details(
+          *
+        )
+        `
       )
-      `
-    )
-    .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .range(0,limit);
 
-  if (error) {
-    console.error(error);
-    return [];
+    if (error) {
+      console.error(error);
+      return [];
+    }
+
+    return data as any;
+  }else{
+    const { data, error } = await supabase
+      .from("inventory_counts")
+      .select(
+        `
+        count_id,
+        counted_by,
+        created_at,
+        notes,
+        profiles(
+          username,
+          profile_id
+        ),
+        inventory_counts_details(
+          *
+        )
+        `
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      return [];
+    }
+
+    return data as any;
   }
 
-  return data as any;
+
 }
 
 export async function getInventoryCount(count_id: number){

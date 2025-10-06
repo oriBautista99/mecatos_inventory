@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Mecatos Inventory",
   description: "Inventory System",
+  icons: {
+    icon: "/favico.ico"
+  }
 };
 
 const openSans = Open_Sans({

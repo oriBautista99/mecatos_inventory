@@ -20,7 +20,7 @@ export interface Item {
     storage_area_id: number,
     storage_areas: Storage_area,
     created_at?: string,
-    total ?: number,
+    system_quantity ?: number,
     presentations: Presentation[],
     production_type ?: 'BREAD' | 'DESSERT' | 'PASTRY';
 }

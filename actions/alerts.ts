@@ -28,19 +28,39 @@ export async function resolveAlert(alertId: string, resolvedBy: string) {
 
 }
 
-export async function getPendingAlerts() {
+export async function getPendingAlerts(limit?: number) {
     const supabase = await createClient();
 
-    const { data, error } = await supabase
-        .from("v_expiration_alerts")
-        .select("*")
-        .eq("resolved", false)
-        .order("due_date", { ascending: true });
+    if(limit) { 
+        const { data, error } = await supabase
+            .from("v_expiration_alerts")
+            .select("*")
+            .eq("resolved", false)
+            .range(0,limit)
+            .order("due_date", { ascending: true }); 
 
-    if (error) {
-        console.error("Error fetching alerts:", error);
-        return { error };
+        if (error) {
+            console.error("Error fetching alerts:", error);
+            return { error };
+        }
+
+        return { success: true, data };                  
+    }else{
+        const { data, error } = await supabase
+            .from("v_expiration_alerts")
+            .select("*")
+            .eq("resolved", false)
+            .order("due_date", { ascending: true }); 
+
+        if (error) {
+            console.error("Error fetching alerts:", error);
+            return { error };
+        }
+
+        return { success: true, data };   
     }
 
-    return { success: true, data };
+
+
+
 }
