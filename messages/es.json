@@ -100,7 +100,8 @@
         "sales": "Ventas",
         "production": "Producción",
         "settings": "Configuraciones",
-        "neworder": "Nueva Orden"       
+        "neworder": "Nueva Orden",
+        "new_count": "Nuevo Conteo"       
     },
      "USERS" : {
         "TITLE": "Gestión de Usuarios",

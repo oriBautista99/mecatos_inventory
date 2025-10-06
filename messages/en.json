@@ -90,7 +90,8 @@
         "sales" : "Sales",
         "production" : "Production",
         "settings": "settings",
-        "neworder": "New Order"                
+        "neworder": "New Order",
+        "new_count": "New Count"       
     },
   "USERS": {
         "TITLE": "User Management",

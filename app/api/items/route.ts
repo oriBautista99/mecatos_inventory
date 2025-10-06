@@ -23,13 +23,36 @@ export async function GET() {
           *,
           suppliers_presentations(
             suppliers(*)
-          )
+          ),
+          item_batches (
+            batch_id,
+            current_quantity,
+            received_date,
+            expiration_date,
+            is_active,
+            order_detail_id,
+            created_at
+          )            
         )
+
     `);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  const items: any[] = data.map((item: any) => {
+    const system_quantity = item.presentations.reduce((acc:any, pres:any) => {
+      const sumBatches = pres.item_batches && pres.item_batches
+        .filter((b:any) => b.is_active)
+        .reduce((s:any, b:any) => s + b.current_quantity, 0);
+      return acc + (sumBatches ? sumBatches: 0) * pres.conversion_factor;
+    }, 0);
+    return {
+      ...item,
+      system_quantity
+    }
+  });
+
+  return NextResponse.json(items);
 }
