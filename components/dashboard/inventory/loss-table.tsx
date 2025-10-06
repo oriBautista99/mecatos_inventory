@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { cn } from "@/lib/utils";
 import { LossEventRow } from "@/types/loss";
 import { format } from "date-fns";
-import { CalendarIcon, ChevronDownIcon } from "lucide-react";
+import { CalendarIcon, ChevronDownIcon, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { useState } from "react";
@@ -52,17 +52,20 @@ export default function LossTable({ data, onSelectRow }: Props) {
     }
 
     return(
-        <div className="overflow-x-auto space-y-2 p-2">
-            <div className="flex flex-col md:flex-row gap-4">
-                <Input
-                    placeholder={t("SEARCH")}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="md:w-1/3"
-                />
+        <div className="flex flex-col space-y-4">
+            <div className="flex flex-col md:flex-row lg:flex-wrap gap-4">
+                <div className="relative flex-1 max-w-full">
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground"/>
+                    <Input
+                        placeholder={t("SEARCH")}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="pl-8 w-full text-sm"
+                    />                    
+                </div>
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant='outline' id='date' className='w-fit justify-between font-normal'>
+                        <Button variant='outline' id='date' className='w-full md:w-fit justify-between font-normal'>
                             <span className='flex items-center'>
                                 <CalendarIcon className='mr-2 h-4 w-4' />
                                 {selectedDate ? format(selectedDate, "dd/MM/yyyy") : t("DATE-SEARCH")}
@@ -79,8 +82,8 @@ export default function LossTable({ data, onSelectRow }: Props) {
                     </PopoverContent>
                 </Popover>
             </div>
-            <div className="hidden md:block md:rounded-xl md:border md:border-border shadow">
-                <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[70vh]">
+            <div  className="md:rounded-xl md:border md:border-border shadow">
+                <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[60vh]">
                     <Table className="bg-card">
                         <TableHeader>
                             <TableRow className="bg-secondary">

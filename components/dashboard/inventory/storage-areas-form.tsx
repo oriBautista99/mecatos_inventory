@@ -33,7 +33,7 @@ export function StorageAreasForm({ onClose, onSave, area }: AreaModalProps){
         },
     });
 
-    const t = useTranslations("CATEGORIES-FORM"); 
+    const t = useTranslations("STORAGE-AREAS-FORM"); 
 
     useEffect(() => {
         if (area) {

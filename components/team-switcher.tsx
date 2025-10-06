@@ -4,6 +4,7 @@ import type * as React from "react"
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
 import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
 
 export function TeamSwitcher({
   teams,
@@ -15,6 +16,14 @@ export function TeamSwitcher({
   }[]
 }) {
   const activeTeam = teams[0]
+  const pathname = usePathname(); 
+  const basePath = pathname.split("/").slice(0, 3).join("/"); 
+  const router = useRouter();
+
+  //redirect for row
+  const handleRowClick = () => {
+    router.push(`${basePath}`);
+  };
 
   if (!activeTeam) {
     return null
@@ -23,7 +32,7 @@ export function TeamSwitcher({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton size="lg" className="cursor-default">
+        <SidebarMenuButton size="lg" className="cursor-pointer" onClick={() => handleRowClick()}>
           <div className="flex aspect-square size-8 items-center justify-center rounded-full">
             <Image width={30} height={30} src="/mecatos-logo.png" alt="logo-mecatos" />
           </div>

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Mecatos Inventory",
   description: "Inventory System",
   icons: {
-    icon: "/favico.ico"
+    icon: "/favicon.ico"
   }
 };
 

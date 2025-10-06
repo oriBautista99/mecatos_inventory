@@ -63,7 +63,7 @@ export default function AlertsView() {
     return (
         <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
             <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-start w-full">
                     <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
                     <p className="text-sm text-muted-foreground tracking-tight">
                         {t("DESCRIPTION")}
@@ -78,7 +78,7 @@ export default function AlertsView() {
                     </div>
                 ) : (
                     <div className="overflow-x-auto space-y-2">
-                        <div className="hidden md:block md:rounded-xl md:border md:border-border shadow">
+                        <div className="md:rounded-xl md:border md:border-border shadow">
                             <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[70vh]">
                                 <Table className="bg-card">
                                     <TableHeader>

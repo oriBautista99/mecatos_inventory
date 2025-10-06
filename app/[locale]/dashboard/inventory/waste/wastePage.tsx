@@ -53,14 +53,13 @@ export default function WastePage(){
     }, []);
 
     return(
-        <div className="max-h-screen overflow-y-auto space-y-4">
-            <div className="flex flex-col md:flex-row justify-between items-center w-full space-y-4 md:space-y-2">
-                <div className="flex flex-col items-start">
+        <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
+                <div className="flex flex-col justify-start w-full">
                     <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
                     <p className="text-sm text-muted-foreground tracking-tight">{t("DESCRIPTION")}</p>
                 </div>
                 <Sheet open={!!sheetState} onOpenChange={(open) => !open && setSheetState(null)}>
-                    
                     <Button className="w-full sm:w-fit" onClick={() => setSheetState({ mode: "create" })}>
                         <Plus className="mr-2 h-4 w-4" />
                         {t("REGISTER-WASTE")}
