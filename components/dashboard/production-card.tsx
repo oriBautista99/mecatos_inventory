@@ -12,6 +12,7 @@ import { BarChartComponent } from "../bar-chart";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 export default function ProductionCard(){
 
@@ -64,19 +65,24 @@ export default function ProductionCard(){
                 </div>
                 <div>
                     {
-                        range &&
-                        <div className="p-1 w-full h-auto">
-                            <BarChartComponent
-                                data={series}
-                                xKey="event_day"
-                                yKey="total"
-                                xIsDate={true}
-                                config={{
-                                    total: { label: "Producción", color: "hsl(var(--chart-1))" },
-                                }}
-                            /> 
-                        </div>
-                    
+                        range && series ? (
+                            <div className="p-1 w-full h-auto">
+                                <BarChartComponent
+                                    data={series}
+                                    xKey="event_day"
+                                    yKey="total"
+                                    xIsDate={true}
+                                    config={{
+                                        total: { label: "Producción", color: "hsl(var(--chart-1))" },
+                                    }}
+                                /> 
+                            </div>                            
+                        ): (
+                            <div className="w-full flex justify-center items-center p-4 gap-2">
+                                <Spinner className="size-9 text-primary/80" /> 
+                                <p className="text-sm text-muted-foreground">{t("LOADING")}</p>
+                            </div>
+                        )
                     }                    
                 </div>
             </div>

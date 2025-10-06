@@ -10,6 +10,7 @@ import Link from "next/link";
 import { ArrowRight, Calculator, Notebook } from "lucide-react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 export default function CountsCard()  {
     const [counts, setCounts] = useState<(InventoryCount & { inventory_counts_details: InventoryCountDetail[] } & {profiles: Profiles})[]>([]);  
@@ -53,28 +54,35 @@ export default function CountsCard()  {
                     </div>
                     <div className="flex flex-col gap-2 overflow-y-auto h-full max-h-[300px]">
                         {
-                            counts.map((count) => {
-                                return (
-                                    <Link key={count.count_id} href={`${pathname}/inventory/count/${count.count_id}`}>
-                                        <div className=" cursor-pointer p-3 shadow-sm bg-primary/5 hover:bg-primary/15 rounded-sm w-full flex justify-between">
-                                            <div className="flex gap-3">
-                                                <div className="flex justify-center items-center">
-                                                    <Calculator className="h-5 w-5 text-primary" />
+                            counts.length > 0 ? (
+                                counts.map((count) => {
+                                    return (
+                                        <Link key={count.count_id} href={`${pathname}/inventory/count/${count.count_id}`}>
+                                            <div className=" cursor-pointer p-3 shadow-sm bg-primary/5 hover:bg-primary/15 rounded-sm w-full flex justify-between">
+                                                <div className="flex gap-3">
+                                                    <div className="flex justify-center items-center">
+                                                        <Calculator className="h-5 w-5 text-primary" />
+                                                    </div>
+                                                    <div className="flex flex-col h-full justify-between items-start">
+                                                        <p className="text-sm font-semibold">{t("COUNT")}: # <span className="font-semibold">{count.count_id}</span></p>  
+                                                        <p className="text-sm font-medium text-muted-foreground">{new Date(count.created_at).toLocaleString()}</p>  
+                                                    </div>                                                
                                                 </div>
-                                                <div className="flex flex-col h-full justify-between items-start">
-                                                    <p className="text-sm font-semibold">{t("COUNT")}: # <span className="font-semibold">{count.count_id}</span></p>  
-                                                    <p className="text-sm font-medium text-muted-foreground">{new Date(count.created_at).toLocaleString()}</p>  
-                                                </div>                                                
-                                            </div>
 
-                                            <div className="flex justify-end items-end">
-                                                <p className="text-sm font-semibold text-muted-foreground">{count.profiles.username}</p> 
-                                            </div>
-                                        </div>                                
-                                    </Link>
+                                                <div className="flex justify-end items-end">
+                                                    <p className="text-sm font-semibold text-muted-foreground">{count.profiles.username}</p> 
+                                                </div>
+                                            </div>                                
+                                        </Link>
 
-                                )
-                            })
+                                    )
+                                })                                
+                            ) : (
+                                <div className="w-full flex justify-center items-center p-4 gap-2">
+                                    <Spinner className="size-9 text-primary/80" /> 
+                                    <p className="text-sm text-muted-foreground">{t("LOADING")}</p>
+                                </div>
+                            )
                         }
                     </div>
                 </div>

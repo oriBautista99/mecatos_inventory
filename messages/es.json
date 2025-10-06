@@ -47,12 +47,14 @@
     "DASH-PROD-CARD" : {
         "TITLE" : "Producción",
         "DESCRIP" : "Producción de los últimos 7 días",
-        "MORE" : "Más"
+        "MORE" : "Más",
+        "LOADING" : "Cargando ..."
     },
     "DASH-LOST-CARD" : {
         "TITLE" : "Perdidas",
         "DESCRIP" : "Perdida de los últimos 7 días",
-        "MORE" : "Más"
+        "MORE" : "Más",
+        "LOADING" : "Cargando ..."
     },
     "DASH-CARD-ALERTS":{
         "TITLE":"Alertas de Vencimiento",
@@ -60,13 +62,15 @@
         "QTY" : "Unidades en Vitrina",
         "EXPIRATION": "Retirar el",
         "RESOLVED-SUCCESSFULLY": "Alerta revisada",
-        "MORE" : "Más"
+        "MORE" : "Más",
+        "LOADING" : "Cargando ..."
     },
     "DASH-CARD-COUNTS":{
         "TITLE":"Conteos de Inventario",
         "DESCRIPTION": "Conteos de los últimos 7 días",
         "COUNT": "Conteo",
-        "MORE" : "Más"
+        "MORE" : "Más",
+        "LOADING" : "Cargando ..."
     },
     "DASH-CARD-ORDERS": {
         "ORDERS" : "Órdenes",
@@ -76,7 +80,8 @@
         "RECEIVED" : "Recibida el",
         "EXPIRATION" : "Vencimiento",
         "LAST-SUGGESTED-ORDER" : "Ultima orden sugerida",
-        "GENERATED": "Generada"
+        "GENERATED": "Generada",
+        "LOADING" : "Cargando ..."
     },
     "ROUTES": {
         "dashboard": "Dashboard",

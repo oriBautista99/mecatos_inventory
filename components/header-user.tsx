@@ -31,8 +31,8 @@ export function HeaderUser() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-            <Avatar className="h-10 w-10">
+          <Button variant="ghost" className="relative h-10 w-auto rounded-lg hover:bg-primary/10 p-0">
+            <Avatar className="h-8 w-8  text-muted-foreground">
                 {/* <AvatarImage src={profile[0].avatar || "/placeholder.svg"} alt={profile[0].username} /> */}
                 <AvatarFallback>
                               {profile && profile.username
@@ -42,7 +42,10 @@ export function HeaderUser() {
                                 .toUpperCase()}
                   </AvatarFallback>
               </Avatar>
-              
+              <div className=" hidden md:flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none  text-muted-foreground">{profile.username}</p>
+                <p className="text-xs leading-none text-muted-foreground">{profile.email}</p>
+              </div>
           </Button>       
         </DropdownMenuTrigger>
         <DropdownMenuContent  className="w-56" align="end" forceMount>

@@ -10,6 +10,7 @@ import { ArrowRight, Trash } from "lucide-react";
 import { Button } from "../ui/button";
 import { AreaChartComponent } from "../area-chart";
 import Link from "next/link";
+import { Spinner } from "../ui/spinner";
 
 export default function LostCard(){
     const [range] = useState<DateRange | undefined>({
@@ -62,18 +63,25 @@ export default function LostCard(){
                 </div>
                 <div>
                     {
-                        range &&
-                        <div className="p-1 w-full">
-                            <AreaChartComponent
-                                data={lossesByDay}
-                                xKey="loss_date"
-                                yKey="total_loss"
-                                xIsDate={true}
-                                config={{
-                                    total: { label: "Perdida", color: "hsl(var(--chart-1))" },
-                                }}
-                            /> 
-                        </div>
+                        range && lossesByDay ? (
+                            <div className="p-1 w-full">
+                                <AreaChartComponent
+                                    data={lossesByDay}
+                                    xKey="loss_date"
+                                    yKey="total_loss"
+                                    xIsDate={true}
+                                    config={{
+                                        total: { label: "Perdida", color: "hsl(var(--chart-1))" },
+                                    }}
+                                /> 
+                            </div>                            
+                        ) : (
+                            <div className="w-full flex justify-center items-center p-4 gap-2">
+                                <Spinner className="size-9 text-primary/80" /> 
+                                <p className="text-sm text-muted-foreground">{t("LOADING")}</p>
+                            </div>
+                        )
+
                     }                    
                 </div>
             </div>

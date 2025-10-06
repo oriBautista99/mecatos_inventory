@@ -47,12 +47,15 @@
     "DASH-PROD-CARD" : {
         "TITLE" : "Production",
         "DESCRIP" : "Production from the last 7 days",
-        "MORE" : "More"
+        "MORE" : "More",
+        "LOADING" : "Loading ..."
+
     },
     "DASH-LOST-CARD" : {
         "TITLE" : "Lost",
         "DESCRIP" : "Lost in the last 7 days",
-        "MORE" : "More"
+        "MORE" : "More",
+        "LOADING" : "Loading ..."
     },
     "DASH-CARD-ALERTS":{
         "TITLE": "Expiration Alerts",
@@ -60,13 +63,26 @@
         "QTY": "Units in Display",
         "EXPIRATION": "Remove on",
         "RESOLVED-SUCCESSFULLY": "Alert reviewed",
-        "MORE": "More"
+        "MORE": "More",
+        "LOADING" : "Loading ..."
     },
     "DASH-CARD-COUNTS":{
         "TITLE": "Inventory Counts",
         "DESCRIPTION": "Counts from the last 7 days",
         "COUNT": "Count",
-        "MORE": "More"
+        "MORE": "More",
+        "LOADING" : "Loading ..."
+    },
+    "DASH-CARD-ORDERS": {
+        "ORDERS" : "Orders",
+        "ORDER" : "Order",
+        "MORE" : "More",
+        "LAST-RECEIVING-ORDER" : "Last Order Received",
+        "RECEIVED" : "Received On",
+        "EXPIRATION" : "Expiration",
+        "LAST-SUGGESTED-ORDER" : "Last Suggested Order",
+        "GENERATED" : "Generated",
+        "LOADING" : "Loading..."
     },
     "ROUTES": {
         "dashboard": "Dashboard",
@@ -620,15 +636,5 @@
         "DESCRIPTION": "Record of losses that occurred",
         "REGISTER-WASTE": "Record Loss",
         "LOADING": "Loading losses..."
-    },
-    "DASH-CARD-ORDERS": {
-        "ORDERS": "Orders",
-        "ORDER": "Order",
-        "MORE": "More",
-        "LAST-RECEIVING-ORDER": "Last Order Received",
-        "RECEIVED": "Received On",
-        "EXPIRATION": "Expiration",
-        "LAST-SUGGESTED-ORDER": "Last Suggested Order",
-        "GENERATED": "Generated"
     }
 }

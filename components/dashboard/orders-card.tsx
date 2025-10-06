@@ -8,6 +8,7 @@ import { ArrowRight, ClipboardList, FileInput, Truck } from "lucide-react";
 import { Button } from "../ui/button";
 import { PieChartComponent } from "../PieChart";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 export type chartDataStatus = {
     label: string, 
@@ -65,25 +66,33 @@ export default function OrdersCard() {
                         </Button>                    
                     </Link>
                 </div>
-                <div className="flex flex-col justify-between relative">
-                    <div className="absolute flex flex-col w-full h-full justify-center items-center text-foreground font-semibold">
-                        <h1 className="text-2xl font-bold">{totalOrdersReceiving+totalOrdersSuggested}</h1>
-                        <p className="text-xs text-muted-foreground font-normal pb-6">Total</p>
-                    </div>
-                    <div className="h-60 w-full">
-                        <PieChartComponent
-                            data={chartData}
-                            nameKey={"label"}
-                            valueKey={"value"}
-                            config={{
-                                "RECEIVING": { label: "RECEIVING", color: "hsl(var(--chart-1))" },
-                                "SUGGESTED": { label: "SUGGESTED", color: "hsl(var(--chart-2))" },
-                            }}                        
-                        >
-                        </PieChartComponent>
-                    </div>
-                </div>
-
+                {
+                    totalOrdersReceiving && totalOrdersSuggested ? (
+                        <div className="flex flex-col justify-between relative">
+                            <div className="absolute flex flex-col w-full h-full justify-center items-center text-foreground font-semibold">
+                                <h1 className="text-2xl font-bold">{totalOrdersReceiving+totalOrdersSuggested}</h1>
+                                <p className="text-xs text-muted-foreground font-normal pb-6">Total</p>
+                            </div>
+                            <div className="h-60 w-full">
+                                <PieChartComponent
+                                    data={chartData}
+                                    nameKey={"label"}
+                                    valueKey={"value"}
+                                    config={{
+                                        "RECEIVING": { label: "RECEIVING", color: "hsl(var(--chart-1))" },
+                                        "SUGGESTED": { label: "SUGGESTED", color: "hsl(var(--chart-2))" },
+                                    }}                        
+                                >
+                                </PieChartComponent>
+                            </div>
+                        </div>                        
+                    ) : (
+                        <div className="w-full flex justify-center items-center p-4 gap-2">
+                            <Spinner className="size-9 text-primary/80" /> 
+                            <p className="text-sm text-muted-foreground">{t("LOADING")}</p>
+                        </div>
+                    )
+                }
                 {
                     ordersReceiving && ordersReceiving.length > 0 &&
                     <div className="flex flex-col space-y-4">

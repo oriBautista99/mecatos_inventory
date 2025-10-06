@@ -30,7 +30,7 @@ export default async function DashboardLayout({children} : Readonly<{children: R
             <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4 hidden md:block" />
             <Breadcrumbs/>
           </div>
-          <div className="ml-auto flex items-center gap-2 px-4">
+          <div className="ml-auto flex items-center gap-2">
             {/* <NotificationsDropdown /> */}
             <HeaderUser/>
           </div>

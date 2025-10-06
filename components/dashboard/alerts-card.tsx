@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 export default function AlertsCard() {
 
@@ -62,40 +63,48 @@ export default function AlertsCard() {
                     </div>
                     <div className="space-y-2 overflow-y-auto max-h-[300px]">
                         {
-                            alerts.map((alert) => {
-                                return(
-                                    <div key={alert.alert_id} className="p-3 bg-accent/10 hover:bg-accent/25 rounded-lg shadow-sm transition-all hover:shadow-md">
-                                        <div className="flex items-center justify-between gap-3 text-sm">
-                                            <div className="flex items-center gap-3">
-                                                <div className="flex justify-center items-center">
-                                                    <CircleAlert className="h-5 w-5 text-accent"></CircleAlert>
+                            alerts.length > 0 ? 
+                            (
+                                alerts.map((alert) => {
+                                    return(
+                                        <div key={alert.alert_id} className="p-3 bg-accent/10 hover:bg-accent/25 rounded-lg shadow-sm transition-all hover:shadow-md">
+                                            <div className="flex items-center justify-between gap-3 text-sm">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="flex justify-center items-center">
+                                                        <CircleAlert className="h-5 w-5 text-accent"></CircleAlert>
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <span className="font-semibold text-foreground text-sm">
+                                                            {alert.item_name}
+                                                        </span>
+                                                        <span className="text-muted-foreground text-xs">
+                                                            {t("EXPIRATION")}: <span className="text-foreground font-medium">{new Date(alert.due_date).toLocaleDateString()}</span>
+                                                        </span>
+                                                        <span className="text-muted-foreground text-xs font-medium">
+                                                            {t("QTY")}: <span className="text-foreground font-medium">{alert.remaining_quantity}</span> 
+                                                        </span>
+                                                    </div>                                                
                                                 </div>
-                                                <div className="flex flex-col">
-                                                    <span className="font-semibold text-foreground text-sm">
-                                                        {alert.item_name}
-                                                    </span>
-                                                    <span className="text-muted-foreground text-xs">
-                                                        {t("EXPIRATION")}: <span className="text-foreground font-medium">{new Date(alert.due_date).toLocaleDateString()}</span>
-                                                    </span>
-                                                    <span className="text-muted-foreground text-xs font-medium">
-                                                        {t("QTY")}: <span className="text-foreground font-medium">{alert.remaining_quantity}</span> 
-                                                    </span>
-                                                </div>                                                
-                                            </div>
 
-                                            <div className="flex items-center gap-2">
-                                                <Button
-                                                    onClick={() => handleResolve(alert.alert_id)}
-                                                    size={"sm"}
-                                                    className="h-7 px-2 text-xs"
-                                                >
-                                                    <Check className="w-4 h-4"></Check>
-                                                </Button>
+                                                <div className="flex items-center gap-2">
+                                                    <Button
+                                                        onClick={() => handleResolve(alert.alert_id)}
+                                                        size={"sm"}
+                                                        className="h-7 px-2 text-xs"
+                                                    >
+                                                        <Check className="w-4 h-4"></Check>
+                                                    </Button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
-                            })
+                                    )
+                                })                                
+                            ) : (
+                                <div className="w-full flex justify-center items-center p-4 gap-2">
+                                    <Spinner className="size-9 text-primary/80" /> 
+                                    <p className="text-sm text-muted-foreground">{t("LOADING")}</p>
+                                </div>
+                            )
                         }
                     </div>       
                 </div>

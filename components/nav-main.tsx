@@ -50,7 +50,7 @@ export function NavMain({
   return (
     <SidebarGroup>
       {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
-      <SidebarMenu className="space-y-4">
+      <SidebarMenu className="space-y-2">
         {items.map((item) => {
           const hasSubItems = item.items && item.items.length > 0;
           return hasSubItems ? (
