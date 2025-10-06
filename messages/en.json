@@ -636,6 +636,10 @@
         "SAVE": "Save",
         "CANCEL": "Cancel"
     },
+    "LOSS-ITEM-TABLE" : {
+        "PRODUCT": "Product",
+        "QYT_LOST": "Lost Quantity"
+    },
     "LOSS-TABLE": {
         "NO-REGISTER": "No recorded losses",
         "SEARCH": "Search for loss...",
