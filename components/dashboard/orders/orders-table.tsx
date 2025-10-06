@@ -37,7 +37,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
     return(
         <div className="overflow-x-auto space-y-2">
             <div className="hidden md:block md:rounded-xl md:border md:border-border shadow">
-              <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[70vh]">
+              <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[60vh]">
                 <Table className="bg-card">
                     <TableHeader>
                         <TableRow className="bg-secondary">
@@ -78,7 +78,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                     <div className="flex justify-between items-center">
                       <div className="flex flex-col">
                         <h3 className="text-lg font-semibold text-foreground tracking-tight">
-                          {t("NO-ORDERS")}: {order.order_id}
+                          {t("N-ORDER")}: {order.order_id}
                         </h3>
                         <p className="text-xs text-muted-foreground">{order.description}</p>                      
                       </div>

@@ -294,6 +294,11 @@
         "TYPE": "Tipos de Productos"
     },
     "ITEM-TYPES": {
+        "TITLE": "Tipos de productos",
+        "DESCRIPTION-TITLE" : "Clasificacion que deseas agregar a tus productos dentro del inventario.",
+        "ADD": "Nuevo tipo",
+        "SAVE": "Guardar",
+        "UPDATE": "Actualizar",
         "EDIT-ITEM-TYPES": "Editar el tipo de producto",
         "CREATE-ITEM-TYPES":"Nuevo tipo de producto",
         "EDIT-DESCRIPTION": "Modifica la información del tipo de producto existente",

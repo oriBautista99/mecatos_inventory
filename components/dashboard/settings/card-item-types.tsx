@@ -2,7 +2,6 @@
 
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Item_types, ItemTypeSchema, ItemTypesFormValues } from "@/types/itemTypes";
@@ -17,6 +16,8 @@ import { toast } from "sonner";
 import { createItemType, deleteItemType, updateItemType } from "@/actions/item_types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { revalidateItemTypes, useItemTypesSWR } from "@/hooks/useItemTypesSWR";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 export default function CardItemTypes(){
 
@@ -58,6 +59,13 @@ export default function CardItemTypes(){
         type.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         type.description.toLowerCase().includes(searchTerm.toLowerCase()),
     );
+
+    //   pagination
+    const [page, setPage] = useState(1);
+    const pageSize = 5; 
+    const totalPages = Math.ceil(filteredTypes.length / pageSize);
+    const startIndex = (page - 1) * pageSize;
+    const currentData = filteredTypes.slice(startIndex, startIndex + pageSize);
 
     const handleSave = async (typeData: ItemTypesFormValues) => {
         if (selectType) {
@@ -105,13 +113,78 @@ export default function CardItemTypes(){
     }
 
     return(
-        <Card>
-            <CardHeader className="px-6 sm:p-6">
-                <CardTitle className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</CardTitle>
-                <CardDescription className="text-sm">{selectType ?  t("EDIT-DESCRIPTION") : t("CREATE-DESCRIPTION")}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex items-center space-x-2 mb-4">
+        <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
+                <div className="flex flex-col justify-start w-full">
+                    <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
+                    <p className="text-sm text-muted-foreground tracking-tight">
+                        {t("DESCRIPTION-TITLE")}
+                    </p>
+                </div>
+                <Sheet open={showForm} onOpenChange={setShowForm} >
+                    <SheetTrigger asChild>
+                        <Button className="w-full md:w-fit">
+                        <Plus className="mr-2 h-4 w-4" />
+                            {t("ADD")}
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-4 sm:p-6">
+                        <div className="">
+                                <SheetTitle>
+                                    <div className="p-1">
+                                        <h3 className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</h3>
+                                    </div>                                    
+                                </SheetTitle>
+                                <Separator />
+                                <form onSubmit={handleSubmit(handleSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="name" className="text-sm">
+                                            {t("T-NAME")} *
+                                        </Label>
+                                        <Input
+                                            id="name"
+                                            {...register("name")}
+                                            placeholder="Recetas"
+                                            className={`text-sm ${errors.name ? "border-destructive" : ""}`}
+                                        />
+                                        {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="description" className="text-sm">
+                                            {t("T-DESCRIPTION")} *
+                                        </Label>
+                                        <Textarea
+                                            id="description"
+                                            {...register("description")}
+                                            placeholder="Describe a que se refiere tu tipo de producto"
+                                            className={`text-sm resize-none ${errors.description ? "border-destructive" : ""}`}
+                                            rows={2}
+                                        />
+                                        {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
+                                    </div>
+                                    {/* Actions */}
+                                    <div className="flex gap-2 sm:gap-3 pt-4 border-t">
+                                        <Button type="submit" className="flex-1 text-sm">
+                                            <Save className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                            { selectType ? t("UPDATE") : t("SAVE") }
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            onClick={() => handleCancel()}
+                                            className="flex-1 sm:flex-none text-sm bg-transparent"
+                                            >
+                                            <X className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                            {t("CANCEL")} 
+                                        </Button>
+                                    </div>
+                                </form>
+                            </div>
+                    </SheetContent>
+                </Sheet> 
+            </div>
+            <div className="flex flex-col space-y-4">
+                <div className="flex md:flex-row gap-2 justify-start md:space-y-0 md:justify-between lg:space-x-4 2xl:justify-start">
                     <div className="relative flex-1 max-w-full">
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
@@ -122,13 +195,14 @@ export default function CardItemTypes(){
                         />
                     </div>
                 </div>
+                {/* Mobile Cards View */}
                 <div className="block sm:hidden space-y-4 w-full">
-                    {filteredTypes.length === 0 ? (
+                    {currentData.length === 0 ? (
                         <div className="text-center py-2 text-muted-foreground">
                             {searchTerm ? t("NO-FOUND-TYPES") : t("NO-TYPES")}
                         </div>
                     ):(
-                        filteredTypes.map((type) => (
+                        currentData.map((type) => (
                             <div 
                                 key={type.item_type_id} 
                                 className="border rounded-lg p-4 space-y-3 bg-muted hover:bg-accent cursor-pointer flex justify-between">
@@ -169,142 +243,106 @@ export default function CardItemTypes(){
                         ))                    
                     )}
                 </div>
-                  {/* Desktop Table View */}
-              <div className="hidden sm:block rounded-md border overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="min-w-[150px]">{t("T-NAME")}</TableHead>
-                      <TableHead className="min-w-[120px]">{t("T-DESCRIPTION")}</TableHead>
-                      <TableHead className="w-[140px]">{t("T-ACTIONS")}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredTypes.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                          {searchTerm ?  t("NO-FOUND-TYPES") : t("NO-TYPES")}
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      filteredTypes.map((type) => (
-                        <TableRow
-                          key={type.item_type_id}
-                          className="hover:bg-muted/50 cursor-pointer"
-                        >
-                          <TableCell>
-                            <div className="space-y-1">
-                              <div className="font-medium text-sm">{type.name}</div>
-                            </div>
-                          </TableCell>
-
-                          <TableCell>
-                            <div className="space-y-1">
-                              <div className="font-medium text-sm">{type.description}</div>
-                            </div>
-                          </TableCell>
-
-                          <TableCell>
-                            <div className="flex gap-1">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0"
-                                onClick={() => handleEdit(type)}
-                                title="Editar"
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <ConfirmDialog
-                                trigger={
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
-                                      title="Eliminar"
-                                    >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                }
-                                title={t("DELETE-TYPE")}
-                                description={t("DELETE-DESCRIPTION")}
-                                confirmText={t("DELETE")}
-                                cancelText={t("CANCEL")}
-                                onConfirm={() => handleDelete(type.item_type_id)}
-                              />
-
-                            </div>
-                          </TableCell>
+                {/* Desktop Table View */}
+                <div className="hidden sm:block rounded-md border overflow-x-auto">
+                    <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead className="min-w-[150px]">{t("T-NAME")}</TableHead>
+                        <TableHead className="min-w-[120px]">{t("T-DESCRIPTION")}</TableHead>
+                        <TableHead className="w-[140px]">{t("T-ACTIONS")}</TableHead>
                         </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </div>             
-                
-                    {showForm && 
-                        <div className="">
-                            <div className="p-1">
-                                <h3 className="text-lg font-bold sm:text-xl">Agregar un tipo de Producto</h3>
-                            </div>
-                            <Separator />
-                            <form onSubmit={handleSubmit(handleSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
-                                <div className="space-y-2">
-                                    <Label htmlFor="name" className="text-sm">
-                                        Nombre *
-                                    </Label>
-                                    <Input
-                                        id="name"
-                                        {...register("name")}
-                                        placeholder="Recetas"
-                                        className={`text-sm ${errors.name ? "border-destructive" : ""}`}
-                                    />
-                                    {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+                    </TableHeader>
+                    <TableBody>
+                        {currentData.length === 0 ? (
+                        <TableRow>
+                            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                            {searchTerm ?  t("NO-FOUND-TYPES") : t("NO-TYPES")}
+                            </TableCell>
+                        </TableRow>
+                        ) : (
+                        currentData.map((type) => (
+                            <TableRow
+                            key={type.item_type_id}
+                            className="hover:bg-muted/50 cursor-pointer"
+                            >
+                            <TableCell>
+                                <div className="space-y-1">
+                                <div className="font-medium text-sm">{type.name}</div>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="description" className="text-sm">
-                                        Descripcion *
-                                    </Label>
-                                    <Textarea
-                                        id="description"
-                                        {...register("description")}
-                                        placeholder="Describe a que se refiere tu tipo de producto"
-                                        className={`text-sm resize-none ${errors.description ? "border-destructive" : ""}`}
-                                        rows={2}
-                                    />
-                                    {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
-                                </div>
-                                {/* Actions */}
-                                <div className="flex gap-2 sm:gap-3 pt-4 border-t">
-                                    <Button type="submit" className="flex-1 text-sm">
-                                        <Save className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                        { selectType ? "Actualizar" : "Guardar"}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={() => handleCancel()}
-                                        className="flex-1 sm:flex-none text-sm bg-transparent"
-                                        >
-                                        <X className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                        Cancelar 
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    }
-                    {
-                        !showForm &&
-                        <div className="flex flex-col w-full">
-                            <Button onClick={() => {setShowForm(!showForm)}}>
-                                <Plus className="mr-2 h-3 w-3 sm:h-4 sm:w-4"/>
-                                Añadir
-                            </Button>
-                        </div>                        
-                    }
+                            </TableCell>
 
-                
-            </CardContent>
-        </Card>
+                            <TableCell>
+                                <div className="space-y-1">
+                                <div className="font-medium text-sm">{type.description}</div>
+                                </div>
+                            </TableCell>
+
+                            <TableCell>
+                                <div className="flex gap-1">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0"
+                                    onClick={() => handleEdit(type)}
+                                    title="Editar"
+                                >
+                                    <Edit className="h-4 w-4" />
+                                </Button>
+                                <ConfirmDialog
+                                    trigger={
+                                        <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                        title="Eliminar"
+                                        >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                    }
+                                    title={t("DELETE-TYPE")}
+                                    description={t("DELETE-DESCRIPTION")}
+                                    confirmText={t("DELETE")}
+                                    cancelText={t("CANCEL")}
+                                    onConfirm={() => handleDelete(type.item_type_id)}
+                                />
+
+                                </div>
+                            </TableCell>
+                            </TableRow>
+                        ))
+                        )}
+                    </TableBody>
+                    </Table>
+                </div>
+            </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <Pagination>
+                    <PaginationContent>
+                    <PaginationItem>
+                        <PaginationPrevious
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        aria-disabled={page === 1}
+                        />
+                    </PaginationItem>
+                    {[...Array(totalPages)].map((_, i) => (
+                        <PaginationItem key={i}>
+                        <PaginationLink isActive={page === i + 1} onClick={() => setPage(i + 1)}>
+                            {i + 1}
+                        </PaginationLink>
+                        </PaginationItem>
+                    ))}
+                    <PaginationItem>
+                        <PaginationNext
+                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                        aria-disabled={page === totalPages}
+                        />
+                    </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
+        </div>
+
     )
 }
