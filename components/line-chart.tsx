@@ -4,7 +4,6 @@ import {
   LineChart as ReLineChart,
   Line,
   XAxis,
-  YAxis,
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts"
@@ -47,7 +46,7 @@ export function LineChartComponent({ data, xKey, yKey, config, xIsDate = false }
             }}
           />
 
-          <YAxis />
+          {/* <YAxis /> */}
 
           <ChartTooltip
             content={

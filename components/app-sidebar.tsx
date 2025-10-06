@@ -20,7 +20,7 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/component
 const data = {
   teams: [
     {
-      name: "Mecatos",
+      name: "Mecatos Bakery & Cafe",
       logo: GalleryVerticalEnd,
       plan: "Hoffner",
     }

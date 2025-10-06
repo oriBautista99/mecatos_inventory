@@ -39,7 +39,7 @@ export default async function DashboardLayout({children} : Readonly<{children: R
             <HeaderUser/>
           </div>
         </header>
-        <div className="min-h-min bg-background ">
+        <div className="min-h-min bg-background p-4">
           {children}
         </div>
       </SidebarInset>

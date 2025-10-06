@@ -3,21 +3,37 @@ import { createClient } from "@/lib/supabase/server";
 import { ORDER_STATUS } from "@/types/constants";
 import { fullPresentItems, itemBatches, mapSupabaseDataToPresentations, Order, OrderDetails, OrderFromValues } from "@/types/order";
 
-export async function getOrdersForStatus(status: typeof ORDER_STATUS[keyof typeof ORDER_STATUS][]){
-    try {
-        const supabase = await createClient();
-        const {data, error} = await supabase.from("orders")
-            .select('*,suppliers(supplier_id, company_name)')
-            .in('status', status);
-        if(error){
-            console.error('Error in get suppliers:', error);
-            return { data: null, error: "ERROR-GET-SUPPLIERS"};
-        }
-        return {data: data, error: null};
-    } catch (err) {
-        console.error("Error get suppliers:", err)
-        return { data: null, error: "ERROR-GET-SUPPLIERS" }
+export async function getOrdersForStatus(
+  status: typeof ORDER_STATUS[keyof typeof ORDER_STATUS][],
+  limit?: number,
+  offset?: number
+) {
+  try {
+    const supabase = await createClient();
+
+    // base query
+    let query = supabase
+      .from("orders")
+      .select("*, suppliers(supplier_id, company_name)", { count: "exact" })
+      .in("status", status);
+
+    // aplicar paginación solo si se envían los parámetros
+    if (typeof limit === "number" && typeof offset === "number") {
+      query = query.range(offset, offset + limit - 1);
     }
+
+    const { data, count, error } = await query;
+
+    if (error) {
+      console.error("Error in getOrdersForStatus:", error);
+      return { data: null, total: 0, error: "ERROR-GET-ORDERS" };
+    }
+
+    return { data, total: count ?? 0, error: null };
+  } catch (err) {
+    console.error("Error getOrdersForStatus:", err);
+    return { data: null, total: 0, error: "ERROR-GET-ORDERS" };
+  }
 }
 
 export async function getOrders() {

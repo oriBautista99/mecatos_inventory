@@ -69,7 +69,6 @@ export function ChartCard({title, data, xKey, yKey, filename, typeChart, range, 
                     itemId
                 )
                 if (!error) setLocalData(newData)
-                    console.log(newData)
                 setResolvedType(detectChartType(newData, typeChart))
             } else {
                 setLocalData(data);

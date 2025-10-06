@@ -36,6 +36,38 @@
         "SETTINGS" : "Settings",
         "USERS" : "Users"
     },
+    "DASHBOARD-HOME": {
+        "HELLO": "Hello",
+        "MESS": "Manage all your inventory and operations from here",
+        "CARD-1-TITLE": "Produced in the last 7 days",
+        "CARD-DESCRIPTION": "than the previous week",
+        "CARD-UNIT": "units",
+        "CARD-2-TITLE": "Lost in the last 7 days"
+    },
+    "DASH-PROD-CARD" : {
+        "TITLE" : "Production",
+        "DESCRIP" : "Production from the last 7 days",
+        "MORE" : "More"
+    },
+    "DASH-LOST-CARD" : {
+        "TITLE" : "Lost",
+        "DESCRIP" : "Lost in the last 7 days",
+        "MORE" : "More"
+    },
+    "DASH-CARD-ALERTS":{
+        "TITLE": "Expiration Alerts",
+        "DESCRIPTION": "Upcoming items to be removed from display",
+        "QTY": "Units in Display",
+        "EXPIRATION": "Remove on",
+        "RESOLVED-SUCCESSFULLY": "Alert reviewed",
+        "MORE": "More"
+    },
+    "DASH-CARD-COUNTS":{
+        "TITLE": "Inventory Counts",
+        "DESCRIPTION": "Counts from the last 7 days",
+        "COUNT": "Count",
+        "MORE": "More"
+    },
     "ROUTES": {
         "dashboard": "Dashboard",
         "inventory" : "Inventario",
@@ -587,5 +619,15 @@
         "DESCRIPTION": "Record of losses that occurred",
         "REGISTER-WASTE": "Record Loss",
         "LOADING": "Loading losses..."
+    },
+    "DASH-CARD-ORDERS": {
+        "ORDERS": "Orders",
+        "ORDER": "Order",
+        "MORE": "More",
+        "LAST-RECEIVING-ORDER": "Last Order Received",
+        "RECEIVED": "Received On",
+        "EXPIRATION": "Expiration",
+        "LAST-SUGGESTED-ORDER": "Last Suggested Order",
+        "GENERATED": "Generated"
     }
 }

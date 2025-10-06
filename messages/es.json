@@ -36,6 +36,48 @@
         "SETTINGS" : "Configuración",
         "USERS" : "Usuarios"
     },
+    "DASHBOARD-HOME": {
+        "HELLO": "Hola",
+        "MESS" : "Administra todo tu inventario y operaciones desde aqui",
+        "CARD-1-TITLE": "Producido en los últimos 7 días",
+        "CARD-DESCRIPTION" : "que la semana anterior",
+        "CARD-UNIT" : "unidades",
+        "CARD-2-TITLE": "Perdido en los últimos 7 días"
+    },
+    "DASH-PROD-CARD" : {
+        "TITLE" : "Producción",
+        "DESCRIP" : "Producción de los últimos 7 días",
+        "MORE" : "Más"
+    },
+    "DASH-LOST-CARD" : {
+        "TITLE" : "Perdidas",
+        "DESCRIP" : "Perdida de los últimos 7 días",
+        "MORE" : "Más"
+    },
+    "DASH-CARD-ALERTS":{
+        "TITLE":"Alertas de Vencimiento",
+        "DESCRIPTION": "Proximos productos a retirar de vitrina",
+        "QTY" : "Unidades en Vitrina",
+        "EXPIRATION": "Retirar el",
+        "RESOLVED-SUCCESSFULLY": "Alerta revisada",
+        "MORE" : "Más"
+    },
+    "DASH-CARD-COUNTS":{
+        "TITLE":"Conteos de Inventario",
+        "DESCRIPTION": "Conteos de los últimos 7 días",
+        "COUNT": "Conteo",
+        "MORE" : "Más"
+    },
+    "DASH-CARD-ORDERS": {
+        "ORDERS" : "Órdenes",
+        "ORDER" : "Orden",
+        "MORE" : "Más",
+        "LAST-RECEIVING-ORDER" : "Ultima orden recibida",
+        "RECEIVED" : "Recibida el",
+        "EXPIRATION" : "Vencimiento",
+        "LAST-SUGGESTED-ORDER" : "Ultima orden sugerida",
+        "GENERATED": "Generada"
+    },
     "ROUTES": {
         "dashboard": "Dashboard",
         "inventory": "Inventario",
