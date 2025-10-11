@@ -251,7 +251,7 @@ export default function UsersView() {
                                     {user.is_active ? t("ACTIVE") : t("INACTIVE")}
                                     </Badge>
                                 </TableCell>
-                                <TableCell className="text-muted-foreground">{user.created_at}</TableCell>
+                                <TableCell className="text-muted-foreground">{user.created_at && new Date(user.created_at).toLocaleString()}</TableCell>
                                 <TableCell className="text-right pr-6">
                                     <div className="flex items-center justify-end gap-2">
                                     <Button variant="ghost" size="sm" onClick={() => handleEditUser(user)}>

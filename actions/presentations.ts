@@ -165,8 +165,6 @@ export async function deletePresentations(ids: number[]) {
       throw new Error("Unauthorized");
     }
 
-    console.log("IDS a eliminar:", ids);
-
     const { error } = await supabase
       .from("presentations")
       .delete()

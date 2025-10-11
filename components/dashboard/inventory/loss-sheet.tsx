@@ -5,7 +5,7 @@ import { useItemsSWR } from "@/hooks/useItems";
 import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 import { filters_Items } from "@/types/item";
 import { ItemForLoss, LossEventDetail } from "@/types/loss";
-import { Funnel, Save, Search, X } from "lucide-react";
+import { Funnel, Save, Search, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import LossForm, { FormValues } from "./loss-form";
 import LostItemsTable, { RowValuesLost } from "./loss-items-table";
@@ -17,6 +17,7 @@ import { createLossEvent, getLossEventById, updateLossEvent } from "@/actions/lo
 import { Progress } from "@/components/ui/progress";
 import { Item } from "@/types/item";
 import { useTranslations } from "next-intl";
+import { Separator } from "@/components/ui/separator";
 
 type Props = {
   eventId?: number | null;
@@ -185,9 +186,13 @@ export default function LossSheet({eventId, onClose }: Props) {
 
     return(
         <SheetContent className="w-full h-full sm:max-w-2xl lg:max-w-3xl overflow-y-auto p-4 sm:p-6 space-y-4">
-            <SheetHeader>
-                <SheetTitle>{t("TITLE")}</SheetTitle>
+            <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
+                <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                    <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                    {t("TITLE")}
+                </SheetTitle>
             </SheetHeader>
+            <Separator />
             {
                 loading ? (
                     <div className="flex flex-col items-center justify-center p-8 gap-4">

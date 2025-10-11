@@ -1,6 +1,6 @@
 "use client";
 
-import { fullPresentItems, OrderFromValues } from "@/types/order";
+import { fullPresentItems, Order, OrderFromValues } from "@/types/order";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -11,6 +11,9 @@ import { OrdenDetails } from "@/components/dashboard/orders/order_details";
 import OrderForm from "@/components/dashboard/orders/order-form";
 import PresentationOrdesTable from "@/components/dashboard/orders/present_order_table";
 import { useSuppliersSWR } from "@/hooks/useSuppliers";
+import { toast } from "sonner";
+import { rpcReceiveNewOrder } from "@/actions/orders";
+import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 
 export default function NewOrder(){
   
@@ -21,6 +24,7 @@ export default function NewOrder(){
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { suppliers } = useSuppliersSWR();
+    const userLogin = useProfileLoginSWR();
 
     
     const handleOrder = useCallback((data: OrderFromValues) => {
@@ -36,11 +40,54 @@ export default function NewOrder(){
     },[]);
 
     const handleUpdate = useCallback((allProducts: fullPresentItems[]) => {
-        // Aquí filtramos los productos seleccionados directamente
         setSelectedProducts([]);
         const selected = allProducts.filter(p => p.selected);
         setSelectedProducts(selected);
     }, []);
+
+    const handleConfirmDetails = useCallback(
+      async ({
+          order,
+          presentations
+      }: {
+          order: OrderFromValues | Order;
+          presentations: fullPresentItems[];
+          mode: string;
+      }) => {
+        const itemsData = presentations.map(item => {
+          return(
+              { 
+                  presentation_id:item.presentation_id, 
+                  quantity_ordered:item.quantity_orderned, 
+                  quantity_received:item.quantity_received, 
+                  unit_price:item.unit_price, 
+                  expiration_date:item.expiration_date
+              }
+          )
+        });
+
+        try {
+            const response = await rpcReceiveNewOrder({
+                supplier_id: order.supplier_id,
+                createdBy: userLogin.profile?.profile_id,
+                received_date: order.received_date,
+                description:order.description,
+                items: itemsData
+            });
+            if(response.data){
+              toast.success(t("SUCCESSFULY-UPDATE-ORDER"));
+              setOrder(null);
+              setSelectedProducts([]);
+              setSupplier(null);
+              router.back();                
+            }
+
+        } catch (err) {
+            console.error("Error update order:", err);
+        }
+
+      }, []
+    )
 
     return(
         <div className="max-h-screen overflow-y-auto space-y-4">
@@ -54,9 +101,9 @@ export default function NewOrder(){
                     order?.supplier_id && 
                     <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
                         <SheetTrigger asChild>
-                          <Button className="w-fit bg-primary/60 border-primary  hover:bg-primary/50">
+                          <Button className="w-fit bg-primary border-primary  hover:bg-primary/50">
                             <BookOpenCheck className="h-4 w-4" />
-                            Recibir Orden
+                            {t("RECEIVE-ORDER")}
                           </Button>
                         </SheetTrigger>
                         <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-6 sm:p-6">
@@ -76,12 +123,7 @@ export default function NewOrder(){
                               setSupplier(null);
                               router.back();
                             }}
-                            onConfirm={() => {
-                              setOrder(null);
-                              setSelectedProducts([]);
-                              setSupplier(null);
-                              router.back();
-                            }}
+                            onConfirm={handleConfirmDetails}
                           ></OrdenDetails>   
                         </SheetContent>
                     </Sheet>                    
