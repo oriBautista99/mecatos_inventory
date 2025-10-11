@@ -217,7 +217,7 @@ export default function ProductionSheetForm({ type, onSubmit, initialData }: Pro
                     <FormItem>
                     <FormLabel>{t("NOTE")}</FormLabel>
                     <FormControl>
-                        <Textarea {...field} />
+                        <Textarea className="min-h-10" {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>

@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { revalidateSuppliers, useSuppliersSWR } from "@/hooks/useSuppliers";
 import { Supplier, SupplierFormValues } from "@/types/suppliers";
-import { Edit, Mail, MapPin, Phone, Plus, Search, Trash2 } from "lucide-react";
+import { Edit, Info, Mail, Phone, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -152,14 +152,21 @@ export default function SuppliersPage() {
                     </div>
 
                     <div className="space-y-2 text-xs">
+                      {
+                        supplier.phone &&
+                          <div className="flex items-center gap-2">
+                            <Phone className="h-3 w-3 text-muted-foreground" />
+                            <span>{supplier.phone}</span>
+                          </div>                        
+                      }
+                      {
+                        supplier.email && 
                         <div className="flex items-center gap-2">
-                        <Phone className="h-3 w-3 text-muted-foreground" />
-                        <span>{supplier.phone}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                        <Mail className="h-3 w-3 text-muted-foreground" />
-                        <span className="truncate">{supplier.email}</span>
-                        </div>
+                          <Mail className="h-3 w-3 text-muted-foreground" />
+                          <span className="truncate">{supplier.email}</span>
+                        </div>                        
+                      }
+
                     </div>
 
                     <div className="flex items-center justify-end pt-2 border-t">
@@ -239,18 +246,28 @@ export default function SuppliersPage() {
 
                                     <TableCell className="hidden md:table-cell">
                                         <div className="space-y-2">
-                                        <div className="flex items-center gap-2 text-xs">
-                                            <Phone className="h-3 w-3 text-muted-foreground" />
-                                            {supplier.phone}
-                                        </div>
-                                        <div className="flex items-center gap-2 text-xs">
-                                            <Mail className="h-3 w-3 text-muted-foreground" />
-                                            <span className="truncate max-w-[150px]">{supplier.email}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-xs">
-                                            <MapPin className="h-3 w-3 text-muted-foreground" />
-                                            <span className="truncate max-w-[150px]">{supplier.address}</span>
-                                        </div>
+                                          {
+                                            supplier.phone &&
+                                            <div className="flex items-center gap-2 text-xs">
+                                                <Phone className="h-3 w-3 text-muted-foreground" />
+                                                {supplier.phone}
+                                            </div>                                            
+                                          }
+                                          {
+                                            supplier.email &&
+                                            <div className="flex items-center gap-2 text-xs">
+                                                <Mail className="h-3 w-3 text-muted-foreground" />
+                                                <span className="truncate max-w-[150px]">{supplier.email}</span>
+                                            </div>                                            
+                                          }
+                                          {
+                                            supplier.address &&
+                                            <div className="flex items-center gap-2 text-xs">
+                                                <Info className="h-3 w-3 text-muted-foreground" />
+                                                <span className="truncate max-w-[150px]">{supplier.address}</span>
+                                            </div>                                            
+                                          }
+
                                         </div>
                                     </TableCell>
 

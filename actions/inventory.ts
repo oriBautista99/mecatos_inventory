@@ -50,15 +50,11 @@ export async function getItemsWithStock() {
   }
 
 const items: ItemForCount[] = data.map((item: any) => {
-    // 🔹 Transformar la data de `presentations` para corregir la estructura de `suppliers`
     const correctedPresentations = item.presentations.map((pres: any) => {
-        // Asumo que el array `sp.suppliers` solo tiene un elemento
         const correctedSuppliersPresentations = pres.suppliers_presentations.map((sp: any) => {
-            // ✅ CORRECCIÓN: Accedemos al primer elemento del array `suppliers`
             const supplier = sp.suppliers[0];
             return {
                 ...sp,
-                // ✅ Sobreescribimos la propiedad `suppliers` para que sea un solo objeto
                 suppliers: supplier,
             } as SupplierPresentation;
         });
@@ -69,7 +65,6 @@ const items: ItemForCount[] = data.map((item: any) => {
         } as Presentation;
     });
 
-    // 🔹 Calcular el stock real sumando lotes del item
     const system_quantity = correctedPresentations.reduce((acc:any, pres:any) => {
       const sumBatches = pres.item_batches && pres.item_batches
         .filter((b:any) => b.is_active)
@@ -77,7 +72,6 @@ const items: ItemForCount[] = data.map((item: any) => {
       return acc + (sumBatches ? sumBatches: 0) * pres.conversion_factor;
     }, 0);
   
-    // Devolvemos el objeto con la estructura correcta
     return { 
       ...item, 
       presentations: correctedPresentations,
@@ -89,29 +83,22 @@ const items: ItemForCount[] = data.map((item: any) => {
 }
 
 
-/**
- * Crea el inventario count y detalles; luego ajusta lotes por diferencia (FIFO).
- * payload.items = [{ item_id, counted_quantity, system_quantity }]
- */
 export async function saveInventoryCount(
   countedBy: number,
   items: { item_id: number; counted_quantity: number; system_quantity: number }[]
 ) {
   const supabase = await createClient();
 
-  // Crear conteo principal
   const { data: count, error: countError } = await supabase
     .from("inventory_counts")
     .insert([{counted_by: countedBy }])
     .select()
     .single();
 
-    // console.log(countError)
   if (countError || !count) {
     throw new Error("Error creando conteo");
   }
 
-  // Crear detalles
   const details = items.map((i) => ({
     count_id: count.count_id,
     item_id: i.item_id,

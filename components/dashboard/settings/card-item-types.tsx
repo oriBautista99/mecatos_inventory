@@ -113,7 +113,7 @@ export default function CardItemTypes(){
     }
 
     return(
-        <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
+        <div className="overflow-y-hidden space-y-4 mx-auto ">
             <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
                 <div className="flex flex-col justify-start w-full">
                     <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
@@ -245,9 +245,9 @@ export default function CardItemTypes(){
                 </div>
                 {/* Desktop Table View */}
                 <div className="hidden sm:block rounded-md border overflow-x-auto">
-                    <Table>
+                    <Table className="bg-card">
                     <TableHeader>
-                        <TableRow>
+                        <TableRow className="bg-secondary">
                         <TableHead className="min-w-[150px]">{t("T-NAME")}</TableHead>
                         <TableHead className="min-w-[120px]">{t("T-DESCRIPTION")}</TableHead>
                         <TableHead className="w-[140px]">{t("T-ACTIONS")}</TableHead>

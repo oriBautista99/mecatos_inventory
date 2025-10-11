@@ -79,19 +79,17 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
   return (
     <div>
-        <div className="p-4">
-          <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
-            <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
-              {supplier ? t("EDIT-SUPPLIER") : t("CREATE-SUPPLIER")}
-            </SheetTitle>
-            <SheetDescription className="text-sm">
-              {supplier
-                ? t("EDIT-DESCRIPTION")
-                : t("CREATE-DESCRIPTION")}
-            </SheetDescription>
-          </SheetHeader>          
-        </div>
+        <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
+          <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
+            {supplier ? t("EDIT-SUPPLIER") : t("CREATE-SUPPLIER")}
+          </SheetTitle>
+          <SheetDescription className="text-sm">
+            {supplier
+              ? t("EDIT-DESCRIPTION")
+              : t("CREATE-DESCRIPTION")}
+          </SheetDescription>
+        </SheetHeader>      
         <Separator />
         <form onSubmit={handleSubmit(onSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
           {/* Company Information */}
@@ -117,7 +115,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
             <div className="space-y-2">
               <Label htmlFor="address" className="text-sm">
-                {t("ADDRESS")} *
+                {t("ADDRESS")}
               </Label>
               <Textarea
                 id="address"
@@ -155,7 +153,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="phone" className="text-sm">
-                  {t("PHONE")} *
+                  {t("PHONE")}
                 </Label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
@@ -171,7 +169,7 @@ export function SupplierForm({ onClose, onSave, supplier }: SupplierModalProps){
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm">
-                  {t("EMAIL")} *
+                  {t("EMAIL")}
                 </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />

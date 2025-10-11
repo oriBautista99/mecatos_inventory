@@ -14,20 +14,15 @@ export async function suggestedOrders(profileId: number){
             throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
         }
 
-        const res = await fetch('/api/generate-suggested-orders', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            created_by: profileId, 
-            }),
+        const { data, error } = await supabase.rpc('generate_suggested_orders', {
+            p_created_by: profileId
         });
 
-        const data = await res.json();
-        //console.log(data)
-        if(!res.ok){
-            console.error('Error in generated orders:', data.error);
-            return { error: data.error};
+        if(error){
+            console.error('Error in generate_suggested_orders:', error);
+            return { error: error};
         }
+
         return {success: true, data:data,  error:null};
     } catch (err) {
         console.error('Unexpected error in suggest-orders:', err);

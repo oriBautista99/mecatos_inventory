@@ -1,5 +1,6 @@
 "use client"
 
+import { suggestedOrders } from "@/actions/generate-suggested-orders";
 import { getOrders } from "@/actions/orders";
 import OrdersTable from "@/components/dashboard/orders/orders-table";
 import { StatusBadge } from "@/components/dashboard/orders/StatusBadgeOrder";
@@ -69,26 +70,12 @@ export default function OrdersPage() {
   )
 
   const handleGenerateOrders = async () => {
-    if(profile){   
-      const res = await fetch('/api/generate-suggested-orders', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            created_by: profile.profile_id, 
-            }),
-        });
-
-        const data = await res.json();
-        //console.log(data)
-        if(!res.ok){
-            console.error('Error in generated orders:', data.error);
-            return { error: data.error};
-        }
-      if(data){
-        toast.success("Ordenes por proveedor creadas");
-      }   
+    if(profile){ 
+        const response = await suggestedOrders(profile.profile_id);
+        if(response.data){
+          toast.success("Ordenes por proveedor creadas correctamente");
+        }  
     }
-
   }
   
   return (

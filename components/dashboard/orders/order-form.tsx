@@ -35,6 +35,7 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
         control, 
         register,
         watch,
+        setValue,
         formState: { isDirty }, 
         reset
     } = useForm<OrderFromValues>({
@@ -70,6 +71,8 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
             setIsLoading(false);
         }
         if(suppliers.length > 0 && modeForm === 'RECEIVED'){
+            setValue('received_date', new Date());
+            setValue('expiration_date', new Date());
             setIsLoading(false);
         }
     },[order, suppliers, reset, modeForm])

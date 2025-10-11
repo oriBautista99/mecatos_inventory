@@ -1,7 +1,7 @@
 "use server"
 import { createClient } from "@/lib/supabase/server";
 import { ORDER_STATUS } from "@/types/constants";
-import { fullPresentItems, itemBatches, mapSupabaseDataToPresentations, Order, OrderDetails, OrderFromValues } from "@/types/order";
+import { mapSupabaseDataToPresentations } from "@/types/order";
 
 export async function getOrdersForStatus(
   status: typeof ORDER_STATUS[keyof typeof ORDER_STATUS][],
@@ -146,276 +146,6 @@ export async function getPrsentationsForSupplier(supplier_id: number){
     }
 }
 
-export async function createOrder(order: Omit<Order, "order_id">){
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {data, error:orderErr} = await supabase.from("orders").insert(order).select().single();
-        if(orderErr){
-            console.error('Error in create category:', orderErr);
-            return { error: orderErr};
-        }
-
-        return {success: true, data:data, error:null};
-    } catch (err) {
-        console.error('Unexpected error in order:', err);
-        return { error: { message: 'Unexpected error occurred' } }
-    }
-}
-
-export async function updateOrder(order_id: number | undefined, data: OrderFromValues | Order) {
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-        } = await supabase.auth.getUser();
-
-        if (!user) {
-            throw new Error("Unauthorized"); // O devuelve {error: "Unauthorized"}
-        }
-        const {error} = await supabase.from("orders")
-                            .update({
-                                order_id : data.order_id,
-                                received_date: data.received_date,
-                                expiration_date: data.expiration_date,
-                                status: data.status,
-                                supplier_id: data.supplier_id,
-                                description: data.description
-                            })
-                            .eq("order_id", order_id);
-        if(error){
-            console.error('Error in update supplier:', error);
-            return {error: error};
-        }
-        return {success: true, error: null};
-    } catch (err) {
-        console.error("Error updating order:", err)
-        return { success: false, error: "Error actualizando order" }        
-    }
-}
-
-export async function createOrderDetails(orderDetail: Omit<OrderDetails[],"order_detail_id">, newBatchs: Omit<itemBatches[],"batch_id">) {
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {data, error: presError} = await supabase.from("order_details")
-            .insert(orderDetail)
-            .select();
-
-        if(data){
-            for (let i = 0; i < newBatchs.length; i++) {
-                newBatchs[i].order_detail_id = data[i].order_detail_id;
-            }
-            const responseOD = await createNewsBatches(newBatchs);
-
-            if(responseOD.success){
-                return {success: true, data:data, error:null}; 
-            }
-        }
-        
-
-        if(presError){
-            console.error('Error in createOrderDetails:', presError);
-            return { error: presError};
-        }
-    } catch (err) {
-        console.error('Unexpected error in order details:', err);
-        return { error: { message: 'Unexpected error occurred' } }
-    }
-}
-
-export async function createOrderDetail(orderId: number | undefined, detail: fullPresentItems) {
-  try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {data, error: presError} = await supabase.from("order_details").insert({
-            order_id: orderId,
-            presentation_id: detail.presentation_id,
-            quantity_ordered: detail.quantity_orderned,
-            quantity_received: detail.quantity_received,
-            unit_price: detail.unit_price
-        }).select().single();
-          
-        if(presError){
-            console.error('Error in createOrderDetail:', presError);
-            return { error: presError};
-        }
-        return {success: true, data:data, error:null};
-  } catch (err) {
-        console.error('Unexpected error in createOrderDetail:', err);
-        return { error: "Error create deatils" }  
-  }
-
-}
-
-export async function updateOrderDetail(order: Order, detail: fullPresentItems) {
-  try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {data, error: presError} = await supabase.from("order_details")
-        .update({
-            quantity_ordered: detail.quantity_orderned,
-            quantity_received: detail.quantity_received,
-            unit_price: detail.unit_price,
-        })
-        .eq("order_detail_id", detail.order_detail_id)
-        .select().single();  
-
-
-        if(order.status === 'RECEIVED' && data ){
-            const response = await updateBatches(data, detail);
-            if(response.success){
-                return {success: true, data:data, error:null};
-            }
-        }
-        
-        if(presError){
-            console.error('Error in updateOrderDetail:', presError);
-            return { error: presError};
-        }
-        return {success: true, data:data, error:null};
-  } catch (err) {
-        console.error('Unexpected error updateOrderDetail:', err);
-        return { error: "Error update deatils" }  
-  }
-
-}
-
-export async function deleteOrderDetail(orderId: number, presentationId: number) {
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {data, error: presError} = await supabase.from("order_details")
-            .delete()
-            .eq("order_id", orderId)
-            .eq("presentation_id", presentationId);  
-
-        if(presError){
-            console.error('Error in deleteOrderDetail:', presError);
-            return { error: presError};
-        }
-        return {success: true, data:data, error:null};    
-        
-    } catch (err) {
-        console.error('Unexpected error deleteOrderDetail:', err);
-        return { error: "Error delete deatils" } 
-    }
-}
-
-export async function createNewsBatches(newBatchs: Omit<itemBatches[],"batch_id">){
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {error} = await supabase.from("item_batches")
-            .insert(newBatchs)
-            .select();
-        if(error){
-            console.error('Error in create item_batches:', error);
-            return { error: error};
-        }
-
-        return {success: true, error:null};
-    } catch (err) {
-        console.error('Unexpected error createNewsBatches:', err);
-        return { error: { message: 'Unexpected error occurred' } }
-    }
-}
-
-export async function createBatch(newBatch: Omit<itemBatches,"batch_id">){
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {error} = await supabase.from("item_batches")
-            .insert(newBatch)
-            .select();
-        if(error){
-            console.error('Error in create createBatch:', error);
-            return { error: error};
-        }
-
-        return {success: true, error:null};
-    } catch (err) {
-        console.error('Unexpected error in createBatch:', err);
-        return { error: { message: 'Unexpected error occurred' } }
-    }
-}
-
-export async function updateBatches(order_detail: OrderDetails, detail: fullPresentItems){
-    try {
-        const supabase = await createClient();
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-        
-        if (userError || !user) {
-            return { error: "Unauthorized" };
-        }
-        const {error} = await supabase.from("item_batches")
-            .update({
-                quantity_batch: detail.quantity_received,
-                current_quantity: detail.quantity_received,
-                expiration_date: detail.expiration_date
-            })
-        .eq("order_detail_id", order_detail.order_detail_id)
-        .eq("presentation_id", detail.presentation_id); 
-        if(error){
-            console.error('Error in create updateBatches:', error);
-            return { error: error};
-        }
-
-        return {success: true, error:null};
-    } catch (err) {
-        console.error('Unexpected error in updateBatches:', err);
-        return { error: { message: 'Unexpected error occurred' } }
-    }
-}
-
-
 export async function updateBatch(batch_id: number, detail: { quantity_batch: number, current_quantity: number, expiration_date: Date }){
     try {
         const supabase = await createClient();
@@ -440,6 +170,156 @@ export async function updateBatch(batch_id: number, detail: { quantity_batch: nu
         }
 
         return {success: true, error:null};
+    } catch (err) {
+        console.error('Unexpected error in updateBatch:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+}
+
+export async function rpcUpdateOrder({
+  orderId,
+  updatedBy,
+  status,
+  description,
+  items,
+}: {
+  orderId: number | undefined;
+  updatedBy: number | undefined;
+  status?: string;
+  description?: string;
+  items: Array<{
+    presentation_id: number;
+    quantity_ordered: number;
+    quantity_received: number;
+    unit_price: number;
+    expiration_date: string | Date | null; // ISO
+    delete: boolean;
+  }>;
+}){
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+
+        const {data, error} = await supabase.rpc("update_order", {
+            p_order_id: orderId,
+            p_updated_by: updatedBy,
+            p_items: items,
+            p_status: status ?? null,
+            p_description: description ?? null
+        }); 
+
+        if(error){
+            console.error('Error in create updateBatch:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in updateBatch:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+}
+
+export async function rpcReceiveNewOrder({
+  supplier_id,
+  createdBy,
+  received_date,
+  description,
+  items,
+}: {
+  supplier_id: number | undefined;
+  createdBy: number | undefined;
+  received_date?: string | Date | null;
+  description?: string;
+  items: Array<{
+    presentation_id: number;
+    quantity_ordered: number;
+    quantity_received: number;
+    unit_price: number;
+    expiration_date: string | Date | null; // ISO
+  }>;
+}){
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+
+        const {data, error} = await supabase.rpc("receive_new_order", {
+            p_supplier_id: supplier_id,
+            p_created_by: createdBy,
+            p_items: items,
+            p_received_date: received_date ?? null,
+            p_description: description ?? null
+        }); 
+
+        if(error){
+            console.error('Error in create updateBatch:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in updateBatch:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+}
+
+export async function rpcReceiveSuggestedOrder({
+  order_id,
+  received_by,
+  received_date,
+  description,
+  items,
+}: {
+  order_id: number | undefined;
+  received_by: number | undefined;
+  received_date?: string | Date | null;
+  description?: string;
+  items: Array<{
+    presentation_id: number;
+    quantity_received: number;
+    unit_price: number;
+    expiration_date: string | Date | null; // ISO
+  }>;
+}){
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+
+        const {data, error} = await supabase.rpc("receive_suggested_order", {
+            p_order_id: order_id,
+            p_received_by: received_by,
+            p_items: items,
+            p_received_date: received_date ?? null,
+            p_description: description ?? null
+        }); 
+
+        if(error){
+            console.error('Error in create updateBatch:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
     } catch (err) {
         console.error('Unexpected error in updateBatch:', err);
         return { error: { message: 'Unexpected error occurred' } }
