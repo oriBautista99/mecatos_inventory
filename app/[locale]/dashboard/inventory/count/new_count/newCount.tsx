@@ -218,21 +218,17 @@ export default function NewCount() {
                                 {searchTerm ? "No se encontraron items" : "No hay items"}
                             </div>
                         ) : (
-                            <div className="md:rounded-xl md:border md:border-border shadow">
-                                <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[70vh]">
-                                    <CountInventoryTable
-                                        data={filteredItems.map((it: ItemForCountTable) => ({
-                                            item_id: it.item_id,
-                                            name: it.name,
-                                            base_unit: it.base_unit,
-                                            system_quantity: it.system_quantity,
-                                            counted_quantity: it.counted_quantity,
-                                        }))}
-                                        onChange={handleCountTableChange}
-                                        mode="CREATE"
-                                    />
-                                </div>
-                            </div>
+                            <CountInventoryTable
+                                data={filteredItems.map((it: ItemForCountTable) => ({
+                                    item_id: it.item_id,
+                                    name: it.name,
+                                    base_unit: it.base_unit,
+                                    system_quantity: it.system_quantity,
+                                    counted_quantity: it.counted_quantity,
+                                }))}
+                                onChange={handleCountTableChange}
+                                mode="CREATE"
+                            />
                         )}
                     </div>
                 </div>

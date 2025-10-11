@@ -12,13 +12,13 @@ import { useCategoriesSWR } from "@/hooks/useCategoriesSWR";
 import { useItemTypesSWR } from "@/hooks/useItemTypesSWR";
 import { useStorageAreasSWR } from "@/hooks/useStorageAreas";
 import { useSuppliersSWR } from "@/hooks/useSuppliers";
-import { UNITS } from "@/types/constants";
+import { TYPE_PRODUCTION, UNITS } from "@/types/constants";
 import { Item, ItemFormValues, ItemSchema } from "@/types/item"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Package, PackageOpen, Save, ShoppingCart, Tags, X } from "lucide-react";
+import { Box, Package, PackageOpen, Save, ShoppingCart, Tags, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 
 interface ItemModalProps {
   onClose: () => void
@@ -46,6 +46,8 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
       min_quantity: 1,
       target_quantity: 1,
       storage_area_id: "",
+      production_type: "",
+      shelf_life_days: "",
       presentations: [],
     },
   });
@@ -53,6 +55,11 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
   const { fields, append, remove } = useFieldArray({
     control,
     name: "presentations",
+  });
+
+  const baseUnit = useWatch({
+    control,
+    name: "base_unit",
   });
 
   useEffect(() => {
@@ -67,6 +74,8 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
           storage_area_id: item.storage_area_id ? String(item.storage_area_id) : "",
           min_quantity: item.min_quantity ?? 1,
           target_quantity: item.target_quantity ?? 1,
+          shelf_life_days: item.shelf_life_days ?? '',
+          production_type: item.production_type ?? '',
           presentations: (item.presentations ?? []).map(p => ({
             name: p.name ?? "",
             description: p.description ?? "",
@@ -146,10 +155,9 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                         id="description"
                         {...register("description")}
                         placeholder={t("DESCRIPTION-PLACEHOLDER")}
-                        className={`text-sm resize-none ${errors.description ? "border-destructive" : ""}`}
-                        rows={2}
+                        className={`text-sm resize-none min-h-10 h-10 ${errors.description ? "border-destructive" : ""}`}
+                        rows={1}
                       />
-                      {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="type" className="text-sm">
@@ -183,7 +191,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                         
                       )}
                       />            
-
+                      {errors.item_type_id && <p className="text-xs text-destructive">{errors.item_type_id.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="type" className="text-sm">
@@ -219,7 +227,53 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                           </Select>                      
                         )}
                       />         
-
+                      {errors.storage_area_id && <p className="text-xs text-destructive">{errors.storage_area_id.message}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="type" className="text-sm">
+                        {t(("TYPE_PRODUCTION"))}
+                      </Label>  
+                      <Controller
+                        control={control}          
+                        name="production_type"
+                        render={({field})=> (
+                        <Select   
+                          value={field.value ? String(field.value) : ""}
+                          onValueChange={field.onChange}                     
+                        >
+                          <SelectTrigger id="production_type" className='relative w-full ps-9 text-sm py-2'>
+                            <div className='text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 group-has-[select[disabled]]:opacity-50'>
+                                <Tags size={12} aria-hidden='true' />
+                            </div>
+                            <SelectValue className="text-sm sm:text-base lg:text-sm tracking-tight" placeholder={t("SELECT")} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem 
+                              className="text-sm sm:text-base lg:text-sm"
+                              key={TYPE_PRODUCTION.BREAD} 
+                              value={TYPE_PRODUCTION.BREAD}
+                            >
+                              {TYPE_PRODUCTION.BREAD}
+                            </SelectItem>
+                            <SelectItem 
+                              className="text-sm sm:text-base lg:text-sm"
+                              key={TYPE_PRODUCTION.DESSERT} 
+                              value={TYPE_PRODUCTION.DESSERT}
+                            >
+                              {TYPE_PRODUCTION.DESSERT}
+                            </SelectItem>
+                            <SelectItem 
+                              className="text-sm sm:text-base lg:text-sm"
+                              key={TYPE_PRODUCTION.PASTRY} 
+                              value={TYPE_PRODUCTION.PASTRY}
+                            >
+                              {TYPE_PRODUCTION.PASTRY}
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        )} 
+                      />
+                      <p className="text-xs text-muted-foreground">{t("INFO_TYPE_PRODUCTION")}</p>
                     </div>
                   </div>
                   <div className="md:col-start-2 md:row-start-1 flex flex-col justify-between">
@@ -263,11 +317,18 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                             >
                               {UNITS.U}
                             </SelectItem>
+                            <SelectItem 
+                              className="text-sm sm:text-base lg:text-sm"
+                              key={UNITS.gl} 
+                              value={UNITS.gl}
+                            >
+                              {UNITS.gl}
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         )} 
                       />
-
+                      {errors.base_unit && <p className="text-xs text-destructive">{errors.base_unit.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="type" className="text-sm">
@@ -283,7 +344,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                           className={`text-sm ${errors.min_quantity ? "border-destructive" : ""}`}
                         />                    
                         <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-9 text-sm peer-disabled:opacity-50'>
-                          lb
+                          {baseUnit || "—"}
                         </span>
                       </div>
                       {errors.min_quantity && <p className="text-xs text-destructive">{errors.min_quantity.message}</p>}
@@ -302,7 +363,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                           className={`text-sm ${errors.target_quantity ? "border-destructive" : ""}`}
                         />                    
                         <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-9 text-sm peer-disabled:opacity-50'>
-                          lb
+                          {baseUnit || "—"}
                         </span>
                       </div>
                       {errors.target_quantity && <p className="text-xs text-destructive">{errors.target_quantity.message}</p>}
@@ -336,12 +397,27 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                           </Select>                     
                         )}
                       />         
-                      
+                      {errors.category_id && <p className="text-xs text-destructive">{errors.category_id.message}</p>}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="type" className="text-sm">
+                        {t("LIFE_DAYS")}
+                      </Label>  
+                       <Input
+                          id="shelf_life_days"
+                          type='number'
+                          {...register("shelf_life_days")}
+                          placeholder="Ej: 7"
+                          min={1}
+                          className={`text-sm ${errors.shelf_life_days ? "border-destructive" : ""}`}
+                        /> 
+                      <p className="text-xs text-muted-foreground">{t("INFO_LIFE_DAYS")}</p>
                     </div>
                   </div>
                 </div>           
               </div>
               <Separator/>  
+              {/* Prsentations */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
@@ -349,7 +425,7 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                 </div>
                 {
                   fields.map((field, index) => (
-                    <Card key={field.id} className="p-2 relative flex flex-col space-y-2">
+                    <Card key={field.id} className="p-3 relative flex flex-col space-y-2">
                         <Button
                           variant='ghost' size='sm'
                           onClick={() => remove(index)}
@@ -358,7 +434,8 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
                           <X />
                         </Button>
                         <div className="flex items-center gap-2">
-                          <h3 className="font-medium text-sm sm:text-sm py-3">{t("INFO-PRESENTATIONS")}</h3>
+                          <Box className="h-4 w-4"></Box>
+                          <h3 className="font-semibold text-md sm:text-sm">{t("INFO-PRESENTATIONS")}</h3>
                         </div>
                         <div className="w-full grid grid-cols-2 gap-4 items-center">
                           <div className="space-y-1">

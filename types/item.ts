@@ -22,19 +22,59 @@ export interface Item {
     created_at?: string,
     system_quantity ?: number,
     presentations: Presentation[],
-    production_type ?: 'BREAD' | 'DESSERT' | 'PASTRY';
+    production_type ?: 'BREAD' | 'DESSERT' | 'PASTRY',
+    shelf_life_days?: number
 }
 
 export const ItemSchema = z.object({
-    name: z.string().min(1, "El nombre de la categoria es obligatorio"),
-    description: z.string().min(1, "La descripcion es obligatoria"),
-    base_unit: z.string().min(1,"La unidad es obligatoria"),
-    min_quantity: z.coerce.number().min(1, "La cantidad minima es obligatoria"),
-    target_quantity: z.coerce.number().min(1, "La cantidad objetivo es obligatoria"),
-    category_id:z.coerce.number(),
-    item_type_id: z.coerce.number(),
-    storage_area_id: z.coerce.number(),
-    presentations: z.array(PresentationSchema).min(1, "Debe agregar al menos una presentacion")
+  name: z
+    .string()
+    .min(1, "El nombre del producto es obligatorio"),
+
+  description: z
+    .string()
+    .optional(),
+
+  base_unit: z
+    .string()
+    .min(1, "Debe seleccionar una unidad base"),
+
+  min_quantity: z
+    .coerce
+    .number()
+    .min(1, "La cantidad mínima es obligatoria"),
+
+  target_quantity: z
+    .coerce
+    .number()
+    .min(1, "La cantidad objetivo es obligatoria"),
+
+  category_id: z
+    .coerce
+    .number()
+    .min(1, "Debe seleccionar una categoría"),
+
+  item_type_id: z
+    .coerce
+    .number()
+    .min(1, "Debe seleccionar un tipo de ítem"),
+
+  storage_area_id: z
+    .coerce
+    .number()
+    .min(1, "Debe seleccionar un área de almacenamiento"),
+
+  presentations: z
+    .array(PresentationSchema)
+    .min(1, "Debe agregar al menos una presentación"),
+
+  production_type: z
+    .string()
+    .optional(),
+
+  shelf_life_days: z
+    .coerce
+    .number()
 });
 
 export type ItemFormValues = z.infer<typeof ItemSchema>;

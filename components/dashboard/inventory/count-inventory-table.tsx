@@ -17,7 +17,7 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
     const t = useTranslations("COUNT-INVENTORY-TABLE");
 
     const [page, setPage] = useState(1);
-    const pageSize = 10; // 🔹 Cambia según lo que quieras mostrar
+    const pageSize = 10; 
     const totalPages = Math.ceil(data.length / pageSize);
 
     const startIndex = (page - 1) * pageSize;
@@ -77,56 +77,58 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
     return(
         <div className="overflow-x-auto space-y-2">
             <div className="md:rounded-xl md:border md:border-border shadow">
-                <Table className="bg-card">
-                    <TableHeader>
-                        <TableRow className="bg-secondary uppercase text-md tracking-tight">
-                            <TableHead className="text-foreground font-bold ">{t("INVENTORY")}</TableHead>
-                            <TableHead className="text-foreground font-bold ">{t("THERE-IS")}</TableHead>
-                            {mode === "CREATE" && (
-                                <TableHead className="text-foreground font-bold ">
-                                {t("THERE-MUST-BE")}
-                                </TableHead>
-                            )}
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {
-                        currentData.map(it => {
-                            return(
-                                <TableRow key={it.item_id} className="text-md tracking-tight font-semibold">
-                                    <TableCell>
-                                        <div className="space-y-1">
-                                            <div className="font-medium text-md">{it.name}</div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className="space-y-1 min-w-25 w-28 max-w-xs relative">
-                                            <Input
-                                                type="number"
-                                                value={counts[it.item_id]?.toString() ?? ""}
-                                                onChange={(e) => handleCountChange(it.item_id, e.target.value)}
-                                                className="pl-5 w-full max-w-sm text-md"
-                                            />
-                                            <div className='text-muted-foreground pointer-events-none absolute inset-y-1 end-0 flex items-center justify-center pe-8 peer-disabled:opacity-50'>
-                                                <span>{it.base_unit}</span>
-                                            </div>
-                                        </div>
-                                    </TableCell>
-                                    {mode === "CREATE" && (
+                <div className="overflow-x-auto rounded-xl border border-border shadow max-h-[65vh]">
+                    <Table className="bg-card">
+                        <TableHeader>
+                            <TableRow className="bg-secondary uppercase text-md tracking-tight">
+                                <TableHead className="text-foreground font-bold ">{t("INVENTORY")}</TableHead>
+                                <TableHead className="text-foreground font-bold ">{t("THERE-IS")}</TableHead>
+                                {mode === "CREATE" && (
+                                    <TableHead className="text-foreground font-bold ">
+                                    {t("THERE-MUST-BE")}
+                                    </TableHead>
+                                )}
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {
+                            currentData.map(it => {
+                                return(
+                                    <TableRow key={it.item_id} className="text-md tracking-tight font-semibold">
                                         <TableCell>
-                                        <div className="space-y-1">
-                                            <div className="font-medium">
-                                            {it.system_quantity} {it.base_unit}
+                                            <div className="space-y-1">
+                                                <div className="font-medium text-md">{it.name}</div>
                                             </div>
-                                        </div>
                                         </TableCell>
-                                    )}
-                                </TableRow>
-                            )
-                        })                                            
-                    }
-                    </TableBody>
-                </Table>
+                                        <TableCell>
+                                            <div className="space-y-1 min-w-25 w-28 max-w-xs relative">
+                                                <Input
+                                                    type="number"
+                                                    value={counts[it.item_id]?.toString() ?? ""}
+                                                    onChange={(e) => handleCountChange(it.item_id, e.target.value)}
+                                                    className="pl-5 w-full max-w-sm text-md"
+                                                />
+                                                <div className='text-muted-foreground pointer-events-none absolute inset-y-1 end-0 flex items-center justify-center pe-8 peer-disabled:opacity-50'>
+                                                    <span>{it.base_unit}</span>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        {mode === "CREATE" && (
+                                            <TableCell>
+                                            <div className="space-y-1">
+                                                <div className="font-medium">
+                                                {it.system_quantity} {it.base_unit}
+                                                </div>
+                                            </div>
+                                            </TableCell>
+                                        )}
+                                    </TableRow>
+                                )
+                            })                                            
+                        }
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
 
             {/* Pagination */}

@@ -6,12 +6,13 @@ import ProductionItemsTable, { RowValues } from "./production-item-table";
 import { useItemsSWR } from "@/hooks/useItems";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Save, X } from "lucide-react";
+import { ChefHat, Save, X } from "lucide-react";
 import { createProduction, getProductionById, updateProductioEvent, updateProductionDetails } from "@/actions/production";
 import { TYPE_PRODUCTION } from "@/types/constants";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ProductionEvent, ProductionEventDetail } from "@/types/production";
+import { Separator } from "@/components/ui/separator";
 
 type Props = {
   type?: typeof TYPE_PRODUCTION[keyof typeof TYPE_PRODUCTION] | null;
@@ -146,9 +147,13 @@ export function SheetProduction({ type, eventId, onClose }: Props){
     if(type && itemsSelected){
         return (
             <SheetContent className="w-full md:max-w-xl lg:max-w-2xl overflow-y-auto p-4 sm:p-6 space-y-4" onInteractOutside={onClose} onEscapeKeyDown={onClose}>
-                <SheetHeader>
-                    <SheetTitle>{t(`${type}_TITLE`)}</SheetTitle>
+                <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
+                    <SheetTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                        <ChefHat className="h-4 w-4 sm:h-5 sm:w-5"/>
+                        {t(`${type}_TITLE`)}
+                    </SheetTitle>
                 </SheetHeader>
+                <Separator />
                 <ProductionSheetForm type={type} onSubmit={setFormDate} initialData={initformData}></ProductionSheetForm>
                 <ProductionItemsTable type={type} data={itemsSelected} typeTable={eventId ? 'EDIT' : 'CREATE'} onChange={setTableData} initialRows={initTableData}></ProductionItemsTable>
                 <SheetFooter>

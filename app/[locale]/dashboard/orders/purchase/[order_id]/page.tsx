@@ -1,5 +1,5 @@
 import { getOrderById } from "@/actions/orders";
-import OrderDetails from "./orderDetail";
+import OrderDetails from "./orderDetails";
 import { fullPresentItems } from "@/types/order";
 
 export default async function Page(props: { params: Promise<{ order_id: string }> }) {

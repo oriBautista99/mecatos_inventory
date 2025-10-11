@@ -34,7 +34,8 @@
         "PRODUCTION" : "Producción",
         "SUPPLIERS" : "Proveedores",
         "SETTINGS" : "Configuración",
-        "USERS" : "Usuarios"
+        "USERS" : "Usuarios",
+        "AUDIT" : "Movimientos"
     },
     "DASHBOARD-HOME": {
         "HELLO": "Hola",
@@ -90,7 +91,7 @@
         "reports": "Informes / Reportes",
         "suppliers": "Proveedores",
         "users": "Usuarios",
-        "purchase": "Órdenes de Compra",
+        "purchase": "Órdenes a Proveedores",
         "receiving": "Recepción de Órdenes",
         "history" : "Historial de Órdenes",
         "storage_areas": "Áreas de Almacenamiento",
@@ -106,7 +107,9 @@
         "production": "Producción",
         "settings": "Configuraciones",
         "neworder": "Nueva Orden",
-        "new_count": "Nuevo Conteo"       
+        "new_count": "Nuevo Conteo",
+        "audit": "Movimientos"       
+
     },
      "USERS" : {
         "TITLE": "Gestión de Usuarios",
@@ -171,8 +174,8 @@
         "NO-FOUND-SUPPLIERS": "No se encontraron proveedores",
         "NO-SUPPLIERS": "No hay proveedores registrados",
         "T-COMPANY":"Empresa",
-        "T-CONTACT":"Contacto",
-        "T-INFORMATION":"información",
+        "T-CONTACT":"Contacto / Website",
+        "T-INFORMATION":"Información",
         "T-FRECUENCY":"Frecuencia",
         "T-ACTIONS":"Acciones",
         "ERROR-GET-SUPPLERS": "Error al consultar los proveedores",
@@ -194,8 +197,8 @@
         "CREATE-DESCRIPTION":"Completa la información para registrar un nuevo proveedor",
         "COMPANY-INFO":"Información de la Empresa",
         "COMPANY-NAME":"Nombre de la Empresa",
-        "ADDRESS": "Dirección",
-        "ADDRESS-PLACEHOLDER": "Dirección completa de la empresa",
+        "ADDRESS": "Detalles",
+        "ADDRESS-PLACEHOLDER": "Address, website or data you need",
         "CONTACT-INFO": "Información de Contacto",
         "CONTACT-NAME": "Nombre del Contacto",
         "CONTACT-PLACEHOLDER": "Nombre completo de la persona de contacto",
@@ -395,7 +398,11 @@
         "ADD_PRESENTATIONS": "Agregar Presentaciones",
         "UPDATE_ITEM": "Actualizar producto",
         "SAVE_ITEM": "Guardar producto",
-        "CANCEL": "Cancelar"
+        "CANCEL": "Cancelar",
+        "TYPE_PRODUCTION": "Tipo de Producción",
+        "INFO_TYPE_PRODUCTION": "Nota: solo si se toma en cuenta para el apartado de producción.",
+        "LIFE_DAYS": "Días de vigencia",
+        "INFO_LIFE_DAYS": "Cantidad de días que puede permanecer en vitrina"
     },
     "ORDER-DETAILS": {
         "RECEIVED_DATE": "Recibido el: ",
@@ -433,7 +440,9 @@
     "NEW-ORDER": {
         "TITLE": "Recibir Nueva Orden",
         "DESCRIPTION":"A continuación selecciona los datos necesarios de la nueva orden a recibir",
-        "DETAILS-ORDER": "Detalles de la orden a recibir"
+        "DETAILS-ORDER": "Detalles de la orden a recibir",
+        "SUCCESSFULY-UPDATE-ORDER": "Orden creada correctamente",
+        "RECEIVE-ORDER": "Recibir orden"
     },
     "STATUS-ORDER": {
         "CREATED": "Creada",
@@ -465,11 +474,11 @@
         "DETAILS-ORDER": "Detalles de la orden"
     },
     "SUPPLIER-ORDERS": {
-        "TITLE": "Ordenes a Proveedores",
-        "DESCRIPTION": "Administra todas las ordenes registradas y sugeridas en tu sistema.",
-        "SUGGEST-ORDER": "Generar ordenes",
-        "LOADING": "Cargando ordenes...",
-        "SEARCH": "Buscar ordenes...",
+        "TITLE": "Órdenes a Proveedores",
+        "DESCRIPTION": "Administra todas las órdenes registradas y sugeridas en tu sistema.",
+        "SUGGEST-ORDER": "Generar órdenes",
+        "LOADING": "Cargando órdenes...",
+        "SEARCH": "Buscar órdenes...",
         "ORDER": "Orden",
         "SUPPLIER": "Proveedor",
         "ALL" : "Todos",
@@ -481,7 +490,8 @@
         "DESCRIPTION": "Revisa la orden y edita lo que necesites.",
         "RESUMEN-ORDER" : "Orden recibida",
         "SUCCESSFULY-UPDATE-ORDER": "Orden actualizada",
-        "DETAILS-ORDER": "Detalles de la orden"
+        "DETAILS-ORDER": "Detalles de la orden",
+        "UPDATE" : "Update"
     },
     "COUNTS": {
         "TITLE": "Conteo de Inventario",
@@ -540,7 +550,8 @@
         "NAME": "Nombre",
         "QTY": "Cantidad",
         "HOUR": "Hora",
-        "STOCK": "Vitrina"
+        "STOCK": "Vitrina",
+        "SEARCH" : "Filtrar ..."
     },
     "PROD-HISTORY-TABLE" : {
         "NO-DATA" : "No hay registros de producción.",
@@ -645,6 +656,18 @@
         "DESCRIPTION" : "Registro de las perdidas ocurridas",
         "REGISTER-WASTE" : "Registrar Perdida",
         "LOADING" : "Cargando perdidas..."
+    },
+    "MOVEMENTS-VIEW": {
+        "TITLE" : "Movimientos de inventario",
+        "DESCRIPTION": "A continuación se muestran todos los movimientos de inventario registrados para fines de auditoría",
+        "FILE" : "Descargar CSV",
+        "LOADING" : "Cargando movimientos ...",
+        "DATE" : "Fecha",
+        "TYPE": "Tipo",
+        "ITEM": "Producto",
+        "QTY":"Cantidad (±)",
+        "USER": "Empleado",
+        "NOTES": "Notas"
     }
 
 }

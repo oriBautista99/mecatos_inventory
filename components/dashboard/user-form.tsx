@@ -33,19 +33,17 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
 
     return(
         <div>
-            <div className="p-4">
-                <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
-                    <SheetTitle  className="flex items-center gap-2 text-lg sm:text-xl">
-                        <User className="h-4 w-4 sm:h-5 sm:w-5"/>
-                        {mode === "edit" ? t("EDIT-TITLE") : t("CREATE-TITLE")}
-                    </SheetTitle>
-                <SheetDescription className="text-sm">
-                    {mode === "edit"
-                        ? t("DESCRIPTION-EDIT")
-                        : t("DESCRIPTION-CREATE")}
-                    </SheetDescription>
-                </SheetHeader>
-            </div>       
+            <SheetHeader className="space-y-2 sm:space-y-3 mb-3">
+              <SheetTitle  className="flex items-center gap-2 text-lg sm:text-xl">
+                  <User className="h-4 w-4 sm:h-5 sm:w-5"/>
+                  {mode === "edit" ? t("EDIT-TITLE") : t("CREATE-TITLE")}
+              </SheetTitle>
+              <SheetDescription className="text-sm">
+                  {mode === "edit"
+                      ? t("DESCRIPTION-EDIT")
+                      : t("DESCRIPTION-CREATE")}
+                  </SheetDescription>
+              </SheetHeader>
             <Separator />
               
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">

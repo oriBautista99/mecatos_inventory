@@ -71,10 +71,10 @@ const data = {
           title: "EXPIRATION ALERTS",
           url: "alerts",
         },
-        // {
-        //   title: "SUB-RECIPES OR PREPARATION",
-        //   url: "preparations",
-        // },
+        {
+          title: "AUDIT",
+          url: "audit",
+        },
         // {
         //   title: "MENU",
         //   url: "menu",

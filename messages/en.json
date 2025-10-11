@@ -34,7 +34,8 @@
         "PRODUCTION" : "Production",
         "SUPPLIERS" : "Suppliers",
         "SETTINGS" : "Settings",
-        "USERS" : "Users"
+        "USERS" : "Users",
+        "AUDIT": "Movements"
     },
     "DASHBOARD-HOME": {
         "HELLO": "Hello",
@@ -91,7 +92,7 @@
         "reports":"Informes / Reportes",
         "suppliers": "Proveedores",
         "users" : "Usuario",
-        "purchase": "Purchase Orders",
+        "purchase": "Orders to Suppliers",
         "receiving": "Order Receiving",
         "history" : "Order History",
         "storage_areas": "Storage Areas",
@@ -107,7 +108,8 @@
         "production" : "Production",
         "settings": "settings",
         "neworder": "New Order",
-        "new_count": "New Count"       
+        "new_count": "New Count",
+        "audit": "Movements"       
     },
     "USERS": {
         "TITLE": "User Management",
@@ -172,7 +174,7 @@
         "NO-FOUND-SUPPLIERS": "No suppliers found",
         "NO-SUPPLIERS": "No registered suppliers",
         "T-COMPANY": "Company",
-        "T-CONTACT": "Contact",
+        "T-CONTACT": "Contact / Website",
         "T-INFORMATION": "Information",
         "T-FRECUENCY": "Frequency",
         "T-ACTIONS": "Actions",
@@ -195,7 +197,7 @@
         "CREATE-DESCRIPTION": "Complete the information to register a new supplier",
         "COMPANY-INFO": "Company Information",
         "COMPANY-NAME": "Company Name",
-        "ADDRESS": "Address",
+        "ADDRESS": "Details",
         "ADDRESS-PLACEHOLDER": "Full company address",
         "CONTACT-INFO": "Contact Information",
         "CONTACT-NAME": "Contact Name",
@@ -396,7 +398,11 @@
         "ADD_PRESENTATIONS": "Add Presentations",
         "UPDATE_ITEM": "Update Product",
         "SAVE_ITEM": "Save Product",
-        "CANCEL": "Cancel"
+        "CANCEL": "Cancel",
+        "TYPE_PRODUCTION": "Production Type",
+        "INFO_TYPE_PRODUCTION": "Note: Only if considered for the production section.",
+        "LIFE_DAYS": "Days of validity",
+        "INFO_LIFE_DAYS": "Number of days the product can remain on display"
     },
     "ORDER-DETAILS": {
         "RECEIVED_DATE": "Received on: ",
@@ -435,7 +441,9 @@
     "NEW-ORDER": {
         "TITLE": "Receive New Order",
         "DESCRIPTION": "Next, select the necessary details for the new order to be received",
-        "DETAILS-ORDER": "Details of the order to be received"
+        "DETAILS-ORDER": "Details of the order to be received",
+        "SUCCESSFULLY-UPDATE-ORDER": "Order created successfully",
+        "RECEIVE-ORDER": "Receive Order"
     },
     "STATUS-ORDER": {
         "CREATED": "Created",
@@ -481,9 +489,10 @@
         "LOADING": "Loading order information...",
         "ORDER": "Order",
         "DESCRIPTION": "Review the order and edit as needed.",
-        "ORDER-SUMMARY": "Order received",
+        "RESUMEN-ORDER": "Order received",
         "SUCCESSFULY-UPDATE-ORDER": "Order updated",
-        "ORDER-DETAILS": "Order details"
+        "DETAILS-ORDER": "Order details",
+        "UPDATE" : "Actualizar"
     },
     "COUNTS": {
         "TITLE": "Inventory Count",
@@ -542,7 +551,8 @@
         "NAME": "Name",
         "QTY": "Quantity",
         "HOUR": "Time",
-        "STOCK": "Display Case"
+        "STOCK": "Display Case",
+        "SEARCH" : "Filter..."
     },
     "PROD-HISTORY-TABLE" : {
         "NO-DATA" : "No production records.",
@@ -654,5 +664,17 @@
         "DESCRIPTION": "Record of losses that occurred",
         "REGISTER-WASTE": "Record Loss",
         "LOADING": "Loading losses..."
+    },
+    "MOVEMENTS-VIEW": {
+        "TITLE": "Inventory Movements",
+        "DESCRIPTION": "All recorded inventory movements are shown below for audit purposes",
+        "FILE": "Download CSV",
+        "LOADING": "Loading movements...",
+        "DATE": "Date",
+        "TYPE": "Type",
+        "ITEM": "Product",
+        "QTY": "Quantity (±)",
+        "USER": "Employee",
+        "NOTES": "Notes"
     }
 }
