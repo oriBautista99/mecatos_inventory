@@ -12,7 +12,29 @@ export async function GET() {
   if (userError || !user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { data, error } = await supabase.from("profiles").select("*").eq("auth_user", user.id);
+  const { data, error } = await supabase.from("profiles").select(
+    `
+      profile_id,
+      username,
+      email,
+      auth_user,
+      role_id,
+      roles (
+        role_id,
+        name,
+        description,
+        role_permissions (
+          permission_id,
+          permissions (
+            permission_id,
+            name,
+            description,
+            code
+          )
+        )
+      )
+    `
+  ).eq("auth_user", user.id);
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

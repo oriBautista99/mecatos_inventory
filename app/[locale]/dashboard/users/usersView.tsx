@@ -31,6 +31,7 @@ export default function UsersView() {
   async function loadUsers() {
     const {data, error} = await getUsers();
     if(data) {
+      console.log(data)
       setUsers(data);
     }else{
       toast.error(error);
@@ -55,7 +56,7 @@ export default function UsersView() {
     const startIndex = (page - 1) * pageSize;
     const currentData = filteredUsers.slice(startIndex, startIndex + pageSize);
 
-  const getRoleColor = (role: Profile["role"]) => {
+  const getRoleColor = (role: number) => {
     switch (role) {
       case 1:
         return "bg-red-100 text-red-800"
@@ -242,8 +243,8 @@ export default function UsersView() {
                                 </TableCell>
                                 <TableCell className="text-muted-foreground">{user.email}</TableCell>
                                 <TableCell>
-                                    <Badge className={getRoleColor(user.role)}>
-                                    {user.role === 1 ? t("ADMIN") : user.role === 2 ? t("MANAGER") : t("EMPLOYEE")}
+                                    <Badge className={getRoleColor(Number(user.roles.role_id))}>
+                                    {Number(user.roles.role_id) === 2 ? t("ADMIN") : t("EMPLOYEE")}
                                     </Badge>
                                 </TableCell>
                                 <TableCell>

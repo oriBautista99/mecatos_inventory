@@ -125,7 +125,15 @@ export async function deleteUser(profile: Profile) {
 export async function getUsers() {
     try {
         const supabase =  await createClient();
-        const {data, error} = await supabase.from("profiles").select("*");
+        const {data, error} = await supabase.from("profiles").select(`
+            *,
+            role_id,
+            roles (
+                role_id,
+                name,
+                description
+            )
+        `);
         if(error){
             console.error('Error in get users:', error);
             return { data: null, error: "ERROR-GET-USERS"};

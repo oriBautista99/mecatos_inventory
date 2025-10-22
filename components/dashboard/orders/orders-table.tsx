@@ -50,6 +50,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                             }                  
                             
                             <TableHead className="text-foreground font-semibold">{t("EXPIRATION_DATE")}</TableHead>
+                            <TableHead className="text-foreground font-semibold">{t("ACTIONS")}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -65,6 +66,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                                   mode != 'RECEIVED' && <TableCell>{order.received_date && new Date(order.received_date).toDateString()}</TableCell>
                                 }                              
                                 <TableCell>{order.expiration_date &&  new Date(order.expiration_date).toDateString()}</TableCell>
+                                <TableCell></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

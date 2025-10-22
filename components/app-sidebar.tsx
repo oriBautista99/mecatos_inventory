@@ -15,6 +15,7 @@ import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { TeamSwitcher } from "@/components/team-switcher"
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
+import { useProfileLoginSWR } from "@/hooks/useUserLogin"
 
 // This is sample data.
 const data = {
@@ -127,16 +128,63 @@ const data = {
     },
   ],
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function filterMenuByPermissions(menu: any[], userPermissions: string[]) {
+  return menu
+    .map((section) => {
+      if (section.items) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const filteredItems = section.items.filter((item:any) =>
+          userPermissions.includes(item.title)
+        )
+
+        if (userPermissions.includes(section.title) || filteredItems.length > 0) {
+          return { ...section, items: filteredItems }
+        }
+
+        return null
+      }
+
+      // Si es un ítem sin submenú
+      return userPermissions.includes(section.title) ? section : null
+    })
+    .filter(Boolean)
+}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const {profile, isLoading} = useProfileLoginSWR(); 
+
+  if (isLoading) return null
+
+   const userPermissions =
+   
+    profile?.roles?.role_permissions?.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (rp: any) => rp.permissions?.name
+    ) || []
+
+  const isAdmin = profile?.roles?.name === "Administrador"
+
+  const filteredNavMain = isAdmin
+    ? data.navMain
+    : filterMenuByPermissions(data.navMain, userPermissions)
+
+  const filteredProjects = isAdmin
+    ? data.projects
+    : filterMenuByPermissions(data.projects, userPermissions)
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="pt-4">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={filteredNavMain} />
+        {
+          filteredProjects.length > 0 &&
+          <NavProjects projects={filteredProjects} />
+        }
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

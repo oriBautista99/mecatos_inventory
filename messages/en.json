@@ -294,7 +294,8 @@
     "SETTINGS" :{
         "TITLE": "System Settings",
         "DESCRIPTION-TITLE": "Manage your system's basic data.",
-        "TYPE": "Product Types"
+        "TYPE": "Product Types",
+        "ROLES": "Roles"
     },
     "ITEM-TYPES": {
         "TITLE": "Product Types",
@@ -329,6 +330,40 @@
         "DELETE-TYPE": "Do you want to delete a type?",
         "DELETE-DESCRIPTION": "This action cannot be undone. The type will be permanently deleted.",
         "SEARCH": "Search for product type..."  
+    },
+    "ROLES": {
+        "TITLE": "User Roles",
+        "DESCRIPTION-TITLE": "Manage user roles and permissions.",
+        "ADD": "New role",
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "EDIT-ROLES": "Edit the role",
+        "CREATE-ROLES": "New user role",
+        "EDIT-DESCRIPTION": "Modify the information for an existing role",
+        "CREATE-DESCRIPTION": "Complete the information to register a new role",
+        "NAME": "Role name",
+        "NAME-PLACEHOLDER": "Ex: Hot bites",
+        "DESCRIPTION": "Role description",
+        "DESCRIPTION-PLACEHOLDER": "Full description of the role being referenced",
+        "SAVE-ROLES": "Create role",
+        "UPDATE-ROLES": "Update role",
+        "CANCEL": "Cancel",
+        "NO-FOUND-TYPES": "No roles were found",
+        "NO-TYPES": "No roles registered",
+        "T-NAME":"Name",
+        "T-DESCRIPTION":"Description",
+        "T-ACTIONS":"Actions",
+        "ERROR-GET-TYPES": "Error querying roles",
+        "SUCCESS-CREATE": "Role created successfully",
+        "ERROR-CREATE": "Error creating a role",
+        "SUCCESS-EDIT": "Role updated successfully",
+        "ERROR-EDIT": "Error updating a role",
+        "SUCCESS-DELETE": "Role deleted successfully",
+        "ERROR-DELETE": "Error deleting a role",
+        "DELETE": "Delete",
+        "DELETE-TYPE": "Do you want to delete a role?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The role will be deleted permanently.",
+        "SEARCH": "Search product role..."
     },
     "FILTERS-INVENTORY": {
         "CATEGORIES": "Categories",

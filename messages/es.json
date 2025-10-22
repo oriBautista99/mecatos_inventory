@@ -20,7 +20,7 @@
         "ORDER_HISTORY": "Historial de Órdenes",
         "INVENTORY" : "Inventario",
         "STORAGE_AREAS" : "Zonas de Almacenamiento",
-        "INVENTORY_ITEMS" : "Artículos de Inventario",
+        "INVENTORY_ITEMS" : "Productos de Inventario",
         "INVENTORY_COUNT" : "Conteo de Inventario",
         "WASTE": "Pérdidas",
         "CATEGORIES": "Categorías",
@@ -95,9 +95,9 @@
         "receiving": "Recepción de Órdenes",
         "history" : "Historial de Órdenes",
         "storage_areas": "Áreas de Almacenamiento",
-        "items": "Artículos de Inventario",
+        "items": "Productos de Inventario",
         "count": "Conteo de Inventario",
-        "waste": "Desperdicio",
+        "waste": "Pérdidas",
         "categories": "Categorías",
         "alerts": "Alertas de Vencimiento",
         "preparations": "Sub-Recetas o Preparaciones",
@@ -246,9 +246,9 @@
         "CREATE-AREA":"Nueva Área de Almacenamiento",
         "EDIT-DESCRIPTION": "Modifica la información del área existente",
         "CREATE-DESCRIPTION":"Completa la información para registrar una nueva área de almacenamiento",
-        "NAME": "Nombre del Área de Almacenamiento",
+        "NAME": "Nombre",
         "NAME-PLACEHOLDER": "Ej: Congelador",
-        "DESCRIPTION": "Descripción del Área de Almacenamiento",
+        "DESCRIPTION": "Descripción",
         "DESCRIPTION-PLACEHOLDER":"Descripción completa de a que área se hace referencia",
         "SAVE-AREA": "Crear Área",
         "UPDATE-AREA": "Actualizar Área",
@@ -294,7 +294,8 @@
     "SETTINGS" :{
         "TITLE": "Configuración del Sistema",
         "DESCRIPTION-TITLE" : "Administra los datos bases de tu sistema.",
-        "TYPE": "Tipos de Productos"
+        "TYPE": "Tipos de Productos",
+        "ROLES": "Roles"
     },
     "ITEM-TYPES": {
         "TITLE": "Tipos de productos",
@@ -329,6 +330,40 @@
         "DELETE-TYPE": "¿Desea eliminar un tipo?",
         "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El tipo será eliminado permanentemente.",
         "SEARCH": "Buscar tipo de producto..."
+    },
+    "ROLES": {
+        "TITLE": "Roles de usuario",
+        "DESCRIPTION-TITLE" : "Gestion de roles y permisos de los usuarios.",
+        "ADD": "Nuevo rol",
+        "SAVE": "Guardar",
+        "UPDATE": "Actualizar",
+        "EDIT-ROLES": "Editar el rol",
+        "CREATE-ROLES":"Nuevo rol de usuario",
+        "EDIT-DESCRIPTION": "Modifica la información del rol existente",
+        "CREATE-DESCRIPTION":"Completa la información para registrar un nuevo rol",
+        "NAME": "Nombre del rol",
+        "NAME-PLACEHOLDER": "Ej: Hot bites",
+        "DESCRIPTION": "Descripción del rol",
+        "DESCRIPTION-PLACEHOLDER":"Descripción completa de a que rol se hace referencia",
+        "SAVE-ROLES": "Crear rol",
+        "UPDATE-ROLES": "Actualizar rol",
+        "CANCEL": "Cancelar",        
+        "NO-FOUND-TYPES": "No se encontraron roles",
+        "NO-TYPES": "No hay roles registrados",
+        "T-NAME":"Nombre",
+        "T-DESCRIPTION":"Descripción",
+        "T-ACTIONS":"Acciones",
+        "ERROR-GET-TYPES": "Error al consultar los roles",
+        "SUCCESS-CREATE": "Rol creado correctamente",
+        "ERROR-CREATE": "Error al crear un rol",
+        "SUCCESS-EDIT": "Rol actualizado correctamente",
+        "ERROR-EDIT": "Error al actualizar un rol",
+        "SUCCESS-DELETE": "Rol eliminado correctamente",
+        "ERROR-DELETE": "Error al eliminar un rol",
+        "DELETE": "Eliminar",
+        "DELETE-TYPE": "¿Desea eliminar un rol?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El rol será eliminado permanentemente.",
+        "SEARCH": "Buscar rol de producto..."
     },
     "FILTERS-INVENTORY": {
         "CATEGORIES": "Categorías",
@@ -474,7 +509,7 @@
         "DETAILS-ORDER": "Detalles de la orden"
     },
     "SUPPLIER-ORDERS": {
-        "TITLE": "Órdenes a Proveedores",
+        "TITLE": "Órdenes por Proveedores",
         "DESCRIPTION": "Administra todas las órdenes registradas y sugeridas en tu sistema.",
         "SUGGEST-ORDER": "Generar órdenes",
         "LOADING": "Cargando órdenes...",
@@ -594,7 +629,7 @@
         "SELECT-RANGE" : "Seleccionar rango"
     },
     "WASTE-REPORT": {
-        "TITLE": "Reportes de Perdidas",
+        "TITLE": "Reportes de Pérdidas",
         "CARD-1-TITLE" : "Pérdidas",
         "CARD-1-DESCRIPTION" : "con la semana anterior",
         "CARD-1-UNITS": "Unidades",
@@ -643,19 +678,19 @@
         "CANCEL" : "Cancelar"
     },
     "LOSS-TABLE": {
-        "NO-REGISTER": "No hay perdidas registradas",
+        "NO-REGISTER": "No hay pérdidas registradas",
         "SEARCH" : "Buscar perdida...",
         "DATE-SEARCH" : "Buscar por fecha...",
         "DATE" : "Fecha",
         "REGISTER_BY" : "Registrado por",
-        "REASON" : "Razon de perdida",
+        "REASON" : "Razón de perdida",
         "NOTE": "Nota"
     },
     "WASTE-PAGE": {
-        "TITLE" : "Perdidas",
-        "DESCRIPTION" : "Registro de las perdidas ocurridas",
-        "REGISTER-WASTE" : "Registrar Perdida",
-        "LOADING" : "Cargando perdidas..."
+        "TITLE" : "Pérdidas",
+        "DESCRIPTION" : "Registro de las pérdidas ocurridas",
+        "REGISTER-WASTE" : "Registrar Pérdida",
+        "LOADING" : "Cargando pérdidas..."
     },
     "MOVEMENTS-VIEW": {
         "TITLE" : "Movimientos de inventario",

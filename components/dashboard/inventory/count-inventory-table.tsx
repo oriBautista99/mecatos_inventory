@@ -15,7 +15,6 @@ type OrdersTableProps = {
 export default function CountInventoryTable({ data, onChange, mode }: OrdersTableProps){
 
     const t = useTranslations("COUNT-INVENTORY-TABLE");
-
     const [page, setPage] = useState(1);
     const pageSize = 10; 
     const totalPages = Math.ceil(data.length / pageSize);
