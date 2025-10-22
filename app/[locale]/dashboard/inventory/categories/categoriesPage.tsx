@@ -28,8 +28,8 @@ export default function CategoriesPage() {
 
     const filteredCategories = categories.filter(
         (category) =>
-        category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        category.description.toLowerCase().includes(searchTerm.toLowerCase())
+        category.name && category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        category.description && category.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     //   pagination
@@ -93,7 +93,12 @@ export default function CategoriesPage() {
               {t("DESCRIPTION-TITLE")}
             </p>
           </div>
-          <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <Sheet open={isModalOpen} onOpenChange={(open) => {
+                    setIsModalOpen(open);
+                    if (!open) {
+                        setSelectedCategory(null);
+                    }
+                }}>
               <SheetTrigger asChild>
                 <Button className="w-full md:w-fit">
                   <Plus className="mr-2 h-4 w-4" />

@@ -1,10 +1,11 @@
 "use client"
 import CardItemTypes from "@/components/dashboard/settings/card-item-types";
 import Roles from "@/components/dashboard/settings/roles";
+import Units from "@/components/dashboard/settings/units";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tabs } from "@radix-ui/react-tabs";
-import { Type, Users } from "lucide-react";
+import { Ruler, Type, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const tabs = [
@@ -25,6 +26,16 @@ const tabs = [
         content: (
             <>
                 <CardItemTypes></CardItemTypes>
+            </>
+        )
+    },
+    {
+        name: 'UNITS',
+        value: 'units',
+        icon: Ruler,
+        content: (
+            <>
+                <Units></Units>
             </>
         )
     }

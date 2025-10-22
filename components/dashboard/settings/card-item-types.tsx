@@ -8,7 +8,7 @@ import { Item_types, ItemTypeSchema, ItemTypesFormValues } from "@/types/itemTyp
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { Separator } from "@/components/ui/separator";
-import { Edit, Plus, Save, Search, Trash2, X } from "lucide-react";
+import { Edit, Plus, Save, Search, SearchX, Trash2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
@@ -198,8 +198,12 @@ export default function CardItemTypes(){
                 {/* Mobile Cards View */}
                 <div className="block sm:hidden space-y-4 w-full">
                     {currentData.length === 0 ? (
-                        <div className="text-center py-2 text-muted-foreground">
-                            {searchTerm ? t("NO-FOUND-TYPES") : t("NO-TYPES")}
+                        <div className="text-center py-12">
+                            <SearchX className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                            <h3 className="text-lg font-medium text-foreground mb-2">{t("NO-TYPES")}</h3>
+                            <p className="text-muted-foreground">
+                                {searchTerm ? t("NO-FOUND-TYPES") : t("NO-TYPES")}
+                            </p>
                         </div>
                     ):(
                         currentData.map((type) => (
@@ -257,7 +261,13 @@ export default function CardItemTypes(){
                         {currentData.length === 0 ? (
                         <TableRow>
                             <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                            {searchTerm ?  t("NO-FOUND-TYPES") : t("NO-TYPES")}
+                            <div className="text-center py-12">
+                                <SearchX className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                                <h3 className="text-lg font-medium text-foreground mb-2">{t("NO-TYPES")}</h3>
+                                <p className="text-muted-foreground">
+                                    {searchTerm ? t("NO-FOUND-TYPES") : t("NO-TYPES")}
+                                </p>
+                            </div>
                             </TableCell>
                         </TableRow>
                         ) : (

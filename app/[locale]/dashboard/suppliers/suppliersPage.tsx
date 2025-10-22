@@ -29,11 +29,18 @@ export default function SuppliersPage() {
   }
 
   const filteredSuppliers = suppliers.filter(
-    (supplier) =>
-      supplier.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      supplier.contact_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      supplier.email.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+    (supplier) =>{
+      if(supplier.company_name){
+        return supplier.company_name.toLowerCase().includes(searchTerm.toLowerCase())
+      }
+      if(supplier.contact_name){
+        return supplier.contact_name.toLowerCase().includes(searchTerm.toLowerCase())
+      }
+      if(supplier.email){
+        return supplier.email.toLowerCase().includes(searchTerm.toLowerCase())
+      }
+    }
+  );
 
     //   pagination
     const [page, setPage] = useState(1);

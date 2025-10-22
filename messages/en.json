@@ -295,7 +295,8 @@
         "TITLE": "System Settings",
         "DESCRIPTION-TITLE": "Manage your system's basic data.",
         "TYPE": "Product Types",
-        "ROLES": "Roles"
+        "ROLES": "Roles",
+        "UNITS": "Units"
     },
     "ITEM-TYPES": {
         "TITLE": "Product Types",
@@ -364,6 +365,40 @@
         "DELETE-TYPE": "Do you want to delete a role?",
         "DELETE-DESCRIPTION": "This action cannot be undone. The role will be deleted permanently.",
         "SEARCH": "Search product role..."
+    },
+    "UNITS": {
+        "TITLE": "System Units",
+        "DESCRIPTION-TITLE": "System Unit Management",
+        "ADD": "New Unit",
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "EDIT-UNITS": "Edit Unit",
+        "CREATE-UNITS": "New System Unit",
+        "EDIT-DESCRIPTION": "Modify information for existing units",
+        "CREATE-DESCRIPTION": "Complete information to register a new unit",
+        "NAME": "Name of the unit",
+        "NAME-PLACEHOLDER": "Ex: Hot Bites",
+        "DESCRIPTION": "Description of the unit",
+        "DESCRIPTION-PLACEHOLDER": "Full description of the unit being referenced",
+        "SAVE-UNITS": "Create Unit",
+        "UPDATE-UNITS": "Update Unit",
+        "CANCEL": "Cancel",
+        "NO-FOUND-UNITS": "No units found",
+        "NO-UNITS": "No units registered",
+        "T-NAME": "Name",
+        "T-ABBREVIATION": "Abbreviation",
+        "T-ACTIONS": "Actions",
+        "ERROR-GET-UNITS": "Error querying units",
+        "SUCCESS-CREATE": "Unit created successfully",
+        "ERROR-CREATE": "Error creating a unit",
+        "SUCCESS-EDIT": "Unit updated successfully",
+        "ERROR-EDIT": "Error updating a unit",
+        "SUCCESS-DELETE": "Unit deleted successfully",
+        "ERROR-DELETE": "Error deleting a unit",
+        "DELETE": "Delete",
+        "DELETE-TYPE": "Do you want to delete a unit?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The unit will be permanently deleted.",
+        "SEARCH": "Search units..."
     },
     "FILTERS-INVENTORY": {
         "CATEGORIES": "Categories",
@@ -502,7 +537,12 @@
         "CREATED_AT": "Creation date",
         "RECEIVED_DATE": "Receipt date",
         "STATUS": "Status",
-        "EXPIRATION_DATE": "Expiration date"
+        "EXPIRATION_DATE": "Expiration date",
+        "ACTIONS":"Actions",
+        "DELETE": "Delete",
+        "DELETE-ORDER": "Do you want to delete the order?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The order will be permanently deleted.",
+        "CANCEL": "Cancel"
     },
     "RECEIVING-ORDER": {
         "TITLE": "Order to be received",

@@ -3,7 +3,7 @@
 import { createUser, deleteUser, getUsers, updateUser } from "@/actions/users";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { UserForm } from "@/components/dashboard/user-form";
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -164,7 +164,7 @@ export default function UsersView() {
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3 flex-1">
                         <Avatar className="w-10 h-10">
-                            <AvatarImage src={user.avatar || "/placeholder.svg"} />
+                            {/* <AvatarImage src={user.avatar || "/placeholder.svg"} /> */}
                             <AvatarFallback>
                             {user.username
                                 .split(" ")
@@ -229,7 +229,7 @@ export default function UsersView() {
                                 <TableCell className="pl-6">
                                     <div className="flex items-center gap-3">
                                     <Avatar className="w-8 h-8">
-                                        <AvatarImage src={user.avatar || "/placeholder.svg"} />
+                                        {/* <AvatarImage src={user.avatar || "/placeholder.svg"} /> */}
                                         <AvatarFallback>
                                         {user.username
                                             .split(" ")

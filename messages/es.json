@@ -295,7 +295,8 @@
         "TITLE": "Configuración del Sistema",
         "DESCRIPTION-TITLE" : "Administra los datos bases de tu sistema.",
         "TYPE": "Tipos de Productos",
-        "ROLES": "Roles"
+        "ROLES": "Roles",
+        "UNITS": "Unidades"
     },
     "ITEM-TYPES": {
         "TITLE": "Tipos de productos",
@@ -364,6 +365,40 @@
         "DELETE-TYPE": "¿Desea eliminar un rol?",
         "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El rol será eliminado permanentemente.",
         "SEARCH": "Buscar rol de producto..."
+    },
+    "UNITS": {
+        "TITLE": "Unidades del sistema",
+        "DESCRIPTION-TITLE" : "Gestion de unidades del sistema",
+        "ADD": "Nueva unidad",
+        "SAVE": "Guardar",
+        "UPDATE": "Actualizar",
+        "EDIT-UNITS": "Editar la Unidad",
+        "CREATE-UNITS":"Nueva unidad del sistema",
+        "EDIT-DESCRIPTION": "Modifica la información de la unidad existente",
+        "CREATE-DESCRIPTION":"Completa la información para registrar una nueva unidad",
+        "NAME": "Nombre de la unidad",
+        "NAME-PLACEHOLDER": "Ej: Hot bites",
+        "DESCRIPTION": "Descripción de la unidad",
+        "DESCRIPTION-PLACEHOLDER":"Descripción completa de a que unidad se hace referencia",
+        "SAVE-UNITS": "Crear unidad",
+        "UPDATE-UNITS": "Actualizar unidad",
+        "CANCEL": "Cancelar",        
+        "NO-FOUND-UNITS": "No se encontraron unidades",
+        "NO-UNITS": "No hay unidades registradas",
+        "T-NAME":"Nombre",
+        "T-ABBREVIATION":"Abreviación",
+        "T-ACTIONS":"Acciones",
+        "ERROR-GET-UNITS": "Error al consultar las unidades",
+        "SUCCESS-CREATE": "Unidad creada correctamente",
+        "ERROR-CREATE": "Error al crear una unidad",
+        "SUCCESS-EDIT": "Unidad actualizado correctamente",
+        "ERROR-EDIT": "Error al actualizar una unidad",
+        "SUCCESS-DELETE": "Unidad eliminado correctamente",
+        "ERROR-DELETE": "Error al eliminar una unidad",
+        "DELETE": "Eliminar",
+        "DELETE-TYPE": "¿Desea eliminar una unidad?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. La unidad será eliminada permanentemente.",
+        "SEARCH": "Buscar unidad ..."
     },
     "FILTERS-INVENTORY": {
         "CATEGORIES": "Categorías",
@@ -501,7 +536,12 @@
         "CREATED_AT": "Fecha de creación",
         "RECEIVED_DATE": "Fecha de recepción",
         "STATUS": "Estado",
-        "EXPIRATION_DATE": "Fecha de expiración"
+        "EXPIRATION_DATE": "Fecha de expiración",
+        "ACTIONS":"Acciones",
+        "DELETE": "Eliminar",
+        "DELETE-ORDER": "¿Desea eliminar la Orden?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. La orden será eliminada permanentemente.",
+        "CANCEL": "Cancelar"
     },
     "RECEIVING-ORDER": {
         "TITLE": "Orden a recibir: ",

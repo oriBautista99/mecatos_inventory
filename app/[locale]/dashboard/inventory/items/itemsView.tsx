@@ -59,11 +59,11 @@ export default function ItemsView() {
             if (searchTerm) {
                 const lower = searchTerm.toLowerCase();
                 const matches =
-                item.name.toLowerCase().includes(lower) ||
-                item.description.toLowerCase().includes(lower) ||
-                item.categories.name.toLowerCase().includes(lower) ||
-                item.item_types.name.toLowerCase().includes(lower) ||
-                item.storage_areas.name.toLowerCase().includes(lower);
+                item.name && item.name.toLowerCase().includes(lower) ||
+                item.description && item.description.toLowerCase().includes(lower) ||
+                item.categories.name && item.categories.name.toLowerCase().includes(lower) ||
+                item.item_types.name && item.item_types.name.toLowerCase().includes(lower) ||
+                item.storage_areas.name && item.storage_areas.name.toLowerCase().includes(lower);
                 
                 if (!matches) return false;
             }
