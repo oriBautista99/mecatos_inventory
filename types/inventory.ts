@@ -84,4 +84,5 @@ export interface CountTableRow {
   base_unit: string;
   system_quantity: number;
   counted_quantity?: number;
+  presentation ?: Presentation
 }

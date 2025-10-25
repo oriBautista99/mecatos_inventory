@@ -390,10 +390,15 @@ export async function getInventoryCount(count_id: number){
           counted_by: data.counted_by,
           created_at: data.created_at,
           notes: data.notes,
-          inventory_counts_details: data.inventory_counts_details.map((d: any) => ({
-            ...d,
-            item: d.items,
-          })),
+          inventory_counts_details: data.inventory_counts_details.map((d: any) => {
+            const presen_quantity = d.items.presentations.find(p => p.is_default);
+            return {
+              ...d,
+              counted_quantity: d.counted_quantity / presen_quantity.quantity,
+              presentation: presen_quantity,
+              item: d.items,
+            }
+          }),
         };     
         return {data: mapped, error: null}; 
       }

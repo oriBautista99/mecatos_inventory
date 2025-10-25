@@ -67,7 +67,7 @@ export default function ProductionInit() {
 
 
     return (
-        <div className="max-h-screen overflow-y-auto space-y-4">
+        <div className="max-h-screen overflow-y-auto space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-center w-full space-y-4 md:space-y-2">
                 <div className="flex flex-col items-start">
                     <h1 className="text-2xl font-bold tracking-tight">{t("TITLE")}</h1>
@@ -121,11 +121,15 @@ export default function ProductionInit() {
                         <Progress value={progress} className="w-2/3 h-3" />
                     </div>
                 ) : (
-                    <ProductionHistoryTable
-                        data={productions}
-                        daily={true}
-                        onSelectRow={(id, type) => setSheetState({ mode: "edit", type:type, eventId: id })} 
-                    ></ProductionHistoryTable>                    
+                    <div className="flex flex-col w-full gap-2">
+                        <h1 className="pl-2 text-xl font-bold tracking-tight">Producciones del día</h1>
+                        <ProductionHistoryTable
+                            data={productions}
+                            daily={true}
+                            onSelectRow={(id, type) => setSheetState({ mode: "edit", type:type, eventId: id })} 
+                        ></ProductionHistoryTable>   
+                    </div>
+                 
                 )
             }
 

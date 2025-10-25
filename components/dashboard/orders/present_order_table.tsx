@@ -27,6 +27,7 @@ const initializeTableData = (products: presentationsItems[]): fullPresentItems[]
         presentation_id: p.presentation_id,
         presentation_name: p.presentations.name,
         presentation_unit: p.presentations.unit,
+        presentation_quantity: p.presentations.quantity,
         conversion_factor: p.presentations.conversion_factor,
         item_name: p.presentations.items.name,
         target_quantity: p.presentations.items.target_quantity,
@@ -64,6 +65,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
     const getProducts = async (supplier_id:number) => {
         const {data} = await getPrsentationsForSupplier(supplier_id);
         if(data){
+
             const productList = initializeTableData(data);
             if(presentationsOrder && presentationsOrder?.length > 0){
                 const idsPresents = new Map(presentationsOrder.map(p=> [p.presentation_id, p]));
@@ -73,8 +75,8 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                         return {
                             ...pro, 
                             selected:true,
-                            quantity_orderned: dataPres.quantity_orderned,
-                            quantity_received: dataPres.quantity_received,
+                            quantity_orderned: mode === 'EDIT' ? Number((dataPres.quantity_orderned/pro.presentation_quantity).toFixed(2)) : dataPres.quantity_orderned,
+                            quantity_received: mode === 'EDIT' ? Number((dataPres.quantity_received/pro.presentation_quantity).toFixed(2)) : dataPres.quantity_received,
                             unit_price: dataPres.unit_price,
                             expiration_date: dataPres.expiration_date
                         };                        
@@ -82,6 +84,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                     return pro;
                 });
                 setProducts(selectDate);
+                console.log(selectDate)
             }else{
                 setProducts(productList);
             }
@@ -120,7 +123,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
             prev.map((p) =>
                 p.presentation_id === id ? { ...p, [field]: value } : p
             )
-            );
+        );
     };
     
     return(
@@ -155,7 +158,6 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                 <TableRow className="bg-secondary rounded-tr-md rounded-tl-md">
                                     <TableHead className="text-foreground font-semibold w-[50px]"></TableHead>
                                     <TableHead className="text-foreground font-semibold">{t("PRODUCT-T")}</TableHead>
-                                    <TableHead className="text-foreground font-semibold">{t("PRESENTATION-T")}</TableHead>
                                     <TableHead className="text-foreground font-semibold">{t("QTY_RECEIVED-T")}</TableHead>
                                     <TableHead className="text-foreground font-semibold">{t("QTY_ORDERED-T")}</TableHead>
                                     <TableHead className="text-foreground font-semibold">{t("UNIT_PRICE-T")}</TableHead>
@@ -179,13 +181,12 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                             />
                                         </TableCell>
                                         <TableCell>{item.item_name}</TableCell>
-                                        <TableCell>{item.presentation_name}</TableCell>
                                         <TableCell>
                                             <div className="relative">
                                                 <Input
                                                     type="number"
-                                                    className="w-full min-w-20"
-                                                    value={item.quantity_received ?? ''}
+                                                    className="w-full min-w-32"
+                                                    value={item.quantity_received}
                                                     onChange={(e) =>
                                                     handleInputChange(
                                                         item.presentation_id,
@@ -195,8 +196,8 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     }
                                                 />
                                                 <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm peer-disabled:opacity-50'>
-                                                    {item.presentation_unit}
-                                                </span>                                    
+                                                    {item.presentation_name}
+                                                </span>
                                             </div>
                                         </TableCell>
                                         <TableCell>
@@ -205,8 +206,8 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     <div className="relative">
                                                         <Input
                                                             type="number"
-                                                            className="w-full min-w-20"
-                                                            value={item.quantity_orderned ?? ''}
+                                                            className="w-full min-w-32"
+                                                            value={item.quantity_orderned}
                                                             onChange={(e) =>
                                                             handleInputChange(
                                                                 item.presentation_id,
@@ -216,11 +217,14 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                             }
                                                         />
                                                         <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm peer-disabled:opacity-50'>
-                                                            {item.presentation_unit}
-                                                        </span>                                    
+                                                            {item.presentation_name}
+                                                        </span>
                                                     </div>
                                                 :
-                                                `${item.quantity_orderned} ${item.presentation_unit}`
+                                                <div className="flex w-full justify-start gap-2">
+                                                    <h2 className="text-md font-bold">{Number((item.quantity_orderned / item.presentation_quantity).toFixed(2))}</h2>
+                                                    <p>{item.presentation_name}</p>
+                                                </div>
                                             }
                                         </TableCell>
                                         <TableCell>
@@ -234,7 +238,7 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                                                     }
                                                 />   
                                                 <span className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-sm peer-disabled:opacity-50'>
-                                                    / {item.presentation_unit}
+                                                    / {item.presentation_name}
                                                 </span>                             
                                             </div>
 

@@ -296,7 +296,8 @@
         "DESCRIPTION-TITLE" : "Administra los datos bases de tu sistema.",
         "TYPE": "Tipos de Productos",
         "ROLES": "Roles",
-        "UNITS": "Unidades"
+        "UNITS": "Unidades",
+        "TYPE_PRESENTATION" : "Tipos de Presentaciones"
     },
     "ITEM-TYPES": {
         "TITLE": "Tipos de productos",
@@ -522,9 +523,10 @@
         "RECEIVED": "Recibida"
     },
     "RECEIVING-ORDERS": {
-        "TITLE": "Ordenes Recibidas",
+        "TITLE": "Recibir Ordenes",
         "DESCRIPTION": "Administra las ordenes registradas en tu sistema y recibe nuevas ordenes.",
         "RECEIVE-NEW-ORDER": "Recibir Nueva Orden",
+        "SUCCESSFULY-UPDATE-ORDER" : "Ordenes creadas o sugeridas correctamente",
         "LOADING": "Cargando ordenes...",
         "SEARCH": "Buscar ordenes...",
         "ALL": "Todos"
@@ -589,7 +591,7 @@
         "SUCCESSFULLY-SAVE": "Guardado Correctamente",
         "TITLE": "Conteo de Inventario",
         "DESCRIPTION":"Cuenta cada producto necesario en el inventario, recuerda la unidad en que estas contando",
-        "SAVE": "Guardad Conteo",
+        "SAVE": "Guardar Conteo",
         "LOADING": "Cargando productos del inventario",
         "SEARCH": "Buscar en inventario",
         "FILTERS_TITLE": "Filtros"

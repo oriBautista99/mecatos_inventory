@@ -31,7 +31,6 @@ export default function UsersView() {
   async function loadUsers() {
     const {data, error} = await getUsers();
     if(data) {
-      console.log(data)
       setUsers(data);
     }else{
       toast.error(error);

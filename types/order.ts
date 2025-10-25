@@ -37,6 +37,7 @@ export type presentationsItems = {
         name: string,
         presentation_id: number,
         unit: string,
+        quantity: number,
         items: {
             base_unit: string,
             description: string,
@@ -66,6 +67,7 @@ export type fullPresentItems = {
     batch_id?: number,
     presentation_name: string,
     presentation_unit: string,
+    presentation_quantity: number,
     conversion_factor: number,
     item_name: string,
     target_quantity: number,
@@ -113,6 +115,7 @@ export function mapSupabaseDataToPresentations(
         name: presentation.name,
         presentation_id: presentation.presentation_id,
         unit: presentation.unit,
+        quantity: presentation.quantity,
         items: {
           base_unit: item.base_unit,
           description: item.description,

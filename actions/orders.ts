@@ -122,6 +122,7 @@ export async function getPrsentationsForSupplier(supplier_id: number){
                     description,
                     conversion_factor,
                     unit,
+                    quantity,
                     items:item_id (
                     item_id,
                     name,
@@ -315,13 +316,13 @@ export async function rpcReceiveSuggestedOrder({
         }); 
 
         if(error){
-            console.error('Error in create updateBatch:', error);
+            console.error('Error in create receive_suggested_order:', error);
             return { error: error};
         }
 
         return {success: true, data:data, error:null};
     } catch (err) {
-        console.error('Unexpected error in updateBatch:', err);
+        console.error('Unexpected error in receive_suggested_order:', err);
         return { error: { message: 'Unexpected error occurred' } }
     }
 }

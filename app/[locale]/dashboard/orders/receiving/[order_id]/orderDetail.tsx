@@ -80,7 +80,7 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
                 return(
                     { 
                         presentation_id:item.presentation_id, 
-                        quantity_received:item.quantity_received, 
+                        quantity_received:(item.quantity_received * item.presentation_quantity), 
                         unit_price:item.unit_price, 
                         expiration_date:item.expiration_date
                     }
@@ -99,7 +99,6 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
                     toast.success(t("SUCCESSFULY-UPDATE-ORDER"));
                     setSelectedProducts([]);            
                     router.back();                
-
                 }
             } catch (err) {
                 console.error("Error update order:", err);

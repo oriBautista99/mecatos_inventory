@@ -77,8 +77,8 @@ export default function OrderDetails({
         return(
             { 
                 presentation_id:item.presentation_id, 
-                quantity_ordered:item.quantity_orderned, 
-                quantity_received:item.quantity_received, 
+                quantity_ordered:(item.quantity_orderned * item.presentation_quantity), 
+                quantity_received:(item.quantity_received * item.presentation_quantity), 
                 unit_price:item.unit_price, 
                 expiration_date:item.expiration_date, 
                 delete: false 

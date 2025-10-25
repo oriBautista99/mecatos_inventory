@@ -1,13 +1,14 @@
 "use client"
 
 import { getInventoryHistory } from "@/actions/inventory";
+import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Progress } from "@/components/ui/progress";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "@/components/ui/table";
 import { InventoryCount, InventoryCountDetail, Profiles } from "@/types/inventory";
-import { Plus, Search } from "lucide-react";
+import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -113,7 +114,8 @@ export default function CountTable(){
                       <TableHead className="text-foreground font-semibold">{t("N-COUNT")}</TableHead>
                       <TableHead className="text-foreground font-semibold">{t("T-USER")}</TableHead>
                       <TableHead className="text-foreground font-semibold">{t("T-DATE")}</TableHead>
-                      <TableHead className="hidden md:table-cell text-foreground font-semibold">{t("T-NOTES")}</TableHead>
+                      {/* <TableHead className="hidden md:table-cell text-foreground font-semibold">{t("T-NOTES")}</TableHead> */}
+                      <TableHead className="hidden md:table-cell text-foreground font-semibold">Acciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -123,7 +125,38 @@ export default function CountTable(){
                           <TableCell>{count.count_id}</TableCell>
                           <TableCell>{count.profiles.username}</TableCell>
                           <TableCell>{new Date(count.created_at).toLocaleString()}</TableCell>
-                          <TableCell className="hidden md:table-cell">{count.notes}</TableCell>
+                          {/* <TableCell className="hidden md:table-cell">{count.notes}</TableCell> */}
+                          <TableCell className="hidden md:table-cell">
+                            <div className="flex gap-1">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0"
+                                    // onClick={() => handleEdit(unit)}
+                                    title="Editar"
+                                >
+                                    <Edit className="h-4 w-4" />
+                                </Button>
+                                <ConfirmDialog
+                                    trigger={
+                                        <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                        title="Eliminar"
+                                        >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                    }
+                                    title={""}
+                                    description={""}
+                                    confirmText={""}
+                                    cancelText={""}
+                                    onConfirm={() => {}}
+                                />
+
+                                </div>
+                          </TableCell>
                         </TableRow>
                       ))
                     }

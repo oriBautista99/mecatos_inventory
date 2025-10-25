@@ -34,7 +34,6 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
 
     const dataRef = useRef(data);
     dataRef.current = data;
-
     useEffect(() => {
         if (!onChange) return; 
         const updatedData = dataRef.current.map((item) => ({
@@ -100,23 +99,37 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="space-y-1 min-w-25 w-28 max-w-xs relative">
+                                            <div className="space-y-1 min-w-25 w-full max-w-xs relative">
                                                 <Input
                                                     type="number"
                                                     value={counts[it.item_id]?.toString() ?? ""}
                                                     onChange={(e) => handleCountChange(it.item_id, e.target.value)}
-                                                    className="pl-5 w-full max-w-sm text-md"
+                                                    className="pl-5 w-full max-w-md text-md"
                                                 />
-                                                <div className='text-muted-foreground pointer-events-none absolute inset-y-1 end-0 flex items-center justify-center pe-8 peer-disabled:opacity-50'>
-                                                    <span>{it.base_unit}</span>
-                                                </div>
+                                                {
+                                                    it.presentation?.name && 
+                                                    <div className='text-muted-foreground pointer-events-none absolute inset-y-1 end-0 flex items-center justify-center pe-8 peer-disabled:opacity-50'>
+                                                        <span>{it.presentation?.name}</span>
+                                                    </div>                                                    
+                                                }
                                             </div>
                                         </TableCell>
                                         {mode === "CREATE" && (
                                             <TableCell>
                                             <div className="space-y-1">
                                                 <div className="font-medium">
-                                                {it.system_quantity} {it.base_unit}
+                                                    {
+                                                        it.presentation?.quantity ? 
+                                                        <div className="flex w-full justify-start gap-2">
+                                                            <h2 className="text-md font-bold">{Number((it.system_quantity/it.presentation?.quantity).toFixed(2))}</h2>
+                                                            <p>{it.presentation.name}</p>
+                                                        </div>
+                                                        :
+                                                        <div>
+                                                            {it.system_quantity} {it.base_unit}
+                                                        </div>
+                                                    }
+                                                
                                                 </div>
                                             </div>
                                             </TableCell>

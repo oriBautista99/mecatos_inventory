@@ -35,7 +35,6 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
         control, 
         register,
         watch,
-        setValue,
         formState: { isDirty }, 
         reset
     } = useForm<OrderFromValues>({
@@ -71,8 +70,8 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
             setIsLoading(false);
         }
         if(suppliers.length > 0 && modeForm === 'RECEIVED'){
-            setValue('received_date', new Date());
-            setValue('expiration_date', new Date());
+            // setValue('received_date', new Date());
+            // setValue('expiration_date', new Date());
             setIsLoading(false);
         }
     },[order, suppliers, reset, modeForm])
@@ -177,7 +176,7 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
                                 render={({field}) => (
                                     <Popover open={openRecive} onOpenChange={setOpenRecive} >
                                         <PopoverTrigger asChild>
-                                        <Button variant='outline' id='received_date' disabled={creationMode || modeForm === 'EDIT'} className='w-full justify-between font-normal'>
+                                        <Button variant='outline' id='received_date' className='w-full justify-between font-normal'>
                                             <span className='flex items-center'>
                                             <CalendarIcon className='mr-2 h-4 w-4' />
                                                 {field.value ? field.value.toLocaleDateString() : 'Pick a date'}
@@ -209,7 +208,7 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
                                 render={({field}) => (
                                     <Popover open={openExp} onOpenChange={setOpenExp}>
                                         <PopoverTrigger asChild>
-                                        <Button variant='outline' id='expiration_date' disabled={creationMode || modeForm === 'EDIT'} className='w-full justify-between font-normal'>
+                                        <Button variant='outline' id='expiration_date' className='w-full justify-between font-normal'>
                                             <span className='flex items-center'>
                                             <CalendarIcon className='mr-2 h-4 w-4' />
                                                 {field.value ? field.value.toLocaleDateString() : 'Pick a date'}

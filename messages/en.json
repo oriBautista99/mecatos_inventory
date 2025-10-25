@@ -296,7 +296,8 @@
         "DESCRIPTION-TITLE": "Manage your system's basic data.",
         "TYPE": "Product Types",
         "ROLES": "Roles",
-        "UNITS": "Units"
+        "UNITS": "Units",
+        "TYPE_PRESENTATION" : "Types of Presentations"
     },
     "ITEM-TYPES": {
         "TITLE": "Product Types",
@@ -526,6 +527,7 @@
         "TITLE": "Received Orders",
         "DESCRIPTION": "Manage the orders registered in your system and receive new orders.",
         "RECEIVE-NEW-ORDER": "Receive New Order",
+        "SUCCESSFULY-UPDATE-ORDER" : "Orders successfully created or suggested",
         "LOADING": "Loading orders...",
         "SEARCH": "Search orders...",
         "ALL": "All"

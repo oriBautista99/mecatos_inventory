@@ -1,11 +1,12 @@
 "use client"
 import CardItemTypes from "@/components/dashboard/settings/card-item-types";
+import PresentationType from "@/components/dashboard/settings/presentation_type";
 import Roles from "@/components/dashboard/settings/roles";
 import Units from "@/components/dashboard/settings/units";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tabs } from "@radix-ui/react-tabs";
-import { Ruler, Type, Users } from "lucide-react";
+import { Cuboid, Ruler, Type, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const tabs = [
@@ -36,6 +37,16 @@ const tabs = [
         content: (
             <>
                 <Units></Units>
+            </>
+        )
+    },
+    {
+        name: 'TYPE_PRESENTATION',
+        value: 'presentations',
+        icon: Cuboid,
+        content: (
+            <>
+                <PresentationType></PresentationType>
             </>
         )
     }

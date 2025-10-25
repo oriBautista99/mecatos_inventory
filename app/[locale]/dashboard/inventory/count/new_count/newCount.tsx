@@ -54,7 +54,6 @@ export default function NewCount() {
           if (filters.storage_area_id && item.storage_area_id !== Number(filters.storage_area_id)) {
             return false;
           }
-          // supplier (ojo: está anidado dentro de presentations -> suppliers_presentations)
           if (filters.supplier) {
             const hasSupplier = item.presentations.some((p) =>
               p.suppliers_presentations && p.suppliers_presentations.some(
@@ -103,16 +102,15 @@ export default function NewCount() {
             const newCountedItems = updated
                 .filter(u => allItemIds.includes(u.item_id) && u.counted_quantity !== undefined)
                 .map(u => {
-                    // Necesitas encontrar el ítem original para obtener el resto de sus propiedades
                     const originalItem = items.find(item => item.item_id === u.item_id);
 
                     if (!originalItem) {
                         return null;
                     }
                     return {
-                        ...originalItem, // Copia las propiedades originales (system_quantity, etc.)
-                        counted_quantity: u.counted_quantity, // Sobrescribe con el nuevo conteo
-                    } as ItemForCount; // Ajusta el tipo según tu definición real si es necesario
+                        ...originalItem,
+                        counted_quantity: (u.counted_quantity&& u.presentation?.quantity && ( u.counted_quantity * u.presentation?.quantity)),
+                    } as ItemForCount; 
                 })
                 .filter((item): item is ItemForCount => item !== null);
                 return newCountedItems;
@@ -225,6 +223,7 @@ export default function NewCount() {
                                     base_unit: it.base_unit,
                                     system_quantity: it.system_quantity,
                                     counted_quantity: it.counted_quantity,
+                                    presentation: it.presentations.find( p => p.is_default)
                                 }))}
                                 onChange={handleCountTableChange}
                                 mode="CREATE"

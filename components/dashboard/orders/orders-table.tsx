@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, PackageCheck, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 
 type OrdersTableProps = {
@@ -89,7 +89,11 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                                         onClick={() => handleRowClick(order.order_id)}
                                         title="Editar"
                                     >
+                                      {
+                                        mode === 'RECEIVED' ? 
+                                        <PackageCheck className="h-4 w-4" /> : 
                                         <Edit className="h-4 w-4" />
+                                      }
                                     </Button>
                                     <ConfirmDialog
                                         trigger={
