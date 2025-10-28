@@ -48,7 +48,7 @@ export default function ItemsView() {
             }
             
             if (filters.supplier) {
-                const hasSupplier = item.presentations.some((p) =>
+                const hasSupplier = item.item_presentations.some((p) =>
                 p.suppliers_presentations && p.suppliers_presentations.some(
                     (sp) => Number(sp.suppliers.supplier_id) === Number(filters.supplier)
                 )
@@ -78,10 +78,13 @@ export default function ItemsView() {
 
     //   pagination
     const [page, setPage] = useState(1);
-    const pageSize = 10; 
+    const pageSize = 50; 
     const totalPages = Math.ceil(filteredItems.length / pageSize);
     const startIndex = (page - 1) * pageSize;
     const currentData = filteredItems.slice(startIndex, startIndex + pageSize);
+
+    // console.log(currentData)
+    // console.log(currentData.filter(p => !p.item_presentations))
 
     if (errorItems) {
         toast.error("Error cargando inventario");
@@ -90,8 +93,6 @@ export default function ItemsView() {
         setAppliedFilters(filters);
     };
 
-
-
     const handleCancel = () => {
         setSelectedItem(null);
         setShowSheetAdd(false);
@@ -99,18 +100,18 @@ export default function ItemsView() {
 
     const handleSaveItem = async (itemData: ItemFormValues) => {
 
-        //console.log("FORM DATA",itemData)
+        // console.log("FORM DATA",itemData)
 
         if (selectedItem) {
-        //Edit existing
+        // //Edit existing
         const response = await updateItem(selectedItem, itemData);  
-        if(itemData.presentations.length == selectedItem.presentations.length && response){
-            const responseP = await updatePresentations(itemData.presentations);
+        if(itemData.item_presentations.length == selectedItem.item_presentations.length && response){
+            const responseP = await updatePresentations(itemData.item_presentations);
             if(responseP.success) toast.success(t("SUCCESS-EDIT"));
         }
-        if(itemData.presentations.length > selectedItem.presentations.length && response){
-            const newsPresentation = itemData.presentations.filter(p => !p.presentation_id);
-            const presents = itemData.presentations.filter(p => p.presentation_id);
+        if(itemData.item_presentations.length > selectedItem.item_presentations.length && response){
+            const newsPresentation = itemData.item_presentations.filter(p => !p.item_presentation_id);
+            const presents = itemData.item_presentations.filter(p => p.item_presentation_id);
             let responsePresen;
             if(newsPresentation.length > 0){
             const newPresentations = newsPresentation.map( p => {
@@ -125,30 +126,30 @@ export default function ItemsView() {
             const responseUp = await updatePresentations(presents);
             if(responseUp.success && responsePresen && responsePresen.success) toast.success(t("SUCCESS-EDIT"));
         }
-        if(itemData.presentations.length < selectedItem.presentations.length && response){
-            const idsDelete = new Set(itemData.presentations.map(pre => pre.presentation_id));
-            const toDelete = selectedItem.presentations.filter(ps => !idsDelete.has(ps.presentation_id));
-            const responseDelete =  await deletePresentations(toDelete.map(p => p.presentation_id));
-            const responseUp = await updatePresentations(itemData.presentations);
+        if(itemData.item_presentations.length < selectedItem.item_presentations.length && response){
+            const idsDelete = new Set(itemData.item_presentations.map(pre => pre.item_presentation_id));
+            const toDelete = selectedItem.item_presentations.filter(ps => !idsDelete.has(ps.item_presentation_id));
+            const responseDelete =  await deletePresentations(toDelete.map(p => p.item_presentation_id));
+            const responseUp = await updatePresentations(itemData.item_presentations);
             if(responseUp.success && responseDelete && responseDelete.success) toast.success(t("SUCCESS-EDIT"));
         }
 
         } else {
         // Create new 
-        const {presentations} = itemData;
+        const {item_presentations} = itemData;
         const response = await createItem(itemData);
         if (response.success && response.data){ 
-            if(itemData.presentations.length > 0){
-                const newPresentations = presentations.map( p => {
-                const { ...rest } = p;
-                return {
-                    ...rest,
-                    item_id: response.data.item_id
-                };
+            if(itemData.item_presentations.length > 0){
+                const newPresentations = item_presentations.map( p => {
+                    const { ...rest } = p;
+                    return {
+                        ...rest,
+                        item_id: response.data.item_id
+                    };
                 });
                 const responsePresen = await create_present_sup_pre(newPresentations);
                 if(responsePresen && responsePresen.success && responsePresen.data.length > 0){
-                toast.success(t("SUCCESS-CREATE"));
+                    toast.success(t("SUCCESS-CREATE"));
                 }          
             }
         } else { 
@@ -296,7 +297,7 @@ export default function ItemsView() {
                     <div className="flex flex-wrap justify-between py-1 px-3 bg-secondary">
                         <div className="flex items-center gap-2">
                             <Truck className="h-4 w-4 text-secondary-foreground" />
-                            <span className="text-sm  text-secondary-foreground">{item.presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</span>
+                            <span className="text-sm  text-secondary-foreground">{item.item_presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Tag className="h-4 w-4 text-secondary-foreground" />
@@ -309,16 +310,16 @@ export default function ItemsView() {
                     </div>
                     <div className="flex flex-col w-full space-y-3">
                         <div className="flex w-full justify-between items-end space-x-1 px-3">
-                        <span className="text-sm text-muted-foreground tracking-tight">{t("QU-MIN")}</span>
-                        <span className="text-sm">{item.min_quantity} {item.base_unit}</span>
+                            <span className="text-sm text-muted-foreground tracking-tight">{t("QU-MIN")}</span>
+                            <span className="text-sm">{item.min_quantity} {item.units.abbreviation}</span>
                         </div>
                         <div className="w-full flex  justify-between items-end  space-x-1 px-3">
                             <span className="text-sm text-muted-foreground tracking-tight">{t("QU-TARGET")}</span>
-                            <span className="text-sm">{item.target_quantity} {item.base_unit}</span>
+                            <span className="text-sm">{item.target_quantity} {item.units.abbreviation}</span>
                         </div>
                         <div className="w-full flex  justify-between items-end space-x-1 py-1 px-3 bg-secondary rounded-bl-md rounded-br-md">
                             <span className="text-sm text-muted-foreground font-bold tracking-tight">{t("QU-NOW")}</span>
-                            <span className="text-sm font-bold">{item.system_quantity} {item.base_unit}</span>
+                            <span className="text-sm font-bold">{item.system_quantity} {item.units.abbreviation}</span>
                         </div>
                     </div>
                     </div>
@@ -371,10 +372,10 @@ export default function ItemsView() {
                                     <TableCell>{item.name}</TableCell>
                                     <TableCell className="hidden lg:table-cell">{item.description}</TableCell>
                                     <TableCell className="hidden lg:table-cell">{item.item_types.name}</TableCell>
-                                    <TableCell>{item.presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</TableCell>
+                                    <TableCell>{item.item_presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</TableCell>
                                     <TableCell>{item.categories.name}</TableCell>
                                     <TableCell className="hidden xl:table-cell">{item.storage_areas.name}</TableCell>
-                                    <TableCell>{item.base_unit}</TableCell>
+                                    <TableCell>{item.units.abbreviation}</TableCell>
                                     <TableCell className="hidden xl:table-cell">{item.min_quantity}</TableCell>
                                     <TableCell className="hidden lg:table-cell">{item.target_quantity}</TableCell>
                                     <TableCell>{item.system_quantity}</TableCell>
@@ -435,11 +436,11 @@ export default function ItemsView() {
                                                 <Truck className="h-4 w-4 text-muted-foreground" />
                                                 <span className="text-sm text-muted-foreground">{t("T-SUPPLIER")}</span>
                                                 </div>
-                                                <p className="text-sm font-bold">{item.presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</p>
+                                                <p className="text-sm font-bold">{item.item_presentations.map(p => p.suppliers_presentations?.map(sp => sp.suppliers.company_name)).join(',')}</p>
                                             </div> 
                                             <div className="flex w-full items-center justify-end gap-4">
                                                 <span className="text-sm text-muted-foreground tracking-tight">{t("QU-MIN")}</span>
-                                                <span className="text-sm font-bold">{item.min_quantity} {item.base_unit}</span>
+                                                <span className="text-sm font-bold">{item.min_quantity} {item.units.abbreviation}</span>
                                             </div> 
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-2">
@@ -450,7 +451,7 @@ export default function ItemsView() {
                                             </div> 
                                             <div className="w-full flex  justify-end items-center gap-4">
                                                 <span className="text-sm text-muted-foreground tracking-tight">{t("QU-TARGET")}</span>
-                                                <span className="text-sm font-bold">{item.target_quantity} {item.base_unit}</span>
+                                                <span className="text-sm font-bold">{item.target_quantity} {item.units.abbreviation}</span>
                                             </div>  
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center gap-2">
@@ -461,7 +462,7 @@ export default function ItemsView() {
                                             </div> 
                                             <div className="w-full flex justify-end items-center gap-4">
                                                 <span className="text-sm text-muted-foreground tracking-tight">{t("QU-NOW")}</span>
-                                                <span className="text-sm font-bold">{item.system_quantity} {item.base_unit}</span>
+                                                <span className="text-sm font-bold">{item.system_quantity} {item.units.abbreviation}</span>
                                             </div>               
                                             </div>
                                         </motion.div>

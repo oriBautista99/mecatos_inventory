@@ -57,7 +57,7 @@ export default function NewOrder(){
         const itemsData = presentations.map(item => {
           return(
               { 
-                  presentation_id:item.presentation_id, 
+                  item_presentation_id:item.presentation_id, 
                   quantity_ordered:item.quantity_orderned, 
                   quantity_received:(item.quantity_received * item.presentation_quantity), 
                   unit_price:item.unit_price, 
@@ -65,7 +65,6 @@ export default function NewOrder(){
               }
           )
         });
-
         try {
             const response = await rpcReceiveNewOrder({
                 supplier_id: order.supplier_id,

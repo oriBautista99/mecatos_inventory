@@ -79,7 +79,7 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
             const itemsData = presentations.map(item => {
                 return(
                     { 
-                        presentation_id:item.presentation_id, 
+                        item_presentation_id:item.presentation_id, 
                         quantity_received:(item.quantity_received * item.presentation_quantity), 
                         unit_price:item.unit_price, 
                         expiration_date:item.expiration_date

@@ -1,6 +1,7 @@
 "use server"
 import { createClient } from "@/lib/supabase/server";
-import { CountDetails, InventoryCount, InventoryCountDetail, Item, ItemForCount, Presentation, Profiles, SupplierPresentation } from "@/types/inventory";
+import { CountDetails, InventoryCount, InventoryCountDetail, ItemForCount, Presentation, Profiles, SupplierPresentation } from "@/types/inventory";
+import { boolean } from "zod";
 
 // Obtiene items filtrados y calcula stock total por item (en unidades base)
 export async function getItemsWithStock() {
@@ -12,24 +13,24 @@ export async function getItemsWithStock() {
       `
       item_id,
       name,
-      base_unit,
+      units:unit_id ( unit_id, name, abbreviation ),
       category_id,
       storage_area_id,
       item_type_id,
-      presentations (
-        presentation_id,
-        name,
-        unit,
-        conversion_factor,
-        is_default,
+      item_presentations (
+        item_presentation_id,
         quantity,
-        item_id,
+        is_default,
+        presentation_types (
+          presentation_type_id,
+          name,
+          description,
+          conversion_factor,
+          unit:unit_id ( unit_id, name, abbreviation )
+        ),
         suppliers_presentations(
           supplier_presentation_id,
-          suppliers(
-            supplier_id,
-            company_name
-          )
+          suppliers ( supplier_id, company_name, contact_name, email, phone )
         ),
         item_batches (
           batch_id,
@@ -50,7 +51,7 @@ export async function getItemsWithStock() {
   }
 
 const items: ItemForCount[] = data.map((item: any) => {
-    const correctedPresentations = item.presentations.map((pres: any) => {
+    const correctedPresentations = item.item_presentations.map((pres: any) => {
         const correctedSuppliersPresentations = pres.suppliers_presentations.map((sp: any) => {
             const supplier = sp.suppliers[0];
             return {
@@ -69,7 +70,7 @@ const items: ItemForCount[] = data.map((item: any) => {
       const sumBatches = pres.item_batches && pres.item_batches
         .filter((b:any) => b.is_active)
         .reduce((s:any, b:any) => s + b.current_quantity, 0);
-      return acc + (sumBatches ? sumBatches: 0) * pres.conversion_factor;
+      return acc + (sumBatches ? sumBatches: 0) * pres.presentation_types.conversion_factor;
     }, 0);
   
     return { 
@@ -113,7 +114,7 @@ export async function saveInventoryCount(
 
   if (detailError) throw new Error("Error guardando detalles del conteo");
 
-  // 🔹 Ajustar lotes según diferencia
+  //Ajustar lotes según diferencia
   for (const i of items) {
     const diff = i.counted_quantity - i.system_quantity;
     if (diff !== 0) {
@@ -123,6 +124,7 @@ export async function saveInventoryCount(
 
   return count;
 }
+
 
 /**
  * Ajusta lotes de un item para que sumen la diferencia (base units).
@@ -134,13 +136,20 @@ export async function adjustBatchesForItem(
   item_id: number,
   diff: number
 ) {
-  // Traer presentaciones + batches del item
+  // Traer item_presentaciones + batches del item
   const { data: presData, error } = await supabase
-    .from("presentations")
+    .from("item_presentations")
     .select(`
-      presentation_id,
-      conversion_factor,
+      item_presentation_id,
       is_default,
+      quantity,
+      presentation_types (
+        presentation_type_id,
+        name,
+        description,
+        conversion_factor,
+        unit:unit_id ( unit_id, name, abbreviation )
+      ),
       item_batches (
         batch_id,
         current_quantity,
@@ -166,7 +175,7 @@ export async function adjustBatchesForItem(
   }> = [];
 
   for (const p of presData || []) {
-    const conv = Number(p.conversion_factor ?? 1);
+    const conv = Number(p.presentation_types.conversion_factor ?? 1);
     for (const b of p.item_batches || []) {
       if (b.is_active === false) continue;
       batches.push({
@@ -193,7 +202,7 @@ export async function adjustBatchesForItem(
   if (remaining === 0) return;
 
   if (remaining < 0) {
-    // 🔹 Rebajar stock
+    //Rebajar stock
     let toRemove = Math.abs(remaining);
     for (const batch of batches) {
       if (toRemove <= 0) break;
@@ -228,7 +237,7 @@ export async function adjustBatchesForItem(
       );
     }
   } else {
-    // 🔹 Aumentar stock
+    //Aumentar stock
     const latestBatch = batches.length ? batches[batches.length - 1] : null;
 
     if (latestBatch) {
@@ -258,7 +267,7 @@ export async function adjustBatchesForItem(
           received_date: new Date().toISOString(),
           expiration_date: null,
           is_active: true,
-          presentation_id: defaultPres.presentation_id,
+          item_presentation_id: defaultPres.item_presentation_id,
           order_detail_id: null,
           created_at: new Date().toISOString(),
         },
@@ -344,43 +353,55 @@ export async function getInventoryCount(count_id: number){
     const {data, error} = await supabase
       .from("inventory_counts")
       .select(`
-        count_id,
-        created_at,
-        counted_by,
-        notes,
-        inventory_counts_details (
-          count_id,
-          count_detail_id,
-          item_id,
-          counted_quantity,
-          system_quantity,
-          difference,
-          created_at,
-          items (
-            item_id,
-            name,
-            base_unit,
-            category_id,
-            storage_area_id,
-            item_type_id,
-            presentations (
-              presentation_id,
-              name,
-              unit,
-              conversion_factor,
-              is_default,
+            count_id,
+            created_at,
+            counted_by,
+            notes,
+            inventory_counts_details (
+              count_id,
+              count_detail_id,
               item_id,
-              quantity,
-              suppliers_presentations(
-                supplier_presentation_id,
-                suppliers(
-                  supplier_id,
-                  company_name
+              counted_quantity,
+              system_quantity,
+              difference,
+              created_at,
+              items (
+                item_id,
+                name,
+                unit_id,
+                category_id,
+                storage_area_id,
+                item_type_id,
+                units (
+                  unit_id,
+                  name,
+                  abbreviation
+                ),
+                item_presentations (
+                  item_presentation_id,
+                  quantity,
+                  is_default,
+                  presentation_types (
+                    presentation_type_id,
+                    name,
+                    description,
+                    conversion_factor,
+                    units (
+                      unit_id,
+                      name,
+                      abbreviation
+                    )
+                  ),
+                  suppliers_presentations (
+                    supplier_presentation_id,
+                    suppliers (
+                      supplier_id,
+                      company_name
+                    )
+                  )
                 )
               )
             )
-          )
-        )
       `)
       .eq("count_id", count_id)
       .single();
@@ -391,14 +412,18 @@ export async function getInventoryCount(count_id: number){
           created_at: data.created_at,
           notes: data.notes,
           inventory_counts_details: data.inventory_counts_details.map((d: any) => {
-            const presen_quantity = d.items.presentations.find(p => p.is_default);
-            return {
-              ...d,
-              counted_quantity: d.counted_quantity / presen_quantity.quantity,
-              presentation: presen_quantity,
-              item: d.items,
-            }
-          }),
+            const presen_quantity = d.items.item_presentations.find(p => p.is_default);
+            if(presen_quantity){
+              return {
+                ...d,
+                counted_quantity: d.counted_quantity / presen_quantity.quantity,
+                presentation: presen_quantity,
+                item: d.items,
+              }              
+            }else {
+              return null;
+            } 
+          }).filter(Boolean),
         };     
         return {data: mapped, error: null}; 
       }
@@ -413,7 +438,6 @@ export async function getInventoryCount(count_id: number){
     return { data: null, error: "ERROR-GET-INVENTORY-COUNT" }
   }
 }
-
 
 export async function updateInventoryCount(
   countId: number,

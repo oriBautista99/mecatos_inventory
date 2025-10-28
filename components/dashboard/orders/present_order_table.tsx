@@ -24,7 +24,7 @@ interface PresentOrdersTableProps {
 
 const initializeTableData = (products: presentationsItems[]): fullPresentItems[] => {
     return products.map((p) => ({
-        presentation_id: p.presentation_id,
+        presentation_id: p.presentations.presentation_id,
         presentation_name: p.presentations.name,
         presentation_unit: p.presentations.unit,
         presentation_quantity: p.presentations.quantity,
@@ -65,7 +65,6 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
     const getProducts = async (supplier_id:number) => {
         const {data} = await getPrsentationsForSupplier(supplier_id);
         if(data){
-
             const productList = initializeTableData(data);
             if(presentationsOrder && presentationsOrder?.length > 0){
                 const idsPresents = new Map(presentationsOrder.map(p=> [p.presentation_id, p]));
@@ -84,14 +83,11 @@ export default function PresentationOrdesTable({supplier ,presentationsOrder ,on
                     return pro;
                 });
                 setProducts(selectDate);
-                console.log(selectDate)
             }else{
                 setProducts(productList);
             }
 
             setIsLoading(false)
-
-            
             const timer: NodeJS.Timeout = setInterval(() => {
                 setProgress((old) => {
                     if (old >= 100) {

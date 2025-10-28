@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+import { boolean } from "zod";
 
 export default function EditCount({count_id}:{count_id:string}) {
     
@@ -53,7 +54,7 @@ export default function EditCount({count_id}:{count_id:string}) {
             }
             // supplier (ojo: está anidado dentro de presentations -> suppliers_presentations)
             if (filters.supplier) {
-            const hasSupplier = item.item.presentations.some((p) =>
+            const hasSupplier = item.item.item_presentations.some((p) =>
                 p.suppliers_presentations && p.suppliers_presentations.some(
                 (sp) => Number(sp.suppliers.supplier_id) === Number(filters.supplier)
                 )
@@ -221,10 +222,10 @@ export default function EditCount({count_id}:{count_id:string}) {
                             data={filteredItems.map((d) => ({
                                 item_id: d.item.item_id,
                                 name: d.item.name,
-                                base_unit: d.item.base_unit,
+                                base_unit: d.item.units.abbreviation,
                                 system_quantity: d.system_quantity,
                                 counted_quantity: d.counted_quantity,
-                                presentation: d.item.presentations[0]
+                                presentation: d.item.item_presentations[0]
                             }))}
                             onChange={handleDetailsChange}
                             mode="EDIT"

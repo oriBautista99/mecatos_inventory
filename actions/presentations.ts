@@ -1,9 +1,9 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server";
-import { PresentationFormValues, Supplier_Presentation } from "@/types/presentations";
+import { ItemPresentationFormValues, Supplier_Presentation } from "@/types/presentations";
 
-export async function createPresentations(presentations: PresentationFormValues[]){
+export async function createPresentations(presentations: ItemPresentationFormValues[]){
     try {
         const supabase = await createClient();
         const {
@@ -14,7 +14,7 @@ export async function createPresentations(presentations: PresentationFormValues[
         if (userError || !user) {
             return { error: "Unauthorized" };
         }
-        const {data, error: areaError} = await supabase.from("presentations")
+        const {data, error: areaError} = await supabase.from("item_presentations")
             .insert(presentations)
             .select();
 
@@ -30,7 +30,7 @@ export async function createPresentations(presentations: PresentationFormValues[
     }
 }
 
-export async function create_present_sup_pre(presentations: PresentationFormValues[]){
+export async function create_present_sup_pre(presentations: ItemPresentationFormValues[]){
     try {
         const supabase = await createClient();
         const {
@@ -44,13 +44,13 @@ export async function create_present_sup_pre(presentations: PresentationFormValu
 
         const suppliers_id_present = presentations.map(pr => pr.supplier_ids);
         const presents = presentations.map(pre => {
-            const {supplier_ids, presentation_id, ...data} = pre;
+            const {supplier_ids, item_presentation_id, unit, conversion_factor, ...data} = pre;
             return data;
         });
 
         // console.log("IDS PROVEEDORES Y PRESENTACIONES", suppliers_id_present, presents);
 
-        const {data, error: areaError} = await supabase.from("presentations")
+        const {data, error: areaError} = await supabase.from("item_presentations")
             .insert(presents)
             .select();
 
@@ -61,7 +61,7 @@ export async function create_present_sup_pre(presentations: PresentationFormValu
             for(let i=0; i < suppliers_id_present.length; i++){ //pre
                 for(let j=0; j < suppliers_id_present[i].length; j++){
                     newsSupplierPresents.push({
-                        presentation_id: data[i].presentation_id,
+                        item_presentation_id: data[i].item_presentation_id,
                         supplier_id: Number(suppliers_id_present[i][j])
                     });
                 }
@@ -113,7 +113,7 @@ export async function create_Supplier_Presentations(newSupPres: Supplier_Present
     }
 }
 
-export async function updatePresentations(newPresentations: PresentationFormValues[]){
+export async function updatePresentations(newPresentations: ItemPresentationFormValues[]){
     try {
         const supabase = await createClient();
         const {
@@ -125,21 +125,21 @@ export async function updatePresentations(newPresentations: PresentationFormValu
         }
         // Prepara los datos sacando supplier_ids y separando presentation_id
         const presents = newPresentations.map((pre) => {
-        const { supplier_ids, ...data } = pre;
+        const { supplier_ids, unit, conversion_factor, ...data } = pre;
         return {
-            presentation_id: pre.presentation_id,
             ...data,
+            item_presentation_id: pre.item_presentation_id,
             item_id: Number(pre.item_id),
         };
         });
         // Actualizamos uno por uno (para que cada fila reciba sus valores)
         for (const pre of presents) {
-            const { presentation_id, ...updateData } = pre;
+            const { item_presentation_id, ...updateData } = pre;
 
             const { error } = await supabase
-                .from("presentations")
+                .from("item_presentations")
                 .update(updateData)
-                .eq("presentation_id", presentation_id);
+                .eq("item_presentation_id", item_presentation_id);
 
             if (error) {
                 console.error("Error updating presentation:", error);
@@ -166,9 +166,9 @@ export async function deletePresentations(ids: number[]) {
     }
 
     const { error } = await supabase
-      .from("presentations")
+      .from("item_presentations")
       .delete()
-      .in("presentation_id", ids);
+      .in("item_presentation_id", ids);
 
     if (error) {
       console.error("Error deleting presentations:", error);

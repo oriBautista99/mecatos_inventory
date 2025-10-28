@@ -1,3 +1,6 @@
+import { TypePresentation } from "./type_presentation";
+import { Units } from "./units";
+
 export interface Supplier {
   supplier_id: number;
   company_name: string;
@@ -19,13 +22,11 @@ export interface ItemBatch {
 }
 
 export interface Presentation {
-  presentation_id: number;
-  name: string;
-  unit: string;
-  conversion_factor: number;
+  item_presentation_id: number;
   is_default: boolean;
-  item_id: number;
   quantity: number;
+  presentation_types : TypePresentation;
+  item_id: number;
   suppliers_presentations: SupplierPresentation[];
   item_batches?: ItemBatch[];
 }
@@ -37,7 +38,9 @@ export interface Item {
   category_id: number;
   storage_area_id: number;
   item_type_id: number;
-  presentations: Presentation[];
+  item_presentations: Presentation[];
+  unit_id: number;
+  units: Units;
 }
 
 export interface ItemForCount extends Item {
@@ -59,6 +62,7 @@ export interface InventoryCountDetail {
   system_quantity: number;
   difference: number;
   created_at: string;
+  presentation: Presentation;
 }
 
 export interface ItemForCountTable extends ItemForCount {

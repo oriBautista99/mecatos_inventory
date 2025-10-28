@@ -17,7 +17,7 @@ export async function createItem(item: ItemFormValues) {
         const {data, error: itemError} = await supabase.from("items").insert({
             name: item.name,
             description: item.description,
-            base_unit: item.base_unit,
+            unit_id: item.unit_id,
             min_quantity: item.min_quantity,
             target_quantity: item.target_quantity,
             category_id: item.category_id,
@@ -53,7 +53,7 @@ export async function updateItem(item: Item, dataItem: ItemFormValues) {
                             .update({
                                 name: dataItem.name,
                                 description: dataItem.description,
-                                base_unit: dataItem.base_unit,
+                                unit_id: dataItem.unit_id,
                                 min_quantity: dataItem.min_quantity,
                                 target_quantity: dataItem.target_quantity,
                                 category_id: dataItem.category_id,

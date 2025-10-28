@@ -16,7 +16,7 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
 
     const t = useTranslations("COUNT-INVENTORY-TABLE");
     const [page, setPage] = useState(1);
-    const pageSize = 10; 
+    const pageSize = 50; 
     const totalPages = Math.ceil(data.length / pageSize);
 
     const startIndex = (page - 1) * pageSize;
@@ -67,6 +67,9 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
             return updatedCounts;
         });
     };
+
+    
+    //console.log('COUNTS DATA:', currentData)
       
     if (!data.length) {
         return <p className="text-center text-sm text-muted-foreground">{t("NO-ITEMS")}</p>;
@@ -107,9 +110,9 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
                                                     className="pl-5 w-full max-w-md text-md"
                                                 />
                                                 {
-                                                    it.presentation?.name && 
+                                                    it.presentation?.presentation_types.name && 
                                                     <div className='text-muted-foreground pointer-events-none absolute inset-y-1 end-0 flex items-center justify-center pe-8 peer-disabled:opacity-50'>
-                                                        <span>{it.presentation?.name}</span>
+                                                        <span>{it.presentation?.presentation_types.name}</span>
                                                     </div>                                                    
                                                 }
                                             </div>
@@ -122,7 +125,7 @@ export default function CountInventoryTable({ data, onChange, mode }: OrdersTabl
                                                         it.presentation?.quantity ? 
                                                         <div className="flex w-full justify-start gap-2">
                                                             <h2 className="text-md font-bold">{Number((it.system_quantity/it.presentation?.quantity).toFixed(2))}</h2>
-                                                            <p>{it.presentation.name}</p>
+                                                            <p>{it.presentation.presentation_types.name}</p>
                                                         </div>
                                                         :
                                                         <div>

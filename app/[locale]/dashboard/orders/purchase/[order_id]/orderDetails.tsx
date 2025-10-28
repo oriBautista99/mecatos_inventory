@@ -52,6 +52,7 @@ export default function OrderDetails({
 
 
   useEffect(() => {
+    // console.log('PRESENTATIONS: ', presentations);
     setTableData(presentations || []);
     originalRef.current = presentations || [];
   }, [presentations]);
@@ -76,7 +77,7 @@ export default function OrderDetails({
     const itemsData = tableData.map(item => {
         return(
             { 
-                presentation_id:item.presentation_id, 
+                item_presentation_id:item.presentation_id, 
                 quantity_ordered:(item.quantity_orderned * item.presentation_quantity), 
                 quantity_received:(item.quantity_received * item.presentation_quantity), 
                 unit_price:item.unit_price, 
@@ -89,7 +90,7 @@ export default function OrderDetails({
     for (const [id, prev] of prevMap.entries()) {
         if (!nextMap.has(id)) {
             itemsData.push({
-                presentation_id:prev.presentation_id, 
+                item_presentation_id:prev.presentation_id, 
                 quantity_ordered:prev.quantity_orderned, 
                 quantity_received:prev.quantity_received, 
                 unit_price:prev.unit_price, 

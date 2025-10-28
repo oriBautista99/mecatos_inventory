@@ -62,7 +62,7 @@ export default function CardItemTypes(){
 
     //   pagination
     const [page, setPage] = useState(1);
-    const pageSize = 5; 
+    const pageSize = 10; 
     const totalPages = Math.ceil(filteredTypes.length / pageSize);
     const startIndex = (page - 1) * pageSize;
     const currentData = filteredTypes.slice(startIndex, startIndex + pageSize);
@@ -130,56 +130,56 @@ export default function CardItemTypes(){
                     </SheetTrigger>
                     <SheetContent className="w-full sm:max-w-lg lg:max-w-xl overflow-y-auto p-4 sm:p-6">
                         <div className="">
-                                <SheetTitle>
-                                    <div className="p-1">
-                                        <h3 className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</h3>
-                                    </div>                                    
-                                </SheetTitle>
-                                <Separator />
-                                <form onSubmit={handleSubmit(handleSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="name" className="text-sm">
-                                            {t("T-NAME")} *
-                                        </Label>
-                                        <Input
-                                            id="name"
-                                            {...register("name")}
-                                            placeholder="Recetas"
-                                            className={`text-sm ${errors.name ? "border-destructive" : ""}`}
-                                        />
-                                        {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="description" className="text-sm">
-                                            {t("T-DESCRIPTION")} *
-                                        </Label>
-                                        <Textarea
-                                            id="description"
-                                            {...register("description")}
-                                            placeholder="Describe a que se refiere tu tipo de producto"
-                                            className={`text-sm resize-none ${errors.description ? "border-destructive" : ""}`}
-                                            rows={2}
-                                        />
-                                        {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
-                                    </div>
-                                    {/* Actions */}
-                                    <div className="flex gap-2 sm:gap-3 pt-4 border-t">
-                                        <Button type="submit" className="flex-1 text-sm">
-                                            <Save className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                            { selectType ? t("UPDATE") : t("SAVE") }
-                                        </Button>
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            onClick={() => handleCancel()}
-                                            className="flex-1 sm:flex-none text-sm bg-transparent"
-                                            >
-                                            <X className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                            {t("CANCEL")} 
-                                        </Button>
-                                    </div>
-                                </form>
-                            </div>
+                            <SheetTitle>
+                                <div className="p-1">
+                                    <h3 className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</h3>
+                                </div>                                    
+                            </SheetTitle>
+                            <Separator />
+                            <form onSubmit={handleSubmit(handleSave)} className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                                <div className="space-y-2">
+                                    <Label htmlFor="name" className="text-sm">
+                                        {t("T-NAME")} *
+                                    </Label>
+                                    <Input
+                                        id="name"
+                                        {...register("name")}
+                                        placeholder="Recetas"
+                                        className={`text-sm ${errors.name ? "border-destructive" : ""}`}
+                                    />
+                                    {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="description" className="text-sm">
+                                        {t("T-DESCRIPTION")} *
+                                    </Label>
+                                    <Textarea
+                                        id="description"
+                                        {...register("description")}
+                                        placeholder="Describe a que se refiere tu tipo de producto"
+                                        className={`text-sm resize-none ${errors.description ? "border-destructive" : ""}`}
+                                        rows={2}
+                                    />
+                                    {errors.description && <p className="text-xs text-destructive">{errors.description.message}</p>}
+                                </div>
+                                {/* Actions */}
+                                <div className="flex gap-2 sm:gap-3 pt-4 border-t">
+                                    <Button type="submit" className="flex-1 text-sm">
+                                        <Save className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                        { selectType ? t("UPDATE") : t("SAVE") }
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => handleCancel()}
+                                        className="flex-1 sm:flex-none text-sm bg-transparent"
+                                        >
+                                        <X className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                                        {t("CANCEL")} 
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
                     </SheetContent>
                 </Sheet> 
             </div>
@@ -248,7 +248,7 @@ export default function CardItemTypes(){
                     )}
                 </div>
                 {/* Desktop Table View */}
-                <div className="hidden sm:block rounded-md border overflow-x-auto">
+                <div className="hidden sm:block rounded-md border overflow-x-auto max-h-[45vh]" >
                     <Table className="bg-card">
                     <TableHeader>
                         <TableRow className="bg-secondary">

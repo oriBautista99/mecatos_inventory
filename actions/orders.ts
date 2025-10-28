@@ -75,14 +75,31 @@ export async function getOrderById(order_id:number) {
         const { data, error } = await supabase
             .from('orders')
             .select(`
-                *,
-                suppliers(supplier_id, company_name),
-                order_details(*,
-                    presentations(*,
-                        items(*)
+                    *,
+                    suppliers(supplier_id, company_name),
+                    order_details(
+                    *,
+                    item_presentations(
+                        item_presentation_id,
+                        quantity,
+                        is_default,
+                        items(
+                            *
+                        ),
+                        presentation_types(
+                            presentation_type_id,
+                            name,
+                            conversion_factor,
+                            unit_id,
+                            units(
+                                unit_id,
+                                name,
+                                abbreviation
+                            )
+                        )
                     ),
                     item_batches(*)
-                )`
+                    )`
             ) // Select the order and its related details
             .eq('order_id', order_id)
             .single(); // Use .single() to get one object instead of an array
@@ -114,24 +131,36 @@ export async function getPrsentationsForSupplier(supplier_id: number){
         const {data,error: preError} = await supabase
             .from('suppliers_presentations')
             .select(`
-                presentation_id,
-                suppliers(supplier_id, company_name),
-                presentations(
-                    presentation_id,
-                    name,
-                    description,
-                    conversion_factor,
-                    unit,
+                    supplier_presentation_id,
+                    suppliers (supplier_id, company_name),
+                    item_presentations (
+                    item_presentation_id,
                     quantity,
-                    items:item_id (
-                    item_id,
-                    name,
-                    description,
-                    base_unit,
-                    min_quantity,
-                    target_quantity
+                    is_default,
+                    items (
+                        item_id,
+                        name,
+                        description,
+                        min_quantity,
+                        target_quantity,
+                        units (
+                        unit_id,
+                        name,
+                        abbreviation
+                        )
+                    ),
+                    presentation_types (
+                        presentation_type_id,
+                        name,
+                        description,
+                        conversion_factor,
+                        units (
+                        unit_id,
+                        name,
+                        abbreviation
+                        )
                     )
-                )
+                    )
             `).eq('supplier_id', supplier_id);
 
         if(preError){
@@ -189,7 +218,7 @@ export async function rpcUpdateOrder({
   status?: string;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_ordered: number;
     quantity_received: number;
     unit_price: number;
@@ -240,7 +269,7 @@ export async function rpcReceiveNewOrder({
   received_date?: string | Date | null;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_ordered: number;
     quantity_received: number;
     unit_price: number;
@@ -290,7 +319,7 @@ export async function rpcReceiveSuggestedOrder({
   received_date?: string | Date | null;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_received: number;
     unit_price: number;
     expiration_date: string | Date | null; // ISO

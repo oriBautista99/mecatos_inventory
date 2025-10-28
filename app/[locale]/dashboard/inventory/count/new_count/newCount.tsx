@@ -55,7 +55,7 @@ export default function NewCount() {
             return false;
           }
           if (filters.supplier) {
-            const hasSupplier = item.presentations.some((p) =>
+            const hasSupplier = item.item_presentations.some((p) =>
               p.suppliers_presentations && p.suppliers_presentations.some(
                 (sp) => Number(sp.suppliers.supplier_id) === Number(filters.supplier)
               )
@@ -223,7 +223,7 @@ export default function NewCount() {
                                     base_unit: it.base_unit,
                                     system_quantity: it.system_quantity,
                                     counted_quantity: it.counted_quantity,
-                                    presentation: it.presentations.find( p => p.is_default)
+                                    presentation: it.item_presentations.find( p => p.is_default)
                                 }))}
                                 onChange={handleCountTableChange}
                                 mode="CREATE"
