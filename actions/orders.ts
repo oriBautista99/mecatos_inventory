@@ -355,3 +355,40 @@ export async function rpcReceiveSuggestedOrder({
         return { error: { message: 'Unexpected error occurred' } }
     }
 }
+
+export async function deleteOrder({
+    order_id,
+    delete_by
+}:{
+    order_id: number | undefined;
+    delete_by: number | undefined;
+}){
+
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+        const {data, error} = await supabase.rpc("delete_order", {
+            p_order_id: order_id,
+            p_deleted_by: delete_by
+        }); 
+
+        if(error){
+            console.error('Error in create delete_order:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in delete_order:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+
+
+}

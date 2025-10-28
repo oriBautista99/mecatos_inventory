@@ -615,7 +615,11 @@
         "N-COUNT": "Conteo",
         "T-USER": "Hecho por",
         "T-DATE": "Realizado el",
-        "T-NOTES": "Observaciones"
+        "T-NOTES": "Observaciones",
+        "DELETE": "Eliminar",
+        "DELETE-COUNT": "¿Desea eliminar el conteo?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El conteo será eliminado permanentemente.",
+        "CANCEL": "Cancelar"
     },
     "COUNT-INVENTORY-TABLE": {
         "NO-ITEMS": "No hay productos",
@@ -762,7 +766,11 @@
         "DATE" : "Fecha",
         "REGISTER_BY" : "Registrado por",
         "REASON" : "Razón de perdida",
-        "NOTE": "Nota"
+        "NOTE": "Nota",
+        "DELETE": "Eliminar",
+        "DELETE-COUNT": "¿Desea eliminar el registro de perdida?",
+        "DELETE-DESCRIPTION": "Esta acción no se puede deshacer. El registro será eliminado permanentemente.",
+        "CANCEL": "Cancelar"
     },
     "WASTE-PAGE": {
         "TITLE" : "Pérdidas",

@@ -1,3 +1,4 @@
+import { deleteLoss } from "@/actions/loss";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -5,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 import { cn } from "@/lib/utils";
 import { LossEventRow } from "@/types/loss";
 import { format } from "date-fns";
@@ -12,6 +14,7 @@ import { CalendarIcon, ChevronDownIcon, Edit, Search, Trash2 } from "lucide-reac
 import { useTranslations } from "next-intl";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface Props {
   data: LossEventRow[];
@@ -22,6 +25,7 @@ export default function LossTable({ data, onSelectRow }: Props) {
 
     const t = useTranslations("LOSS-TABLE");
     const [search, setSearch] = useState("");
+    const {profile} = useProfileLoginSWR();
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
     const [page, setPage] = useState(1);
     const pageSize = 10; 
@@ -51,7 +55,18 @@ export default function LossTable({ data, onSelectRow }: Props) {
     if (!data || data.length === 0) {
         return <p className="p-4 text-gray-500">{t("NO-REGISTER")}</p>
     }
-
+        
+    const handleDelete = async (id: number | undefined) => {
+        const response = await deleteLoss({
+            loss_id: id, 
+            delete_by : profile?.profile_id
+        });
+        if (response.success){ 
+            toast.success(t("SUCCESS-DELETE"));
+        } else{ 
+            toast.error(t("ERROR-DELETE"));
+        }
+    }
     return(
         <div className="flex flex-col space-y-4">
             <div className="flex flex-col md:flex-row lg:flex-wrap gap-4">
@@ -97,10 +112,8 @@ export default function LossTable({ data, onSelectRow }: Props) {
                         </TableHeader>
                         <TableBody>
                             {currentData.map((prod) => (
-                                <TableRow 
-                                        className="cursor-pointer" 
-                                        onClick={() => handleRowClick(prod.loss_event_id)} 
-                                        key={prod.loss_event_id}>
+                                <TableRow  
+                                    key={prod.loss_event_id}>
                                     <TableCell>{new Date(prod.loss_date).toLocaleDateString()}</TableCell>
                                     <TableCell>{prod.profiles.username}</TableCell>
                                     <TableCell>{prod.reason}</TableCell>
@@ -111,7 +124,7 @@ export default function LossTable({ data, onSelectRow }: Props) {
                                                 variant="ghost"
                                                 size="sm"
                                                 className="h-8 w-8 p-0"
-                                                // onClick={() => handleEdit(unit)}
+                                                onClick={() => handleRowClick(prod.loss_event_id)} 
                                                 title="Editar"
                                             >
                                                 <Edit className="h-4 w-4" />
@@ -127,11 +140,11 @@ export default function LossTable({ data, onSelectRow }: Props) {
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                                 }
-                                                title={""}
-                                                description={""}
-                                                confirmText={""}
-                                                cancelText={""}
-                                                onConfirm={() => {}}
+                                                title={t("DELETE-COUNT")}
+                                                description={t("DELETE-DESCRIPTION")}
+                                                confirmText={t("DELETE")}
+                                                cancelText={t("CANCEL")}
+                                                onConfirm={() => handleDelete(prod.loss_event_id)}
                                             />
 
                                             </div>

@@ -490,3 +490,40 @@ export async function updateInventoryCount(
 
   return { success: true };
 }
+
+export async function deleteInventoryCount({
+    count_id,
+    delete_by
+}:{
+    count_id: number | undefined;
+    delete_by: number | undefined;
+}){
+
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+        const {data, error} = await supabase.rpc("delete_inventory_count", {
+            p_count_id: count_id,
+            p_deleted_by: delete_by
+        }); 
+
+        if(error){
+            console.error('Error in create delete_inventory_count:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in delete_inventory_count:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+
+
+}

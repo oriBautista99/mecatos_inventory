@@ -616,7 +616,11 @@
         "N-COUNT": "Count",
         "T-USER": "Done by",
         "T-DATE": "Done on",
-        "T-NOTES": "Observations"
+        "T-NOTES": "Observations",
+        "DELETE": "Delete",
+        "DELETE-COUNT": "Do you want to delete the count?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The count will be permanently deleted.",
+        "CANCEL": "Cancel"
     },
     "COUNT-INVENTORY-TABLE": {
         "NO-ITEMS": "There are no items",
@@ -770,7 +774,11 @@
         "DATE": "Date",
         "REGISTER_BY": "Registered by",
         "REASON": "Reason for loss",
-        "NOTE": "Note"
+        "NOTE": "Note",
+        "DELETE": "Delete",
+        "DELETE-COUNT": "Do you want to delete the loss record?",
+        "DELETE-DESCRIPTION": "This action cannot be undone. The record will be permanently deleted.",
+        "CANCEL": "Cancel"
     },
     "WASTE-PAGE": {
         "TITLE": "Losses",

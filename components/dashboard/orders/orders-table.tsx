@@ -10,6 +10,9 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Button } from "@/components/ui/button";
 import { Edit, PackageCheck, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
+import { deleteOrder } from "@/actions/orders";
+import { useProfileLoginSWR } from "@/hooks/useUserLogin";
+import { toast } from "sonner";
 
 type OrdersTableProps = {
   data: Order[];
@@ -21,6 +24,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
     const pathname = usePathname(); 
     const t = useTranslations("ORDERS-TABLE");
     const router = useRouter();
+    const {profile} = useProfileLoginSWR();
 
     const [page, setPage] = useState(1);
     const pageSize = 10;
@@ -38,14 +42,17 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
     }
 
       
-    // const handleDelete = async (id: number) => {
-      // const response = await deleteOrder(id);
-      // if (response.success){ 
-      //   toast.success(t("SUCCESS-DELETE"));
-      // } else{ 
-      //   toast.error(t("ERROR-DELETE"));
-      // }
-    // }
+    const handleDelete = async (id: number | undefined) => {
+      const response = await deleteOrder({
+        order_id: id, 
+        delete_by : profile?.profile_id
+      });
+      if (response.success){ 
+        toast.success(t("SUCCESS-DELETE"));
+      } else{ 
+        toast.error(t("ERROR-DELETE"));
+      }
+    }
 
 
     return(
@@ -110,7 +117,7 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                                         description={t("DELETE-DESCRIPTION")}
                                         confirmText={t("DELETE")}
                                         cancelText={t("CANCEL")}
-                                        onConfirm={() => {}}
+                                        onConfirm={() => handleDelete(order.order_id)}
                                     />
 
                                     </div>

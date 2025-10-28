@@ -1,12 +1,13 @@
 "use client"
 
-import { getInventoryHistory } from "@/actions/inventory";
+import { deleteInventoryCount, getInventoryHistory } from "@/actions/inventory";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Progress } from "@/components/ui/progress";
 import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "@/components/ui/table";
+import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 import { InventoryCount, InventoryCountDetail, Profiles } from "@/types/inventory";
 import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -24,7 +25,8 @@ export default function CountTable(){
   const router = useRouter();
   const pathname = usePathname(); 
   const t = useTranslations("COUNTS");
-
+  const {profile} = useProfileLoginSWR();
+  
   async function loadCounts() {
     const data  = await getInventoryHistory();
     if(data) {
@@ -68,6 +70,19 @@ export default function CountTable(){
   const handleRowClick = (count_id:number | undefined) => {
     router.push(`${pathname}/${count_id}`);
   };
+
+        
+  const handleDelete = async (id: number | undefined) => {
+    const response = await deleteInventoryCount({
+      count_id: id, 
+      delete_by : profile?.profile_id
+    });
+    if (response.success){ 
+      toast.success(t("SUCCESS-DELETE"));
+    } else{ 
+      toast.error(t("ERROR-DELETE"));
+    }
+  }
 
   return(
     <div className="overflow-y-hidden space-y-4 mx-auto px-2 sm:px-4">
@@ -148,11 +163,11 @@ export default function CountTable(){
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
                                     }
-                                    title={""}
-                                    description={""}
-                                    confirmText={""}
-                                    cancelText={""}
-                                    onConfirm={() => {}}
+                                    title={t("DELETE-COUNT")}
+                                    description={t("DELETE-DESCRIPTION")}
+                                    confirmText={t("DELETE")}
+                                    cancelText={t("CANCEL")}
+                                    onConfirm={() => handleDelete(count.count_id)}
                                 />
 
                                 </div>
