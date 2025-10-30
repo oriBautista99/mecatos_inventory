@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { KeyRound, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { capitalize } from "@/utils/text";
 import { useLocaleRouter } from "@/hooks/useLocaleRouter";
@@ -18,7 +17,7 @@ import Image from "next/image";
 
 export function LoginForm() {
 
-  const [loginMode, setLoginMode] = useState <"pin"|"email">("pin");
+  const [loginMode] = useState <"pin"|"email">("pin");
   const [pin, setPin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -63,7 +63,7 @@ export function OrdenDetails ({presentations, order, mode, onCancel, onConfirm }
                             presentations?.map((pres)=>(
                                 <div key={pres.presentation_id} className="flex w-full gap-4 bg-background p-2 rounded border border-primary/50">
                                     <div className="flex justify-center items-center p-1 px-2 min-w-fit">
-                                        <p className="text-lg font-bold text-foreground">{pres.quantity_received} {pres.presentation_unit}</p>
+                                        <p className="text-lg font-bold text-foreground">{pres.quantity_received}</p>
                                     </div>
                                     <div className="flex flex-col w-auto">
                                         <h3 className="text-sm font-semibold tracking-tight text-card-foreground">{pres.item_name}</h3>

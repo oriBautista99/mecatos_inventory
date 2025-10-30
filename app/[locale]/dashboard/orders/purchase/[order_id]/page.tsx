@@ -15,6 +15,7 @@ export default async function Page(props: { params: Promise<{ order_id: string }
             order_detail_id: od.order_detail_id,
             batch_id: od.item_batches.length > 0 ? od.item_batches[0].batch_id : 0,
             presentation_name: od.item_presentations ? od.item_presentations.name : '',
+            presentation_quantity: od.item_presentations ? od.item_presentations.quantity : '',
             presentation_unit: od.item_presentations ? od.item_presentations.presentation_types.units.name : '',
             conversion_factor: od.item_presentations ? od.item_presentations.presentation_types.conversion_factor : 0,
             item_name: od.item_presentations ? od.item_presentations.items?.name : "",

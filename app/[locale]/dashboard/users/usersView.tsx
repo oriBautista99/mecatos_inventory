@@ -176,8 +176,8 @@ export default function UsersView() {
                             <h3 className="font-medium truncate">{user.username}</h3>
                             <p className="text-sm text-muted-foreground truncate">{user.email}</p>
                             <div className="flex items-center gap-2 mt-2">
-                            <Badge className={getRoleColor(user.role)}>
-                                {user.role ===  1 ? t("ADMIN"): user.role === 2 ? t("MANAGER") : t("EMPLOYEE")}
+                            <Badge className={getRoleColor(Number(user.roles.role_id))}>
+                                {user.roles.name}
                             </Badge>
                             <Badge className={getStatusColor(user.is_active)}>
                                 {user.is_active  ? t("ACTIVE"): t("INACTIVE")}
@@ -243,7 +243,7 @@ export default function UsersView() {
                                 <TableCell className="text-muted-foreground">{user.email}</TableCell>
                                 <TableCell>
                                     <Badge className={getRoleColor(Number(user.roles.role_id))}>
-                                    {Number(user.roles.role_id) === 2 ? t("ADMIN") : t("EMPLOYEE")}
+                                        {user.roles.name}
                                     </Badge>
                                 </TableCell>
                                 <TableCell>

@@ -156,7 +156,6 @@ export function ItemsForm({ onClose, onSave, item }: ItemModalProps){
         ) : (
           <form  onSubmit={handleSubmit(
   (data) => {
-    console.log("Datos enviados", data);
     onSave(data);
   },
   (errors) => {

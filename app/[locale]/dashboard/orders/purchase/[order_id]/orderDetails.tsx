@@ -12,6 +12,7 @@ import { useProfileLoginSWR } from "@/hooks/useUserLogin";
 import { fullPresentItems, Order, OrderFromValues } from "@/types/order";
 import { BookOpenCheck, ClipboardList, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useCallback, useState, useRef } from "react";
 import { toast } from "sonner";
 
@@ -32,6 +33,7 @@ export default function OrderDetails({
   const originalRef = useRef<fullPresentItems[]>(presentations || []);
   const isLoading = isLoadingOrder || loadingSuppliers;
   const t = useTranslations("ORDER-DETAILS-PURCHASE");
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -52,17 +54,17 @@ export default function OrderDetails({
 
 
   useEffect(() => {
-    // console.log('PRESENTATIONS: ', presentations);
     setTableData(presentations || []);
     originalRef.current = presentations || [];
   }, [presentations]);
 
 
   const handleFormChange = useCallback((data: OrderFromValues) => {
-    setOrderData((prev) => {
-      if (JSON.stringify(prev) === JSON.stringify(data)) return prev;
-      return data;
-    });
+    setOrderData(prev => {
+            if (!prev) return data;
+            const isSame = JSON.stringify(prev) === JSON.stringify(data);
+            return isSame ? prev : data;
+          });
   }, []);
 
   const handleTableChange = useCallback((selected: fullPresentItems[]) => {
@@ -85,7 +87,7 @@ export default function OrderDetails({
                 delete: false 
             }
         )
-    });
+    }).filter(i => i.item_presentation_id != null);
 
     for (const [id, prev] of prevMap.entries()) {
         if (!nextMap.has(id)) {
@@ -99,7 +101,6 @@ export default function OrderDetails({
             });
         }
     }
-
     try {
         const response =await rpcUpdateOrder({
             orderId: orderData?.order_id,
@@ -110,6 +111,9 @@ export default function OrderDetails({
         });
         if(response.data){
             toast.success(t("SUCCESSFULY-UPDATE-ORDER"));
+              setOrderData(null);
+              setTableData([]);
+              router.back(); 
         }
     } catch (err) {
         console.error("Error update order:", err);
@@ -150,7 +154,7 @@ export default function OrderDetails({
                         {t("DETAILS-ORDER")}
                     </SheetTitle>
                     </SheetHeader>
-                    <OrdenDetails presentations={tableData} order={order} mode="VIEW" />
+                    <OrdenDetails presentations={tableData} order={orderData} mode="VIEW" />
                 </SheetContent>
                 </Sheet>
             )}

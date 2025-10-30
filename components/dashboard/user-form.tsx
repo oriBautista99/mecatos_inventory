@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SheetDescription, SheetHeader, SheetTitle } from "../ui/sheet";
 import { useTranslations } from "next-intl";
 import { Input } from "../ui/input";
@@ -12,7 +12,9 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createUserSchema, updateUserSchema, UserFormData } from "@/types/user";
 import { Separator } from "@/components/ui/separator";
-import { ROLES } from "@/types/constants";
+import { RolesUser } from "@/types/roles";
+import { toast } from "sonner";
+import { getRoles } from "@/actions/roles";
 
 interface UserFormProps {
   defaultValues ?: UserFormData;
@@ -25,11 +27,25 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
 
     const [showPin, setShowPin] = useState(false)
     const t = useTranslations("USER-FORM"); 
+    const [roles, setRoles] = useState<RolesUser[]>([]);
 
     const { register, handleSubmit, formState:{errors}, control } = useForm<UserFormData>({
       resolver: zodResolver(mode === "create" ? createUserSchema : updateUserSchema),
       defaultValues: defaultValues ? {...defaultValues, pin_hash: undefined} : { username: "", email: "", pin_hash: "", role: 3 }
     });
+
+    async function loadRoles() {
+      const {data, error} = await getRoles();
+      if(data) {
+          setRoles(data);
+      }else{
+          toast.error(error);
+      }
+    }
+
+    useEffect(() => {
+        loadRoles();
+    }, [])
 
     return(
         <div>
@@ -116,9 +132,13 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
                           <SelectValue placeholder={t("ROLE-PLACEHOLDER")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value={ROLES.ADMIN.toString()}>{t("EMPLOYEE")}</SelectItem>
-                          <SelectItem value={ROLES.MANAGER.toString()}>{t("MANAGER")}</SelectItem>
-                          <SelectItem value={ROLES.EMPLOYEE.toString()}>{t("ADMIN")}</SelectItem>
+                          {
+                            roles.map((rol) => (
+                              <SelectItem key={rol.role_id} value={String(rol.role_id)}>
+                                {rol.name}
+                              </SelectItem>
+                            ))
+                          }
                         </SelectContent>
                       </Select>
                     )}

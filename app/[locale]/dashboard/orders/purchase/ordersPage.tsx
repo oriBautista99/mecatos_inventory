@@ -74,6 +74,7 @@ export default function OrdersPage() {
         const response = await suggestedOrders(profile.profile_id);
         if(response.data){
           toast.success("Ordenes por proveedor creadas correctamente");
+          loadOrders();
         }  
     }
   }

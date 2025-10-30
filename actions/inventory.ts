@@ -412,7 +412,7 @@ export async function getInventoryCount(count_id: number){
           created_at: data.created_at,
           notes: data.notes,
           inventory_counts_details: data.inventory_counts_details.map((d: any) => {
-            const presen_quantity = d.items.item_presentations.find(p => p.is_default);
+            const presen_quantity = d.items.item_presentations.find((p:any) => p.is_default);
             if(presen_quantity){
               return {
                 ...d,

@@ -103,58 +103,57 @@ export default function ItemsView() {
         // console.log("FORM DATA",itemData)
 
         if (selectedItem) {
-        // //Edit existing
-        const response = await updateItem(selectedItem, itemData);  
-        if(itemData.item_presentations.length == selectedItem.item_presentations.length && response){
-            const responseP = await updatePresentations(itemData.item_presentations);
-            if(responseP.success) toast.success(t("SUCCESS-EDIT"));
-        }
-        if(itemData.item_presentations.length > selectedItem.item_presentations.length && response){
-            const newsPresentation = itemData.item_presentations.filter(p => !p.item_presentation_id);
-            const presents = itemData.item_presentations.filter(p => p.item_presentation_id);
-            let responsePresen;
-            if(newsPresentation.length > 0){
-            const newPresentations = newsPresentation.map( p => {
-                const { ...rest } = p;
-                return {
-                ...rest,
-                item_id: presents[0].item_id
-                };
-            });
-            responsePresen = await create_present_sup_pre(newPresentations);   
+            // //Edit existing
+            const response = await updateItem(selectedItem, itemData);  
+            if(itemData.item_presentations.length == selectedItem.item_presentations.length && response){
+                const responseP = await updatePresentations(itemData.item_presentations);
+                if(responseP.success) toast.success(t("SUCCESS-EDIT"));
             }
-            const responseUp = await updatePresentations(presents);
-            if(responseUp.success && responsePresen && responsePresen.success) toast.success(t("SUCCESS-EDIT"));
-        }
-        if(itemData.item_presentations.length < selectedItem.item_presentations.length && response){
-            const idsDelete = new Set(itemData.item_presentations.map(pre => pre.item_presentation_id));
-            const toDelete = selectedItem.item_presentations.filter(ps => !idsDelete.has(ps.item_presentation_id));
-            const responseDelete =  await deletePresentations(toDelete.map(p => p.item_presentation_id));
-            const responseUp = await updatePresentations(itemData.item_presentations);
-            if(responseUp.success && responseDelete && responseDelete.success) toast.success(t("SUCCESS-EDIT"));
-        }
-
-        } else {
-        // Create new 
-        const {item_presentations} = itemData;
-        const response = await createItem(itemData);
-        if (response.success && response.data){ 
-            if(itemData.item_presentations.length > 0){
-                const newPresentations = item_presentations.map( p => {
+            if(itemData.item_presentations.length > selectedItem.item_presentations.length && response){
+                const newsPresentation = itemData.item_presentations.filter(p => !p.item_presentation_id);
+                const presents = itemData.item_presentations.filter(p => p.item_presentation_id);
+                let responsePresen;
+                if(newsPresentation.length > 0){
+                const newPresentations = newsPresentation.map( p => {
                     const { ...rest } = p;
                     return {
                         ...rest,
-                        item_id: response.data.item_id
+                        item_id: selectedItem.item_id
                     };
                 });
-                const responsePresen = await create_present_sup_pre(newPresentations);
-                if(responsePresen && responsePresen.success && responsePresen.data.length > 0){
-                    toast.success(t("SUCCESS-CREATE"));
-                }          
+                responsePresen = await create_present_sup_pre(newPresentations);   
+                }
+                const responseUp = await updatePresentations(presents);
+                if(responseUp.success && responsePresen && responsePresen.success) toast.success(t("SUCCESS-EDIT"));
             }
-        } else { 
-            toast.error(t("ERROR-CREATE"));
-        }
+            if(itemData.item_presentations.length < selectedItem.item_presentations.length && response){
+                const idsDelete = new Set(itemData.item_presentations.map(pre => pre.item_presentation_id));
+                const toDelete = selectedItem.item_presentations.filter(ps => !idsDelete.has(ps.item_presentation_id));
+                const responseDelete =  await deletePresentations(toDelete.map(p => p.item_presentation_id));
+                const responseUp = await updatePresentations(itemData.item_presentations);
+                if(responseUp.success && responseDelete && responseDelete.success) toast.success(t("SUCCESS-EDIT"));
+            }
+        } else {
+            // Create new 
+            const {item_presentations} = itemData;
+            const response = await createItem(itemData);
+            if (response.success && response.data){ 
+                if(itemData.item_presentations.length > 0){
+                    const newPresentations = item_presentations.map( p => {
+                        const { ...rest } = p;
+                        return {
+                            ...rest,
+                            item_id: response.data.item_id
+                        };
+                    });
+                    const responsePresen = await create_present_sup_pre(newPresentations);
+                    if(responsePresen && responsePresen.success && responsePresen.data.length > 0){
+                        toast.success(t("SUCCESS-CREATE"));
+                    }          
+                }
+            } else { 
+                toast.error(t("ERROR-CREATE"));
+            }
         }
         // revalidad ITEMS
         revalidateItems();

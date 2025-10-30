@@ -9,7 +9,7 @@ import { Order, OrderFromValues, OrderSchema } from "@/types/order";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, ChevronDownIcon, NotebookPen, Truck } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBadge } from "./StatusBadgeOrder";
 import { Supplier } from "@/types/suppliers";
@@ -30,7 +30,6 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
     const t = useTranslations("ORDER-FORM");
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-
     const {
         control, 
         register,
@@ -49,32 +48,36 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
     });
 
     const values = watch();
+    const firstRender = useRef(true);   
 
     useEffect(() => {
-        if(isDirty){
-            onSave?.(values);
-        }        
-    }, [values, onSave, isDirty]);
+    if (firstRender.current) {
+        firstRender.current = false;
+        return;
+    }
+
+    if (isDirty) {
+        onSave?.(values);
+    }
+    }, [values, isDirty, onSave]);
 
     useEffect(() => {
-        if(order && suppliers.length > 0){
-            reset({
-                order_id: order.order_id,
-                status: order.status,
-                supplier_id: order.supplier_id,
-                expiration_date: order.expiration_date ? new Date(order.expiration_date) : undefined,
-                received_date: order.received_date ? new Date(order.received_date) : undefined,
-                created_by: order.created_by ? order.created_by : 0,
-                description: order.description,
-            });
-            setIsLoading(false);
-        }
-        if(suppliers.length > 0 && modeForm === 'RECEIVED'){
-            // setValue('received_date', new Date());
-            // setValue('expiration_date', new Date());
-            setIsLoading(false);
-        }
-    },[order, suppliers, reset, modeForm])
+    if (order && suppliers.length > 0) {
+        reset({
+        order_id: order.order_id,
+        status: order.status,
+        supplier_id: order.supplier_id,
+        expiration_date: order.expiration_date ? new Date(order.expiration_date) : undefined,
+        received_date: order.received_date ? new Date(order.received_date) : undefined,
+        created_by: order.created_by ?? 0,
+        description: order.description,
+        }, { keepDirty: false });
+        setIsLoading(false);
+    }
+    if (suppliers.length > 0 && modeForm === 'RECEIVED') {
+        setIsLoading(false);
+    }
+    }, [order, suppliers, reset, modeForm]);
 
     return(
         
@@ -188,9 +191,11 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
                                         <Calendar
                                             mode='single'
                                             selected={field.value}
-                                            onSelect={date => {
-                                                field.onChange(date);
-                                                setOpenRecive(false);
+                                            onSelect={(date) => {
+                                                if (date) {
+                                                    field.onChange(date);
+                                                    setOpenRecive(false);
+                                                }
                                             }}
                                         />
                                         </PopoverContent>
@@ -206,27 +211,29 @@ export default function OrderForm({onSave, order, suppliers, modeForm}: OrderPro
                                 control={control}
                                 name="expiration_date"
                                 render={({field}) => (
-                                    <Popover open={openExp} onOpenChange={setOpenExp}>
-                                        <PopoverTrigger asChild>
-                                        <Button variant='outline' id='expiration_date' className='w-full justify-between font-normal'>
-                                            <span className='flex items-center'>
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                                {field.value ? field.value.toLocaleDateString() : 'Pick a date'}
-                                            </span>
-                                            <ChevronDownIcon />
-                                        </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={field.value}
-                                            onSelect={date => {
-                                                field.onChange(date);
-                                                setOpenExp(false);
-                                            }}
-                                        />
-                                        </PopoverContent>
-                                    </Popover>
+                                        <Popover open={openExp} onOpenChange={setOpenExp}>
+                                            <PopoverTrigger asChild>
+                                            <Button variant='outline' id='expiration_date' className='w-full justify-between font-normal'>
+                                                <span className='flex items-center'>
+                                                <CalendarIcon className='mr-2 h-4 w-4' />
+                                                    {field.value ? field.value.toLocaleDateString() : 'Pick a date'}
+                                                </span>
+                                                <ChevronDownIcon />
+                                            </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
+                                            <Calendar
+                                                mode='single'
+                                                selected={field.value}
+                                                onSelect={(date) => {
+                                                    if (date) {
+                                                        field.onChange(date);
+                                                        setOpenRecive(false);
+                                                    }
+                                                }}
+                                            />
+                                            </PopoverContent>
+                                        </Popover>      
                                 )}
                             />
                         </div>

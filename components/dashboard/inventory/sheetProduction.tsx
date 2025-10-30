@@ -74,6 +74,7 @@ export function SheetProduction({ type, eventId, onClose }: Props){
                 profileId: formData?.user,
                 notes: formData?.notes,
                 typeProduction: type,
+                event_date: new Date(formData.date).toISOString(),
                 items: tableData.map(item => {
                     if(item.quantity){
                         return({
@@ -87,7 +88,6 @@ export function SheetProduction({ type, eventId, onClose }: Props){
                     return null;
                 }).filter(Boolean)
             }   
-
             const response = await createProduction(dataEvent);   
             
             if(response.success) {
@@ -101,11 +101,10 @@ export function SheetProduction({ type, eventId, onClose }: Props){
         if(tableData && formData && eventId){
             const newDataForm : Partial<ProductionEvent> = {
                 profile_id: formData.user,
-                event_date: type != 'BREAD' ? new Date(formData.time).toISOString() : undefined,
+                event_date: type != 'BREAD' ? new Date(formData.date).toISOString() : undefined,
                 notes: formData.notes
             }
             const responseUpdEvent = await updateProductioEvent(eventId, newDataForm);
-            
             if(responseUpdEvent.success){
                 const updateDetails = tableData.map( det => {
                     const update = allDetails?.find(du => Number(du.item_id) === det.item_id);
@@ -133,13 +132,14 @@ export function SheetProduction({ type, eventId, onClose }: Props){
                     }
 
                 }).filter(Boolean);
+
                 const responseUpdDetails = await updateProductionDetails(updateDetails);     
                 
                 if(responseUpdDetails.success){
                     toast.success("SUCCESS-UPDATE");
                     onClose();
                 }
-            }            
+            }          
         }
     }
 

@@ -30,11 +30,10 @@ export default function NewOrder(){
     const handleOrder = useCallback((data: OrderFromValues) => {
         if(data.supplier_id){
           setSupplier(data.supplier_id);
-          setOrder( prev => {
-              if (!prev) return data;
-              const same =
-              prev.supplier_id === data.supplier_id; // solo si estos cambian mando a los details
-              return same ? prev : data;
+          setOrder(prev => {
+            if (!prev) return data;
+            const isSame = JSON.stringify(prev) === JSON.stringify(data);
+            return isSame ? prev : data;
           });
         }
     },[]);

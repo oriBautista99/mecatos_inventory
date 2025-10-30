@@ -9,8 +9,8 @@ import { routing } from "@/i18n/routing";
 import { getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
 
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+// import { createServerClient } from "@supabase/ssr";
+// import { cookies } from "next/headers";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -45,30 +45,30 @@ export default async function RootLayout({
 
   const messages = await getMessages({ locale });
 
-  const cookieStore = await Promise.resolve(cookies());
+  // const cookieStore = await Promise.resolve(cookies());
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options) {
-          cookieStore.set({ name, value, ...options });
-        },
-        remove(name: string, options) {
-          cookieStore.set({ name, value: "", ...options });
-        },
-      },
-    }
-  );
+  // const supabase = createServerClient(
+  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  //   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY!,
+  //   {
+  //     cookies: {
+  //       get(name: string) {
+  //         return cookieStore.get(name)?.value;
+  //       },
+  //       set(name: string, value: string, options) {
+  //         cookieStore.set({ name, value, ...options });
+  //       },
+  //       remove(name: string, options) {
+  //         cookieStore.set({ name, value: "", ...options });
+  //       },
+  //     },
+  //   }
+  // );
 
   // Obtener sesión actual (opcional)
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // const {
+  //   data: { session },
+  // } = await supabase.auth.getSession();
 
   return (
     <html lang={locale} suppressHydrationWarning>

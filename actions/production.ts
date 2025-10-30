@@ -20,7 +20,7 @@ export async function createProduction(productionData:any) {
             p_profile_id: productionData.profileId,
             p_notes: productionData.notes,
             p_items: productionData.items,
-            p_event_date: new Date().toISOString(),
+            p_event_date: productionData.event,
             p_type_production: productionData.typeProduction
         });
 

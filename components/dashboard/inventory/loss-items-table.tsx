@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Item } from "@/types/item";
 import { ItemForLoss } from "@/types/loss";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type RowValuesLost = {
     item_id: number;
@@ -20,67 +20,51 @@ type Props = {
     onChange?: (rows: RowValuesLost[]) => void;
 };
 
+type RowState = Record<number, string>;
+
 export default function LostItemsTable({ data, initialRows, typeTable, onChange }: Props) {
 
-    const [rows, setRows] = useState<RowValuesLost[]>(
-        data.map((item) => {
-            return {
-                item_id: Number(item.item_id),
-                item: item.name,
-                quantity_lost: "",
-            };
-        })
-    );
+
+    const [rows, setRows] = useState<RowState>({});
     const t = useTranslations("LOSS-ITEM-TABLE");
-    const isFirstRender = useRef(false);
 
     useEffect(() => {
-        if (onChange) {
-            onChange(rows);
-        }
+    if (onChange) {
+        const rowsArray = Object.entries(rows).map(([id, quantity]) => ({
+        item_id: Number(id),
+        quantity_lost: quantity,
+        }));
+        onChange(rowsArray);
+    }
     }, [rows, onChange]);
 
-    useEffect(() => {
-        if (isFirstRender.current) return;
-        
-        if( data.length > 0 && typeTable === 'CREATE') {
-            setRows(
-                data.map((item) => ({
-                    item_id: Number(item.item_id),
-                    item: item.name,
-                    quantity_lost: ""
-                }))
-            );
-            isFirstRender.current = true;
+useEffect(() => {
+  setRows((prev) => {
+    const newRows = { ...prev };
+
+    // crear los nuevos sin borrar los anteriores
+    data.forEach((item) => {
+      const id = Number(item.item_id);
+      if (!(id in newRows)) {
+        if (typeTable === "EDIT" && initialRows) {
+          const existing = initialRows.find((r) => r.item_id === id);
+          newRows[id] = existing?.quantity_lost ?? "";
+        } else {
+          newRows[id] = "";
         }
+      }
+    });
 
-        if (initialRows &&  data.length > 0 && typeTable === 'EDIT') {
-            setRows(
-                data.map((item) => {
-                    const existing = initialRows.find(r => r.item_id === Number(item.item_id));
-                    return {
-                        item_id: Number(item.item_id),
-                        item: item.name,
-                        quantity_lost: existing?.quantity_lost || "",
-                    };
-                })
-            );
-            isFirstRender.current = true;
+    return newRows;
+  });
+}, [data, initialRows, typeTable]);
 
-        }
-    }, [initialRows,data,typeTable]);
 
-    const handleChange = (
-        index: number,
-        field: keyof RowValuesLost,
-        value: string
-    ) => {
-        setRows((prev) =>
-            prev.map((row, i) =>
-                i === index ? { ...row, [field]: value } : row
-            )
-        );
-
+    const handleChange = (itemId: number, value: string) => {
+    setRows((prev) => ({
+        ...prev,
+        [itemId]: value,
+    }));
     };
 
     return(
@@ -94,16 +78,16 @@ export default function LostItemsTable({ data, initialRows, typeTable, onChange 
                 </TableHeader>
                 <TableBody>
                     {
-                        data.map((item, index) => (
+                        data.map((item) => (
                             <TableRow key={item.item_id}>
                                 <TableCell>{item.name}</TableCell>
                                 <TableCell>
                                     <Input
                                         type="number"
                                         placeholder="0"
-                                        value={rows[index]?.quantity_lost ?? ""}
+                                        value={rows[Number(item.item_id)] ?? ""}
                                         onChange={(e) =>
-                                            handleChange(index, "quantity_lost", e.target.value)
+                                            handleChange(Number(item.item_id), e.target.value)
                                         }
                                     />
                                 </TableCell>

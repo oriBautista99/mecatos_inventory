@@ -58,7 +58,10 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
             expiration_date: data.expiration_date,
             status: data.status
         }
-        setCurrentOrder(newData);
+        setCurrentOrder(prev => {
+            const same = JSON.stringify(prev) === JSON.stringify(newData);
+            return same ? prev : newData;
+        });
     },[order]);
 
     const handleUpdate = useCallback((allProducts: fullPresentItems[]) => {
