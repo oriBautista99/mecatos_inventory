@@ -141,11 +141,11 @@ export default function LossSheet({eventId, onClose }: Props) {
             const response = await createLossEvent(dataLost);   
                         
             if(response.success) {
-                toast.success("SUCCESS-CREATE");
+                toast.success(t("SUCCESS-CREATE"));
                 onClose();
             }
             if(response.error){
-                toast.success("ERROR-CREATE");
+                toast.success(t("ERROR-CREATE"));
             }
         }
         if(tableData && formData && eventId){
