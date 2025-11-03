@@ -104,9 +104,8 @@ export default function WastePage() {
     const totalLosses   = losses.reduce((a,b)=>a + Number(b.total_loss||0), 0);
     const prevLossesTotal   = prevLosses.reduce((a,b)=>a + Number(b.total_loss||0), 0);
     const lossRate = totalProduced > 0 ? (totalLosses / totalProduced) * 100 : 0
-    const varLosses = prevLossesTotal > 0 ? ((totalLosses - prevLossesTotal)/prevLossesTotal)*100 : 0
+    const varLosses = prevLossesTotal > 0 ? ((totalLosses - prevLossesTotal)/prevLossesTotal)  : 0
 
-    
     return (
         <div className="overflow-y-hidden space-y-4">
             <div className="flex px-2 items-center justify-between gap-4">
@@ -150,7 +149,7 @@ export default function WastePage() {
                                 <ChartCard
                                     title={t("TITLE-CHART-1")}
                                     filename={`losses_${range.from}_${range.to}.csv`}
-                                    data={losses}
+                                    data={losses.slice(0,10)}
                                     xKey="item_name"
                                     yKey="total_loss"
                                     typeChart="BAR"

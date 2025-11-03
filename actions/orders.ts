@@ -75,14 +75,31 @@ export async function getOrderById(order_id:number) {
         const { data, error } = await supabase
             .from('orders')
             .select(`
-                *,
-                suppliers(supplier_id, company_name),
-                order_details(*,
-                    presentations(*,
-                        items(*)
+                    *,
+                    suppliers(supplier_id, company_name),
+                    order_details(
+                    *,
+                    item_presentations(
+                        item_presentation_id,
+                        quantity,
+                        is_default,
+                        items(
+                            *
+                        ),
+                        presentation_types(
+                            presentation_type_id,
+                            name,
+                            conversion_factor,
+                            unit_id,
+                            units(
+                                unit_id,
+                                name,
+                                abbreviation
+                            )
+                        )
                     ),
                     item_batches(*)
-                )`
+                    )`
             ) // Select the order and its related details
             .eq('order_id', order_id)
             .single(); // Use .single() to get one object instead of an array
@@ -114,23 +131,36 @@ export async function getPrsentationsForSupplier(supplier_id: number){
         const {data,error: preError} = await supabase
             .from('suppliers_presentations')
             .select(`
-                presentation_id,
-                suppliers(supplier_id, company_name),
-                presentations(
-                    presentation_id,
-                    name,
-                    description,
-                    conversion_factor,
-                    unit,
-                    items:item_id (
-                    item_id,
-                    name,
-                    description,
-                    base_unit,
-                    min_quantity,
-                    target_quantity
+                    supplier_presentation_id,
+                    suppliers (supplier_id, company_name),
+                    item_presentations (
+                    item_presentation_id,
+                    quantity,
+                    is_default,
+                    items (
+                        item_id,
+                        name,
+                        description,
+                        min_quantity,
+                        target_quantity,
+                        units (
+                        unit_id,
+                        name,
+                        abbreviation
+                        )
+                    ),
+                    presentation_types (
+                        presentation_type_id,
+                        name,
+                        description,
+                        conversion_factor,
+                        units (
+                        unit_id,
+                        name,
+                        abbreviation
+                        )
                     )
-                )
+                    )
             `).eq('supplier_id', supplier_id);
 
         if(preError){
@@ -188,7 +218,7 @@ export async function rpcUpdateOrder({
   status?: string;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_ordered: number;
     quantity_received: number;
     unit_price: number;
@@ -239,7 +269,7 @@ export async function rpcReceiveNewOrder({
   received_date?: string | Date | null;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_ordered: number;
     quantity_received: number;
     unit_price: number;
@@ -289,7 +319,7 @@ export async function rpcReceiveSuggestedOrder({
   received_date?: string | Date | null;
   description?: string;
   items: Array<{
-    presentation_id: number;
+    item_presentation_id: number;
     quantity_received: number;
     unit_price: number;
     expiration_date: string | Date | null; // ISO
@@ -315,13 +345,50 @@ export async function rpcReceiveSuggestedOrder({
         }); 
 
         if(error){
-            console.error('Error in create updateBatch:', error);
+            console.error('Error in create receive_suggested_order:', error);
             return { error: error};
         }
 
         return {success: true, data:data, error:null};
     } catch (err) {
-        console.error('Unexpected error in updateBatch:', err);
+        console.error('Unexpected error in receive_suggested_order:', err);
         return { error: { message: 'Unexpected error occurred' } }
     }
+}
+
+export async function deleteOrder({
+    order_id,
+    delete_by
+}:{
+    order_id: number | undefined;
+    delete_by: number | undefined;
+}){
+
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+        const {data, error} = await supabase.rpc("delete_order", {
+            p_order_id: order_id,
+            p_deleted_by: delete_by
+        }); 
+
+        if(error){
+            console.error('Error in create delete_order:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in delete_order:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+
+
 }

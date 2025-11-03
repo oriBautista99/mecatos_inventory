@@ -3,7 +3,7 @@
 import { createUser, deleteUser, getUsers, updateUser } from "@/actions/users";
 import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { UserForm } from "@/components/dashboard/user-form";
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -55,7 +55,7 @@ export default function UsersView() {
     const startIndex = (page - 1) * pageSize;
     const currentData = filteredUsers.slice(startIndex, startIndex + pageSize);
 
-  const getRoleColor = (role: Profile["role"]) => {
+  const getRoleColor = (role: number) => {
     switch (role) {
       case 1:
         return "bg-red-100 text-red-800"
@@ -96,7 +96,11 @@ export default function UsersView() {
   }
 
   const handleEditUser = (user: Profile) => {
-    setSelectedUser(user);
+    const u = {
+      ...user,
+      role: Number(user.roles.role_id)
+    }
+    setSelectedUser(u);
     setIsSheetOpen(true);
   }
 
@@ -163,7 +167,7 @@ export default function UsersView() {
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3 flex-1">
                         <Avatar className="w-10 h-10">
-                            <AvatarImage src={user.avatar || "/placeholder.svg"} />
+                            {/* <AvatarImage src={user.avatar || "/placeholder.svg"} /> */}
                             <AvatarFallback>
                             {user.username
                                 .split(" ")
@@ -176,8 +180,8 @@ export default function UsersView() {
                             <h3 className="font-medium truncate">{user.username}</h3>
                             <p className="text-sm text-muted-foreground truncate">{user.email}</p>
                             <div className="flex items-center gap-2 mt-2">
-                            <Badge className={getRoleColor(user.role)}>
-                                {user.role ===  1 ? t("ADMIN"): user.role === 2 ? t("MANAGER") : t("EMPLOYEE")}
+                            <Badge className={getRoleColor(Number(user.roles.role_id))}>
+                                {user.roles.name}
                             </Badge>
                             <Badge className={getStatusColor(user.is_active)}>
                                 {user.is_active  ? t("ACTIVE"): t("INACTIVE")}
@@ -228,7 +232,7 @@ export default function UsersView() {
                                 <TableCell className="pl-6">
                                     <div className="flex items-center gap-3">
                                     <Avatar className="w-8 h-8">
-                                        <AvatarImage src={user.avatar || "/placeholder.svg"} />
+                                        {/* <AvatarImage src={user.avatar || "/placeholder.svg"} /> */}
                                         <AvatarFallback>
                                         {user.username
                                             .split(" ")
@@ -242,8 +246,8 @@ export default function UsersView() {
                                 </TableCell>
                                 <TableCell className="text-muted-foreground">{user.email}</TableCell>
                                 <TableCell>
-                                    <Badge className={getRoleColor(user.role)}>
-                                    {user.role === 1 ? t("ADMIN") : user.role === 2 ? t("MANAGER") : t("EMPLOYEE")}
+                                    <Badge className={getRoleColor(Number(user.roles.role_id))}>
+                                        {user.roles.name}
                                     </Badge>
                                 </TableCell>
                                 <TableCell>

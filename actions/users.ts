@@ -34,11 +34,10 @@ export async function createUser(data: UserFormData) {
             auth_user: authUser.user.id,
             email: data.email,
             username: data.username,
-            role: data.role,
+            role_id: data.role,
             pin_hash: hashedPin,
             is_active: true
         })
-
         if(profileError){
             console.error('Error in create Profile:', authError);
             return { error: authError };
@@ -69,7 +68,7 @@ export async function updateUser(profile: Profile, dataForm: UserFormData) {
                             .update({
                                 email: dataForm.email,
                                 username: dataForm.username,
-                                role: dataForm.role,
+                                role_id: dataForm.role,
                                 pin_hash: hashedPin
                             })
                             .eq("profile_id", profile.profile_id);
@@ -88,7 +87,7 @@ export async function updateUser(profile: Profile, dataForm: UserFormData) {
                                 .update({
                                     email: dataForm.email,
                                     username: dataForm.username,
-                                    role: dataForm.role,
+                                    role_id: dataForm.role,
                                 })
                                 .eq("profile_id", profile.profile_id);
             if(error){
@@ -125,7 +124,15 @@ export async function deleteUser(profile: Profile) {
 export async function getUsers() {
     try {
         const supabase =  await createClient();
-        const {data, error} = await supabase.from("profiles").select("*");
+        const {data, error} = await supabase.from("profiles").select(`
+            *,
+            role_id,
+            roles (
+                role_id,
+                name,
+                description
+            )
+        `);
         if(error){
             console.error('Error in get users:', error);
             return { data: null, error: "ERROR-GET-USERS"};

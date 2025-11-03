@@ -3,15 +3,14 @@ import { type NextRequest } from "next/server";
 import createMiddleware from 'next-intl/middleware';
 import {routing} from './i18n/routing';
 
+
 export async function middleware(request: NextRequest) {
   return await updateSession(request);
 }
 
 export default createMiddleware(routing);
 
-
 export const config = {
-  //runtime: "nodejs",
   matcher: [
     /*
      * Match all request paths except:

@@ -13,7 +13,7 @@ import { DateRange } from "react-day-picker";
 export default function ProductionPage() {
 
     const [range, setRange] = useState<DateRange | undefined>({
-        from: new Date(new Date().setDate(new Date().getDate() - 7)), // hace 7 días
+        from: new Date(new Date().setDate(new Date().getDate() - 8)), // hace 7 días
         to: new Date(), // hoy
     });
     const t = useTranslations("PRODUCTION-REPORTS");
@@ -70,7 +70,6 @@ export default function ProductionPage() {
 
             const fromPrev = prevRange?.from ? startOfDay(prevRange.from) : startOfDay(today);
             const toPrev   = prevRange?.to   ? endOfDay(prevRange.to)    : endOfDay(today);
-
 
             const [r1, r2, r3, r5, p1] = await Promise.all([
                 getTopProducedByItem(dateRange, 10),

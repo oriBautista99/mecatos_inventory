@@ -62,7 +62,7 @@ export default function Dashboard() {
   const varProduced = prevProduced > 0 ? ((totalProduced - prevProduced)/prevProduced)*100 : 0
   const totalLosses   = losses.reduce((a,b)=>a + Number(b.total_loss||0), 0);
   const prevLossesTotal   = prevLosses.reduce((a,b)=>a + Number(b.total_loss||0), 0);
-  const varLosses = prevLossesTotal > 0 ? ((totalLosses - prevLossesTotal)/prevLossesTotal)*100 : 0;
+  const varLosses = prevLossesTotal > 0 ? ((totalLosses - prevLossesTotal)/prevLossesTotal) : 0;
 
   return (
     <div className="min-h-screen p-0 flex flex-col space-y-6">

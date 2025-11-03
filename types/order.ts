@@ -37,6 +37,7 @@ export type presentationsItems = {
         name: string,
         presentation_id: number,
         unit: string,
+        quantity: number,
         items: {
             base_unit: string,
             description: string,
@@ -66,6 +67,7 @@ export type fullPresentItems = {
     batch_id?: number,
     presentation_name: string,
     presentation_unit: string,
+    presentation_quantity: number,
     conversion_factor: number,
     item_name: string,
     target_quantity: number,
@@ -96,38 +98,42 @@ export interface itemBatches {
 export function mapSupabaseDataToPresentations(
   supabaseData: any[] | null
 ): presentationsItems[] {
-  if (!supabaseData) {
-    return [];
-  }
+  if (!supabaseData) return [];
 
-  const mappedData = supabaseData.map((record) => {
-    const presentation = record.presentations;
-    const supplier = record.suppliers;
-    const item = presentation.items;
+  const mappedData = supabaseData
+    .map((record) => {
+      const presentation = record.item_presentations;
+      const supplier = record.suppliers;
 
-    return {
-      presentation_id: record.presentation_id,
-      presentations: {
-        conversion_factor: presentation.conversion_factor,
-        description: presentation.description,
-        name: presentation.name,
-        presentation_id: presentation.presentation_id,
-        unit: presentation.unit,
-        items: {
-          base_unit: item.base_unit,
-          description: item.description,
-          item_id: item.item_id,
-          min_quantity: item.min_quantity,
-          name: item.name,
-          target_quantity: item.target_quantity,
+      if (!presentation) return null;
+
+      const item = presentation.items;
+
+      return {
+        presentation_id: record.item_presentation_id,
+        presentations: {
+          conversion_factor: presentation.presentation_types.conversion_factor,
+          description: presentation.presentation_types.description,
+          name: presentation.presentation_types.name,
+          presentation_id: presentation.item_presentation_id,
+          unit: presentation.presentation_types.units.name,
+          quantity: presentation.quantity,
+          items: {
+            base_unit: item.units.name,
+            description: item.description,
+            item_id: item.item_id,
+            min_quantity: item.min_quantity,
+            name: item.name,
+            target_quantity: item.target_quantity,
+          },
         },
-      },
-      suppliers: {
-        company_name: supplier.company_name,
-        supplier_id: supplier.supplier_id,
-      },
-    };
-  });
+        suppliers: {
+          company_name: supplier.company_name,
+          supplier_id: supplier.supplier_id,
+        },
+      };
+    })
+    .filter(Boolean);
 
-  return mappedData;
+  return mappedData as presentationsItems[];
 }

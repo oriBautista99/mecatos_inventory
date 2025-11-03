@@ -1,12 +1,25 @@
 "use client"
 import CardItemTypes from "@/components/dashboard/settings/card-item-types";
+import PresentationType from "@/components/dashboard/settings/presentation_type";
+import Roles from "@/components/dashboard/settings/roles";
+import Units from "@/components/dashboard/settings/units";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tabs } from "@radix-ui/react-tabs";
-import { Type } from "lucide-react";
+import { Cuboid, Ruler, Type, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const tabs = [
+    {
+        name: 'ROLES',
+        value: 'roles',
+        icon: Users,
+        content: (
+            <>
+                <Roles></Roles>
+            </>
+        )
+    },
     {
         name: 'TYPE',
         value: 'types',
@@ -14,6 +27,26 @@ const tabs = [
         content: (
             <>
                 <CardItemTypes></CardItemTypes>
+            </>
+        )
+    },
+    {
+        name: 'UNITS',
+        value: 'units',
+        icon: Ruler,
+        content: (
+            <>
+                <Units></Units>
+            </>
+        )
+    },
+    {
+        name: 'TYPE_PRESENTATION',
+        value: 'presentations',
+        icon: Cuboid,
+        content: (
+            <>
+                <PresentationType></PresentationType>
             </>
         )
     }
@@ -35,7 +68,7 @@ export default function Page() {
                 </div>
             </div>
             <div className="w-full max-w-full">
-                <Tabs defaultValue="types"  className="gap-1">
+                <Tabs defaultValue="roles"  className="gap-1">
                     <ScrollArea>
                         <TabsList className="mb-3">
                             {

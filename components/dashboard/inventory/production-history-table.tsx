@@ -1,3 +1,4 @@
+import { ConfirmDialog } from "@/components/confirm-delete-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { cn } from "@/lib/utils";
 import { ProductionEventRow } from "@/types/production";
 import { format } from "date-fns";
-import { CalendarIcon, ChevronDownIcon } from "lucide-react";
+import { CalendarIcon, ChevronDownIcon, Edit, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -94,6 +95,7 @@ export function ProductionHistoryTable({ data, daily, onSelectRow }: Props){
                                 <TableHead className="text-foreground font-semibold">{t("CREATED_BY")}</TableHead>
                                 <TableHead className="text-foreground font-semibold">{t("TYPE")}</TableHead>
                                 <TableHead className="text-foreground font-semibold">{t("NOTES")}</TableHead>
+                                <TableHead className="text-foreground font-semibold">Acciones</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -106,6 +108,37 @@ export function ProductionHistoryTable({ data, daily, onSelectRow }: Props){
                                     <TableCell>{prod.profiles.username}</TableCell>
                                     <TableCell>{prod.type_production}</TableCell>
                                     <TableCell>{prod.notes}</TableCell>
+                                    <TableCell>
+                                        <div className="flex gap-1">
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="h-8 w-8 p-0"
+                                                // onClick={() => handleEdit(unit)}
+                                                title="Editar"
+                                            >
+                                                <Edit className="h-4 w-4" />
+                                            </Button>
+                                            <ConfirmDialog
+                                                trigger={
+                                                    <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                                    title="Eliminar"
+                                                    >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                                }
+                                                title={""}
+                                                description={""}
+                                                confirmText={""}
+                                                cancelText={""}
+                                                onConfirm={() => {}}
+                                            />
+
+                                            </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

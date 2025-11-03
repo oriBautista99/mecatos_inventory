@@ -29,13 +29,12 @@ export default function NewOrder(){
     
     const handleOrder = useCallback((data: OrderFromValues) => {
         if(data.supplier_id){
-        setSupplier(data.supplier_id);
-        setOrder( prev => {
+          setSupplier(data.supplier_id);
+          setOrder(prev => {
             if (!prev) return data;
-            const same =
-            prev.supplier_id === data.supplier_id; // solo si estos cambian mando a los details
-            return same ? prev : data;
-        });
+            const isSame = JSON.stringify(prev) === JSON.stringify(data);
+            return isSame ? prev : data;
+          });
         }
     },[]);
 
@@ -57,15 +56,14 @@ export default function NewOrder(){
         const itemsData = presentations.map(item => {
           return(
               { 
-                  presentation_id:item.presentation_id, 
+                  item_presentation_id:item.presentation_id, 
                   quantity_ordered:item.quantity_orderned, 
-                  quantity_received:item.quantity_received, 
+                  quantity_received:(item.quantity_received * item.presentation_quantity), 
                   unit_price:item.unit_price, 
                   expiration_date:item.expiration_date
               }
           )
         });
-
         try {
             const response = await rpcReceiveNewOrder({
                 supplier_id: order.supplier_id,

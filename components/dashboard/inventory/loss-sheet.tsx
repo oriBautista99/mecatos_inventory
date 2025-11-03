@@ -102,7 +102,7 @@ export default function LossSheet({eventId, onClose }: Props) {
             }
             
             if (filters.supplier) {
-                const hasSupplier = item.presentations.some((p) =>
+                const hasSupplier = item.item_presentations.some((p) =>
                     p.suppliers_presentations && p.suppliers_presentations.some(
                     (sp) => Number(sp.suppliers.supplier_id) === Number(filters.supplier)
                     )
@@ -141,11 +141,11 @@ export default function LossSheet({eventId, onClose }: Props) {
             const response = await createLossEvent(dataLost);   
                         
             if(response.success) {
-                toast.success("SUCCESS-CREATE");
+                toast.success(t("SUCCESS-CREATE"));
                 onClose();
             }
             if(response.error){
-                toast.success("ERROR-CREATE");
+                toast.success(t("ERROR-CREATE"));
             }
         }
         if(tableData && formData && eventId){
