@@ -24,6 +24,7 @@ export default function Roles(){
     const [selectRole, setSelectedRole] = useState<RolesUser | null>(null);
     const [showForm, setShowForm] = useState<boolean>(false);
     const t = useTranslations("ROLES"); 
+    const tp = useTranslations("DASHBOARD"); 
     const [roles, setRoles] = useState<RolesUser[]>([]);
     const [permissions, setPermissions] = useState<Permission[]>([]);
     const [selectedPermissions, setSelectedPermissions] = useState<number[]>([]);
@@ -179,7 +180,7 @@ export default function Roles(){
                         <div>
                             <SheetTitle>
                                 <div className="p-1">
-                                    <h3 className="text-lg font-bold sm:text-xl">{selectRole ?  t("EDIT-ROLES") : t("CREATE-ROLES")}</h3>
+                                    <h3 className="text-lg sm:text-xl">{selectRole ?  t("EDIT-ROLES") : t("CREATE-ROLES")}</h3>
                                 </div>     
                             </SheetTitle>
                             <Separator />
@@ -191,7 +192,7 @@ export default function Roles(){
                                     <Input
                                         id="name"
                                         {...register("name")}
-                                        placeholder="Recetas"
+                                        placeholder="Ej: Administrador"
                                         className={`text-sm ${errors.name ? "border-destructive" : ""}`}
                                     />
                                     {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
@@ -216,25 +217,25 @@ export default function Roles(){
                                     {permissions.map((perm) => (
                                     <li key={perm.permission_id}>
                                         <Label
-                                        htmlFor={`perm-${perm.permission_id}`}
-                                        className="flex items-center justify-between gap-2 px-5 py-3"
-                                        >
-                                        <span className="flex items-center gap-2 text-sm">
-                                            {perm.name}
-                                        </span>
-                                        <Checkbox
-                                            id={`perm-${perm.permission_id}`}
-                                            checked={selectedPermissions.includes(Number(perm.permission_id))}
-                                            onCheckedChange={(checked) => {
-                                            if (checked) {
-                                                setSelectedPermissions([...selectedPermissions, Number(perm.permission_id)]);
-                                            } else {
-                                                setSelectedPermissions(
-                                                selectedPermissions.filter((id) => id !== Number(perm.permission_id))
-                                                );
-                                            }
-                                            }}
-                                        />
+                                            htmlFor={`perm-${perm.permission_id}`}
+                                            className="flex items-center justify-between gap-2 px-5 py-3"
+                                            >
+                                            <span className="flex items-center gap-2 text-sm">
+                                                {tp(perm.name)}
+                                            </span>
+                                            <Checkbox
+                                                id={`perm-${perm.permission_id}`}
+                                                checked={selectedPermissions.includes(Number(perm.permission_id))}
+                                                onCheckedChange={(checked) => {
+                                                    if (checked) {
+                                                        setSelectedPermissions([...selectedPermissions, Number(perm.permission_id)]);
+                                                    } else {
+                                                        setSelectedPermissions(
+                                                        selectedPermissions.filter((id) => id !== Number(perm.permission_id))
+                                                        );
+                                                    }
+                                                }}
+                                            />
                                         </Label>
                                     </li>
                                     ))}

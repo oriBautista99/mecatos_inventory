@@ -10,14 +10,14 @@ import { Eye, EyeOff, Mail, Save, User, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createUserSchema, updateUserSchema, UserFormData } from "@/types/user";
+import { createUserSchema, Profile, updateUserSchema, UserFormData } from "@/types/user";
 import { Separator } from "@/components/ui/separator";
 import { RolesUser } from "@/types/roles";
 import { toast } from "sonner";
 import { getRoles } from "@/actions/roles";
 
 interface UserFormProps {
-  defaultValues ?: UserFormData;
+  defaultValues ?: UserFormData | Profile;
   mode: "create" | "edit"
   onSubmit: (data: UserFormData) => void
   onCancel: () => void
@@ -31,7 +31,11 @@ export function UserForm({ defaultValues, mode, onSubmit, onCancel }: UserFormPr
 
     const { register, handleSubmit, formState:{errors}, control } = useForm<UserFormData>({
       resolver: zodResolver(mode === "create" ? createUserSchema : updateUserSchema),
-      defaultValues: defaultValues ? {...defaultValues, pin_hash: undefined} : { username: "", email: "", pin_hash: "", role: 3 }
+      defaultValues: {
+        email: defaultValues?.email,
+        role: defaultValues?.role,
+        username: defaultValues?.username
+      }
     });
 
     async function loadRoles() {

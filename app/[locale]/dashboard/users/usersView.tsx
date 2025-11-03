@@ -96,7 +96,11 @@ export default function UsersView() {
   }
 
   const handleEditUser = (user: Profile) => {
-    setSelectedUser(user);
+    const u = {
+      ...user,
+      role: Number(user.roles.role_id)
+    }
+    setSelectedUser(u);
     setIsSheetOpen(true);
   }
 

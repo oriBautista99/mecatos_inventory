@@ -135,7 +135,7 @@ export default function PresentationType(){
                         <div className="">
                             <SheetTitle>
                                 <div className="p-1">
-                                    <h3 className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-PRESENTATION-TYPES") : t("CREATE-PRESENTATION-TYPES")}</h3>
+                                    <h3 className="text-lg sm:text-xl">{selectType ?  t("EDIT-PRESENTATION-TYPES") : t("CREATE-PRESENTATION-TYPES")}</h3>
                                 </div>                                    
                             </SheetTitle>
                             <Separator />

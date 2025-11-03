@@ -132,7 +132,7 @@ export default function CardItemTypes(){
                         <div className="">
                             <SheetTitle>
                                 <div className="p-1">
-                                    <h3 className="text-lg font-bold sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</h3>
+                                    <h3 className="text-lg sm:text-xl">{selectType ?  t("EDIT-ITEM-TYPES") : t("CREATE-ITEM-TYPES")}</h3>
                                 </div>                                    
                             </SheetTitle>
                             <Separator />

@@ -1,5 +1,4 @@
 import { z } from "zod"
-import { ROLES } from "./constants"
 import { RolesUser } from "./roles"
 
 export interface Profile {
@@ -7,7 +6,7 @@ export interface Profile {
     username: string,
     email: string,
     pin_hash ?: string,
-    role: typeof ROLES[keyof typeof ROLES],
+    role: number,
     roles: RolesUser
     is_active: boolean
     avatar?: string

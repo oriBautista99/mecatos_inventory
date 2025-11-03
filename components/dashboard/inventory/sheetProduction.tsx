@@ -91,11 +91,11 @@ export function SheetProduction({ type, eventId, onClose }: Props){
             const response = await createProduction(dataEvent);   
             
             if(response.success) {
-                toast.success("SUCCESS-CREATE");
+                toast.success(t("SUCCESS-CREATE"));
                 onClose();
             }
             if(response.error){
-                toast.success("ERROR-CREATE");
+                toast.success(t("ERROR-CREATE"));
             }
         }
         if(tableData && formData && eventId){

@@ -136,7 +136,7 @@ export default function Units(){
                         <div>
                             <SheetTitle>
                                 <div className="p-1">
-                                    <h3 className="text-lg font-bold sm:text-xl">{selectUnit ?  t("EDIT-UNITS") : t("CREATE-UNITS")}</h3>
+                                    <h3 className="text-lg sm:text-xl">{selectUnit ?  t("EDIT-UNITS") : t("CREATE-UNITS")}</h3>
                                 </div>     
                             </SheetTitle>
                             <Separator />

@@ -549,7 +549,7 @@
         "TITLE": "Receive New Order",
         "DESCRIPTION": "Next, select the necessary details for the new order to be received",
         "DETAILS-ORDER": "Details of the order to be received",
-        "SUCCESSFULLY-UPDATE-ORDER": "Order created successfully",
+        "SUCCESSFULY-UPDATE-ORDER": "Order created successfully",
         "RECEIVE-ORDER": "Receive Order"
     },
     "STATUS-ORDER": {
