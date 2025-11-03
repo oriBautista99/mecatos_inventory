@@ -58,7 +58,10 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
             expiration_date: data.expiration_date,
             status: data.status
         }
-        setCurrentOrder(newData);
+        setCurrentOrder(prev => {
+            const same = JSON.stringify(prev) === JSON.stringify(newData);
+            return same ? prev : newData;
+        });
     },[order]);
 
     const handleUpdate = useCallback((allProducts: fullPresentItems[]) => {
@@ -79,8 +82,8 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
             const itemsData = presentations.map(item => {
                 return(
                     { 
-                        presentation_id:item.presentation_id, 
-                        quantity_received:item.quantity_received, 
+                        item_presentation_id:item.presentation_id, 
+                        quantity_received:(item.quantity_received * item.presentation_quantity), 
                         unit_price:item.unit_price, 
                         expiration_date:item.expiration_date
                     }
@@ -99,7 +102,6 @@ export default function OrderDetail({ order, presentations }: {order: Order, pre
                     toast.success(t("SUCCESSFULY-UPDATE-ORDER"));
                     setSelectedProducts([]);            
                     router.back();                
-
                 }
             } catch (err) {
                 console.error("Error update order:", err);

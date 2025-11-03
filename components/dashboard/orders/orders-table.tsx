@@ -7,6 +7,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { Edit, PackageCheck, Trash2 } from "lucide-react";
+import { ConfirmDialog } from "@/components/confirm-delete-dialog";
+import { deleteOrder } from "@/actions/orders";
+import { useProfileLoginSWR } from "@/hooks/useUserLogin";
+import { toast } from "sonner";
 
 type OrdersTableProps = {
   data: Order[];
@@ -18,9 +24,10 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
     const pathname = usePathname(); 
     const t = useTranslations("ORDERS-TABLE");
     const router = useRouter();
+    const {profile} = useProfileLoginSWR();
 
     const [page, setPage] = useState(1);
-    const pageSize = 10; // 🔹 Cambia según lo que quieras mostrar
+    const pageSize = 10;
     const totalPages = Math.ceil(data.length / pageSize);
 
     const startIndex = (page - 1) * pageSize;
@@ -33,6 +40,20 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
     if (!data.length) {
         return <p className="text-center text-sm text-muted-foreground">{t("NO-ORDERS")}</p>;
     }
+
+      
+    const handleDelete = async (id: number | undefined) => {
+      const response = await deleteOrder({
+        order_id: id, 
+        delete_by : profile?.profile_id
+      });
+      if (response.success){ 
+        toast.success(t("SUCCESS-DELETE"));
+      } else{ 
+        toast.error(t("ERROR-DELETE"));
+      }
+    }
+
 
     return(
         <div className="overflow-x-auto space-y-2">
@@ -50,11 +71,12 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                             }                  
                             
                             <TableHead className="text-foreground font-semibold">{t("EXPIRATION_DATE")}</TableHead>
+                            <TableHead className="text-foreground font-semibold">{t("ACTIONS")}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {currentData.map((order) => (
-                            <TableRow className="cursor-pointer" onClick={() => handleRowClick(order.order_id)} key={order.order_id}>
+                            <TableRow className="cursor-pointer" key={order.order_id}>
                                 <TableCell>{order.order_id}</TableCell>
                                 <TableCell>{order.suppliers && order.suppliers.company_name}</TableCell>
                                 <TableCell>{order.created_at && new Date(order.created_at).toDateString()}</TableCell>
@@ -65,6 +87,41 @@ export default function OrdersTable({ data, mode }: OrdersTableProps) {
                                   mode != 'RECEIVED' && <TableCell>{order.received_date && new Date(order.received_date).toDateString()}</TableCell>
                                 }                              
                                 <TableCell>{order.expiration_date &&  new Date(order.expiration_date).toDateString()}</TableCell>
+                                <TableCell>
+                                    <div className="flex gap-1">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() => handleRowClick(order.order_id)}
+                                        title="Editar"
+                                    >
+                                      {
+                                        mode === 'RECEIVED' ? 
+                                        <PackageCheck className="h-4 w-4" /> : 
+                                        <Edit className="h-4 w-4" />
+                                      }
+                                    </Button>
+                                    <ConfirmDialog
+                                        trigger={
+                                            <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 w-8 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                            title="Eliminar"
+                                            >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                        }
+                                        title={t("DELETE-ORDER")}
+                                        description={t("DELETE-DESCRIPTION")}
+                                        confirmText={t("DELETE")}
+                                        cancelText={t("CANCEL")}
+                                        onConfirm={() => handleDelete(order.order_id)}
+                                    />
+
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

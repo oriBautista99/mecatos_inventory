@@ -38,7 +38,7 @@ export interface ItemForLoss {
   category_id: number;
   storage_area_id: number;
   item_type_id: number;
-  presentations: Presentation[];
+  item_presentations: Presentation[];
 }
 
 export interface LossEventDetail {

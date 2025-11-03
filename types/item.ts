@@ -3,7 +3,8 @@ import { Category } from "./category";
 import { UNITS } from "./constants";
 import { Item_types } from "./itemTypes";
 import { Storage_area } from "./storage_area";
-import { Presentation, PresentationSchema } from "./presentations";
+import { ItemPresentation, ItemPresentationSchema } from "./presentations";
+import { Units } from "./units";
 
 export interface Item {
     item_id: string;
@@ -19,9 +20,12 @@ export interface Item {
     item_types: Item_types,
     storage_area_id: number,
     storage_areas: Storage_area,
+    unit_id: number;
+    units: Units;
     created_at?: string,
     system_quantity ?: number,
-    presentations: Presentation[],
+    item_presentations: ItemPresentation[],
+    //presentations: Presentation[],
     production_type ?: 'BREAD' | 'DESSERT' | 'PASTRY',
     shelf_life_days?: number
 }
@@ -34,10 +38,6 @@ export const ItemSchema = z.object({
   description: z
     .string()
     .optional(),
-
-  base_unit: z
-    .string()
-    .min(1, "Debe seleccionar una unidad base"),
 
   min_quantity: z
     .coerce
@@ -64,8 +64,13 @@ export const ItemSchema = z.object({
     .number()
     .min(1, "Debe seleccionar un área de almacenamiento"),
 
-  presentations: z
-    .array(PresentationSchema)
+  unit_id: z
+    .coerce
+    .number()
+    .min(1, "Debe seleccionar una unidad base"),
+
+  item_presentations: z
+    .array(ItemPresentationSchema)
     .min(1, "Debe agregar al menos una presentación"),
 
   production_type: z

@@ -6,6 +6,7 @@ import {
   XAxis,
   CartesianGrid,
   ResponsiveContainer,
+  YAxis,
 } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { TypeOfDataCharts } from "@/types/reports"
@@ -46,7 +47,18 @@ export function LineChartComponent({ data, xKey, yKey, config, xIsDate = false }
             }}
           />
 
-          {/* <YAxis /> */}
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            tickMargin={8}
+            width={50} // espacio reservado para etiquetas
+            tickFormatter={(value) => {
+              // Formato elegante de números
+              if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`
+              if (value >= 1_000) return `${(value / 1_000).toFixed(1)}k`
+              return value
+            }}
+        />
 
           <ChartTooltip
             content={

@@ -132,3 +132,40 @@ export async function getLossEventById(lossEventId: number) {
         return { error: { message: "Unexpected error occurred" } };
     }
 }
+
+export async function deleteLoss({
+    loss_id,
+    delete_by
+}:{
+    loss_id: number | undefined;
+    delete_by: number | undefined;
+}){
+
+    try {
+        const supabase = await createClient();
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+        
+        if (userError || !user) {
+            return { error: "Unauthorized" };
+        }
+        const {data, error} = await supabase.rpc("delete_loss_event", {
+            p_loss_id: loss_id,
+            p_deleted_by: delete_by
+        }); 
+
+        if(error){
+            console.error('Error in create delete_loss_event:', error);
+            return { error: error};
+        }
+
+        return {success: true, data:data, error:null};
+    } catch (err) {
+        console.error('Unexpected error in delete_loss_event:', err);
+        return { error: { message: 'Unexpected error occurred' } }
+    }
+
+
+}

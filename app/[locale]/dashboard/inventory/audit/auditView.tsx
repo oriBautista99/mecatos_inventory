@@ -39,7 +39,7 @@ type ApiResponse = {
 export default function AuditView() {
 
     const [page, setPage] = useState(1);
-    const [pageSize] = useState(25);
+    const [pageSize] = useState(100);
     const [movementType] = useState("");
     const [itemId] = useState<string>("");
     const [dateFrom] = useState<string>("");

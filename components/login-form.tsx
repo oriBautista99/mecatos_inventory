@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { KeyRound, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { capitalize } from "@/utils/text";
 import { useLocaleRouter } from "@/hooks/useLocaleRouter";
@@ -18,7 +17,7 @@ import Image from "next/image";
 
 export function LoginForm() {
 
-  const [loginMode, setLoginMode] = useState <"pin"|"email">("pin");
+  const [loginMode] = useState <"pin"|"email">("pin");
   const [pin, setPin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -187,7 +186,7 @@ export function LoginForm() {
               </div>
             )}
 
-            <div className="after:border-border relative text-center text-xs sm:text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+            {/*<div className="after:border-border relative text-center text-xs sm:text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span className="bg-card text-muted-foreground relative z-10 px-2">{t('continue')}</span>
             </div>
 
@@ -208,7 +207,7 @@ export function LoginForm() {
                   <span className="text-sm sm:text-base">{t('buttonPin')}</span>
                 </>
               )}
-            </Button>
+            </Button>*/}
           </div>
         </form>
         {/* Imagen */}
